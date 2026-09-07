@@ -9,23 +9,23 @@ pre: " <b> 4. </b> "
 During my internship, I participated in events that provided valuable insights into modern cloud solutions and artificial intelligence:
 
 ### [Event 1](4.1-event1/)
-&emsp;**Event Title:** FCAJ Community
+&emsp;**Event Title:** [HANOI] AWS VIETNAM COMMUNITY MEETUP
 
-&emsp;**Date:** Academic Conference (Co-organized with HUTECH University and Swinburne University of Technology)
+&emsp;**Date:** 08:30 – 12:00 | Saturday, July 25, 2026
 
-&emsp;**Location:** Bitexco Financial Tower (AWS Vietnam Office)
+&emsp;**Location:** AWS Hanoi Office – 7th Floor, Grand Terra Tower, 36 Cat Linh, Dong Da, Hanoi
 
-&emsp;**Organizer:** AWS G3 Team in collaboration with First Cloud Journey Community
+&emsp;**Organizer:** AWS Vietnam Community
 
 &emsp;**Role:** Participant
 
 ### [Event 2](4.2-event2/)
-&emsp;**Event Title:** FCAJ Community Day
+&emsp;**Competition Title:** FCAJ BUILDRATHON 2026 — Season 01
 
-&emsp;**Date:** June 27, 2026
+&emsp;**Kick-off & Registration:** September 2026 (Deadline: September 15, 2026 — 6-Month Journey)
 
-&emsp;**Location:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu, Saigon Ward, Ho Chi Minh City
+&emsp;**Location & Grand Finale:** AWS Vietnam Office – 7th Floor, Grand Terra Tower, 36 Cat Linh, Hanoi
 
-&emsp;**Organizer:** AWS Study Group in collaboration with FCAJ Community
+&emsp;**Organizer:** First Cloud Journey (FCAJ) in collaboration with AWS Vietnam
 
-&emsp;**Role:** Participant
+&emsp;**Role:** Contestant / Team Member (Cloud & AI Solution Development)

@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body, #sidebar, #header {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+#sidebar #shortcuts h3 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #8c9ba5 !important;
+  margin-top: 1.5rem !important;
+  padding-left: 1rem !important;
+}
+
+#chapter h1, #chapter h2, #chapter h3 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
 :root {
   --MAIN-TEXT-color: #323235; /* Color of text by default */
   --MAIN-TITLES-TEXT-color: #778ba5; /* Color of titles h2-h3-h4-h5 */
@@ -148,26 +169,95 @@ a:hover {
   border-color: var(--MENU-SECTION-HR-color);
 }
 
+#sidebar #prefooter {
+  margin-top: 10px;
+}
+
+#sidebar #prefooter hr {
+  margin: 10px 1rem;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+#sidebar #prefooter ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar #prefooter ul li {
+  padding: 3px 0;
+}
+
 #sidebar .language-switcher {
   align-items: center;
   color: var(--MENU-SECTIONS-LINK-color);
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  padding: 4px 1rem;
+}
+
+#sidebar .language-switcher i {
+  color: #ea993c;
+  font-size: 15px;
+  flex: 0 0 auto;
 }
 
 #sidebar .language-switcher .language-switcher-label {
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: 13px;
+  color: #bdc3c7;
+  font-weight: 500;
 }
 
 #sidebar .language-switcher .select-style {
   flex: 1 1 auto;
   min-width: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
 }
 
 #sidebar .language-switcher select {
   cursor: pointer;
   width: 100%;
+  background: transparent;
+  border: none;
+  color: #ecf0f1;
+  font-size: 13px;
+  outline: none;
+}
+
+#sidebar .language-switcher select option {
+  background: #232f3e;
+  color: #fff;
+}
+
+#sidebar .clear-history-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  color: #8c9ba5 !important;
+  font-size: 13px;
+  padding: 6px 1rem !important;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+#sidebar .clear-history-btn i {
+  font-size: 14px;
+  color: #8c9ba5;
+  transition: color 0.2s ease;
+}
+
+#sidebar .clear-history-btn:hover {
+  color: #ea993c !important;
+}
+
+#sidebar .clear-history-btn:hover i {
+  color: #ea993c;
 }
 
 #navigation a.nav-prev,

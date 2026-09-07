@@ -1,19 +1,22 @@
 ---
-title: "Week 1 Worklog"
-date: 2026-04-28
+title: "Worklog Week 1"
+date: 2026-08-03
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
 ### Week 1 Objectives:
-* Find and contact a suitable internship organization.
+* Overview of AWS cloud architecture and hands-on account setup.
+* Complete foundational courses on Cloud Computing and AWS services.
 
-### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
+### Tasks Scheduled for this Week:
+| Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | Search for information and prepare internship application | 28/04/2026 | 28/04/2026 | |
-| 3 | Contact companies and find suitable internship positions | 28/04/2026 | 30/04/2026 | |
+| 2 | Overview of AWS Architecture and account setup | 03/08/2026 | 04/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Complete foundational lessons on AWS Cloud | 04/08/2026 | 06/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Learn Cloud Computing models (IaaS, PaaS, SaaS) and Shared Responsibility | 07/08/2026 | 09/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Week 1 Achievements:
-* Currently searching and preparing applications for internship positions.
+### Results Achieved in Week 1:
+* Understood AWS architecture overview and created hands-on account successfully.
+* Mastered basic cloud concepts and finished introductory training modules.

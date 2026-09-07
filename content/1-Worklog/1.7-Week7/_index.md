@@ -1,27 +1,26 @@
 ---
-title: "Week 7 Worklog"
-date: 2026-06-07
+title: "Worklog Week 7"
+date: 2026-08-03
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
 
 ### Week 7 Objectives:
-* Gain in-depth knowledge of AWS CloudWatch (monitoring) and CloudTrail (auditing).
-* Practice monitoring CPU, memory, and network resources for EC2 and Lambda.
-* Study log management, custom metrics, and alarm concepts.
-* Learn to set up resource alerts for proactive incident response.
+* Explore Docker containerization and AWS Elastic Container Service (ECS).
+* Understand container lifecycle and orchestration fundamentals.
+* Practice building container images using Dockerfile.
+* Deploy containerized workloads onto AWS ECS Fargate clusters.
 
-### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
+### Tasks Scheduled for this Week:
+| Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | Research AWS CloudWatch and CloudTrail fundamentals | 07/06/2026 | 09/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Configure resource dashboards for EC2 and Lambda | 09/06/2026 | 10/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Study logs, system metrics, and AWS alarms | 11/06/2026 | 11/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Practice creating Alarms and notifications using AWS SNS | 12/06/2026 | 12/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | Learn AWS ECS and Docker container fundamentals | 14/09/2026 | 15/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Deepen knowledge on container networking and orchestrations | 15/09/2026 | 16/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Write Dockerfile, build and tag container images locally | 17/09/2026 | 18/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Configure Task Definitions and run services on ECS Fargate | 18/09/2026 | 20/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Week 7 Achievements:
-* Distinguished key purposes of CloudWatch (metrics/performance) and CloudTrail (audit log).
-* Built operational dashboards to visualize system status in real-time.
-* Learned metric ingestion, filtering, and alert thresholds.
-* Programmed automated email warnings (SNS) triggered by high CPU resource usage.
+### Results Achieved in Week 7:
+* Mastered application containerization concepts with Docker.
+* Built and tested production-ready Docker images.
+* Deployed container tasks on serverless AWS ECS Fargate seamlessly.

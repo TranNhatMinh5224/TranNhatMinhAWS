@@ -1,34 +1,25 @@
 ---
 title: "Nhật ký công việc"
-date: 2024-01-01
+date: 2026-08-03
 weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
 
+Dưới đây là nhật ký công việc chi tiết của tôi qua 8 tuần thực hiện chương trình thực tập First Cloud AI Journey theo đúng tiến độ kế hoạch thực tập tốt nghiệp:
 
-Dưới đây là nhật ký công việc chi tiết của tôi qua 12 tuần thực hiện chương trình thực tập First Cloud AI Journey:
+**Tuần 1 (03/08/2026 – 09/08/2026):** [Tìm hiểu tổng quan kiến trúc AWS và lập tài khoản thực hành](1.1-week1/)
 
-**Tuần 1:** [Tìm kiếm nơi thực tập](1.1-week1/)
+**Tuần 2 (10/08/2026 – 16/08/2026):** [Tìm hiểu AWS Core Services: EC2, S3, IAM](1.2-week2/)
 
-**Tuần 2:** [Tìm hiểu tổng quan kiến trúc AWS và lập tài khoản thực hành](1.2-week2/)
+**Tuần 3 (17/08/2026 – 23/08/2026):** [Tìm hiểu AWS Networking: VPC, Subnet, Internet Gateway](1.3-week3/)
 
-**Tuần 3:** [Tìm hiểu AWS Core Services: EC2, S3, IAM](1.3-week3/)
+**Tuần 4 (24/08/2026 – 30/08/2026):** [Tìm hiểu AWS Lambda và mô hình Serverless](1.4-week4/)
 
-**Tuần 4:** [Tìm hiểu AWS Networking: VPC, Subnet, Internet Gateway](1.4-week4/)
+**Tuần 5 (31/08/2026 – 06/09/2026):** [Tìm hiểu về AWS CloudWatch (giám sát) và CloudTrail (kiểm vết hoạt động)](1.5-week5/)
 
-**Tuần 5:** [Tìm hiểu AWS RDS và DynamoDB](1.5-week5/)
+**Tuần 6 (07/09/2026 – 13/09/2026):** [Tìm hiểu Elastic Load Balancer (ELB) và Auto Scaling](1.6-week6/)
 
-**Tuần 6:** [Tìm hiểu AWS Lambda và Serverless](1.6-week6/)
+**Tuần 7 (14/09/2026 – 20/09/2026):** [Tìm hiểu AWS ECS và kiến thức Docker cơ bản](1.7-week7/)
 
-**Tuần 7:** [Tìm hiểu AWS CloudWatch và CloudTrail](1.7-week7/)
-
-**Tuần 8:** [Tìm hiểu Elastic Load Balancer (ELB) và Auto Scaling](1.8-week8/)
-
-**Tuần 9:** [Tìm hiểu AWS CloudFormation và Infrastructure as Code (IaC)](1.9-week9/)
-
-**Tuần 10:** [Tìm hiểu AWS ECS và Docker cơ bản](1.10-week10/)
-
-**Tuần 11:** [Tìm hiểu AWS DevOps cơ bản và quy trình CI/CD](1.11-week11/)
-
-**Tuần 12:** [Thực hiện dự án tổng hợp trên AWS và tổng kết đánh giá](1.12-week12/)
+**Tuần 8 (21/09/2026 – 27/09/2026):** [Thực hiện dự án tổng hợp trên AWS (Capstone Project: Serverless & Event-Driven Game Backend trên AWS) và tổng kết](1.8-week8/)

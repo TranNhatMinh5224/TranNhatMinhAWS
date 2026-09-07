@@ -1,27 +1,27 @@
 ---
-title: "Week 8 Worklog"
-date: 2026-06-14
+title: "Worklog Week 8"
+date: 2026-08-03
 weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
 
 ### Week 8 Objectives:
-* Research Elastic Load Balancing (ELB) and Auto Scaling concepts on AWS.
-* Practice creating an Application Load Balancer to route traffic to backend EC2 instances.
-* Configure Auto Scaling Groups to scale EC2 instances dynamically.
-* Run load tests to verify scalability and load distribution.
+* Finalize and deliver the Capstone Project: **Serverless & Event-Driven Game Backend on AWS**.
+* Implement cost-effective architectures utilizing EC2 Spot Fleet (Graviton ARM64), Cognito, API Gateway, Lambda Matchmaker, and DynamoDB.
+* Establish GitOps CI/CD pipelines via AWS CodeDeploy and GitHub Actions.
+* Package Workshop lab guides and summarize the complete 8-week internship results.
 
-### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
+### Tasks Scheduled for this Week:
+| Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | Learn about Elastic Load Balancer (ELB) and Auto Scaling | 14/06/2026 | 16/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Practice creating an Application Load Balancer (ALB) for EC2 instances | 16/06/2026 | 17/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Configure Launch Templates and Auto Scaling Groups (ASG) | 18/06/2026 | 19/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Perform load simulation tests to verify auto-scaling and traffic balancing | 19/06/2026 | 19/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | System architecture design, DynamoDB Single Table & Cognito Pools | 21/09/2026 | 22/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Develop Matchmaker Lambda, API Gateway Authorizer & VPC Endpoints | 22/09/2026 | 23/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Configure EC2 Spot Fleet, Launch Templates & CodeDeploy GitOps | 24/09/2026 | 25/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Asynchronous post-match analytics with DynamoDB Streams & Final Review | 25/09/2026 | 27/09/2026 | <https://github.com/Nothingtoread/fighting-game> |
 
-### Week 8 Achievements:
-* Gained solid understanding of ELB architectures and Auto Scaling mechanisms.
-* Successfully distributed user requests across EC2 instances using an ALB.
-* Set up dynamic scaling policies based on metric thresholds (CPU usage).
-* Verified High Availability and Fault Tolerance behavior during mock traffic surges.
+### Results Achieved in Week 8:
+* Successfully built and verified Capstone Project on AWS infrastructure.
+* Reduced operational overhead by 70-80% through serverless and Spot Graviton instances.
+* Published complete hands-on step-by-step Workshop tutorials on this documentation site.
+* Accomplished all learning objectives declared in official internship plans (TTTN-01 & TTTN-02).

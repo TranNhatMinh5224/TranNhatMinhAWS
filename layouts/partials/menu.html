@@ -46,17 +46,24 @@
             </span>
             <div class="select-style">
               <select id="select-language" aria-label="Select language" onchange="location = this.value;">
-                {{ $siteLanguages := .Site.Languages }}
                 {{ $pageLang := .Page.Lang }}
-                {{ range .Page.AllTranslations }}
-                  {{ $translation := . }}
-                  {{ range $siteLanguages }}
-                    {{ if eq $translation.Lang .Lang }}
-                      <option id="{{ $translation.Language }}" value="{{ $translation.Permalink }}" {{ if eq $pageLang .Lang }}selected{{ end }}>
-                        {{ .LanguageName }}
-                      </option>
+                {{ $translations := .Page.AllTranslations }}
+                {{ range .Site.Languages }}
+                  {{ $lang := . }}
+                  {{ $targetUrl := "" }}
+                  {{ if eq $lang.Lang "en" }}
+                    {{ $targetUrl = "/en/" | relURL }}
+                  {{ else }}
+                    {{ $targetUrl = "/" | relURL }}
+                  {{ end }}
+                  {{ range $translations }}
+                    {{ if eq .Lang $lang.Lang }}
+                      {{ $targetUrl = .RelPermalink }}
                     {{ end }}
                   {{ end }}
+                  <option id="{{ $lang.Lang }}" value="{{ $targetUrl }}" {{ if eq $pageLang $lang.Lang }}selected{{ end }}>
+                    {{ if eq $lang.Lang "vi" }}Tiếng Việt{{ else }}English{{ end }}
+                  </option>
                 {{ end }}
               </select>
               <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="255px" height="255px" viewBox="0 0 255 255" xml:space="preserve">
@@ -72,8 +79,8 @@
         {{end}}
         {{ if $showvisitedlinks}}
         <li>
-          <a class="padding" href="#" data-clear-history-toggle="">
-            <i class="fas fa-history fa-fw"></i> {{T "Clear-History"}}
+          <a class="padding clear-history-btn" href="#" data-clear-history-toggle="" title="{{ if eq .Page.Lang "vi" }}Xóa lịch sử đã xem{{ else }}Clear History{{ end }}">
+            <i class="fas fa-history fa-fw"></i> <span>{{ T "Clear-History" | default (cond (eq .Page.Lang "vi") "Xóa lịch sử đã xem" "Clear History") }}</span>
           </a>
         </li>
         {{ end }}

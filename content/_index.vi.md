@@ -9,21 +9,31 @@ chapter: false
 ### Thông tin sinh viên:
 &emsp; **Họ và tên:** Trần Nhật Minh
 
+&emsp; **Mã số sinh viên (MSV):** 0117967
+
 &emsp; **Số điện thoại:** 0862359426
 
 &emsp; **Email:** nhatminh5224.forwork@gmail.com
 
-&emsp; **Trường:** Đại học Công nghệ Thành phố Hồ Chí Minh (HUTECH)
+&emsp; **Trường:** Trường Đại học Xây dựng Hà Nội (HUCE)
 
-&emsp; **Ngành:** An Ninh Mạng
+&emsp; **Khoa:** Công nghệ thông tin
 
-&emsp; **Lớp:** 67CS
+&emsp; **Ngành:** Khoa học máy tính
+
+&emsp; **Lớp:** 67CS - **Khóa:** 67
+
+&emsp; **Giảng viên hướng dẫn:** ThS. Lê Văn Minh
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
 
-&emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
+&emsp; **Địa chỉ ĐVHD:** Tầng 7 Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội
 
-&emsp; **Thời gian thực tập:** Từ ngày 05-05-2026 đến ngày 30-07-2026
+&emsp; **Cán bộ hướng dẫn:** Nguyễn Gia Hưng (hunggia@amazon.com.vn)
+
+&emsp; **Vị trí thực tập:** First Cloud AI Journey
+
+&emsp; **Thời gian thực tập:** Từ ngày 03-08-2026 đến ngày 27-09-2026 (8 tuần)
 
 <img src="/images/avarta.jpg" alt="Ảnh đại diện của bạn" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
 

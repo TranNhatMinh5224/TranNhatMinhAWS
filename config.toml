@@ -1,6 +1,6 @@
-baseURL = "https://trannhatminh.github.io/TranNhatMinhAWS/"
-relativeURLs = false
-canonifyURLs = true
+baseURL = "/"
+relativeURLs = true
+canonifyURLs = false
 defaultContentLanguage = "vi"
 
 # Change the default theme to be use when building the site with Hugo
@@ -16,7 +16,7 @@ home = [ "HTML", "RSS", "JSON"]
   # Git hub repo link
   editURL = ""
   description = ""
-  author = "thienlh@thienlu.com"
+  author = "Trần Nhật Minh"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
@@ -25,7 +25,7 @@ home = [ "HTML", "RSS", "JSON"]
 [Languages.en]
 title = "Internship Report"
 weight = 1
-languageName = "English"
+label = "English"
 
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
@@ -42,7 +42,7 @@ weight = 20
 [Languages.vi]
 title = "Báo cáo thực tập"
 weight = 2
-languageName = "Tiếng Việt"
+label = "Tiếng Việt"
 
 [[Languages.vi.menu.shortcuts]]
 name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"

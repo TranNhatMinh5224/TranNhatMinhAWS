@@ -1,27 +1,27 @@
 ---
 title: "Worklog Tuần 7"
-date: 2026-06-07
+date: 2026-08-03
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
 
 ### Mục tiêu tuần 7:
-* Tìm hiểu sâu về các dịch vụ giám sát và kiểm tra: AWS CloudWatch và CloudTrail.
-* Thực hành theo dõi trạng thái hoạt động của máy ảo EC2 và hàm Lambda qua CloudWatch.
-* Học các khái niệm về Log, Metric, Alarm trong AWS.
-* Thiết lập cảnh báo (Alarms) tự động khi tài nguyên quá tải.
+* Khám phá Docker cơ bản và dịch vụ điều phối container AWS Elastic Container Service (ECS).
+* Nắm bắt khái niệm về Container và Container Orchestration.
+* Thực hành tạo Docker Image của ứng dụng từ Dockerfile.
+* Triển khai container ứng dụng trên AWS ECS và kiểm tra hoạt động.
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | Tìm hiểu về AWS CloudWatch (giám sát) và CloudTrail (kiểm vết hoạt động) | 07/06/2026 | 09/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Thực hành cấu hình Dashboard theo dõi EC2 và Lambda bằng CloudWatch | 09/06/2026 | 10/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Nghiên cứu về Log Groups, Custom Metrics và CloudWatch Alarms | 11/06/2026 | 11/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Thực hành tạo Alarm và cấu hình cảnh báo qua email (SNS) khi CPU quá 80% | 12/06/2026 | 12/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | Tìm hiểu AWS ECS và kiến thức Docker cơ bản | 14/09/2026 | 15/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Tìm hiểu lý thuyết về Container và Container Orchestration | 15/09/2026 | 16/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Thực hành viết Dockerfile, build Docker Image từ ứng dụng mẫu | 17/09/2026 | 18/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Triển khai container chạy trên AWS ECS (Fargate/EC2) và kiểm tra hoạt động | 18/09/2026 | 20/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 7:
-* Hiểu rõ sự khác nhau giữa CloudWatch (giám sát hiệu suất) và CloudTrail (ghi log bảo mật/lịch sử API).
-* Tạo bảng điều khiển (Dashboard) theo dõi trực quan các tài nguyên.
-* Hiểu cách thức hoạt động của Log, Metric và thiết lập các ngưỡng cảnh báo Alarm.
-* Cấu hình thành công cảnh báo tự động gửi email khi hệ thống gặp sự cố về dung lượng hoặc hiệu năng.
+* Nắm vững cách Docker đóng gói ứng dụng độc lập với môi trường.
+* Viết thành công Dockerfile và tạo Docker image chạy tốt ở local.
+* Đẩy image lên kho lưu trữ và cấu hình Task Definition trên AWS ECS.
+* Triển khai và chạy ứng dụng web thành công trên cluster của AWS ECS Fargate.

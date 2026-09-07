@@ -1,6 +1,6 @@
 ---
 title: "Chia sẻ, đóng góp ý kiến"
-date: 2026-07-14
+date: 2026-09-26
 weight: 7
 chapter: false
 pre: " <b> 7. </b> "
@@ -17,7 +17,7 @@ Chương trình được tổ chức rất chuyên nghiệp và bài bản. Hệ
 Đội ngũ Mentor rất giàu kinh nghiệm và nhiệt huyết. Khi tôi gặp khó khăn trong việc cấu hình mạng bảo mật hoặc gỡ lỗi CI/CD, các Mentor luôn hướng dẫn phương pháp tư duy kiểm tra log hệ thống thay vì đưa ra đáp án có sẵn, giúp tôi cải thiện kỹ năng giải quyết vấn đề. Ban Admin cũng hỗ trợ kỹ thuật và cấp phát tài khoản thực hành AWS Free Tier rất nhanh chóng.
 
 **3. Sự phù hợp với chuyên ngành học**  
-Là sinh viên chuyên ngành **An Ninh Mạng** của Đại học HUTECH, tôi thấy các nội dung thực hành rất sát với thực tế ngành. Việc tự tay cấu hình VPC Isolation, Public/Private Subnets, thiết lập Security Groups, Network ACLs và kiểm soát quyền hạn tối thiểu (Least Privilege) với IAM Policy giúp tôi hiểu sâu sắc cách bảo mật hạ tầng đám mây.
+Là sinh viên chuyên ngành **Khoa học máy tính** của Trường Đại học Xây dựng Hà Nội (HUCE), tôi thấy các nội dung thực hành rất sát với thực tế ngành. Việc tự tay cấu hình VPC Isolation, Public/Private Subnets, thiết lập Security Groups, Network ACLs và kiểm soát quyền hạn tối thiểu (Least Privilege) với IAM Policy giúp tôi hiểu sâu sắc cách bảo mật hạ tầng đám mây.
 
 **4. Cơ hội học hỏi & Phát triển kỹ năng**  
 Chương trình là cơ hội lớn để tôi tiếp cận với các công nghệ đám mây hiện đại như Serverless (Lambda, API Gateway), Container (Docker, ECS) và hạ tầng dưới dạng mã (Terraform, CloudFormation). Ngoài kỹ năng chuyên môn, tôi còn cải thiện kỹ năng viết báo cáo kỹ thuật và quản lý thời gian.

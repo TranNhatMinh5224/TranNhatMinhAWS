@@ -1,6 +1,6 @@
 ---
 title: "Event 2"
-date: 2026-07-21
+date: 2026-08-20
 weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
@@ -11,81 +11,74 @@ aliases:
   - /4-EventParticipated/4.2-event2/
 ---
 
-# Bài thu hoạch “FCAJ Community Day”
+# Báo cáo tham gia cuộc thi: “FCAJ BUILDRATHON 2026 — Season 01”
 
-### Thông tin chung về sự kiện
-*   **Tên Sự Kiện**: FCAJ Community Day
-*   **Thời gian tổ chức**: 27-06-2026
-*   **Địa điểm tổ chức**: Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
-*   **Đơn vị tổ chức**: AWS Study Group phối hợp cùng cộng đồng FCAJ
-*   **Vai trò tham gia**: Người tham dự
-
----
-
-### Mục đích của sự kiện
-*   **Mục tiêu của chương trình**: Giới thiệu xu hướng ứng dụng AI Agent (Agentic AI) vào quá trình quản trị và vận hành hạ tầng Cloud nhằm tự động hóa các tác vụ, nâng cao hiệu quả quản lý hệ thống và tối ưu chi phí vận hành.
-*   **Nội dung chính muốn truyền tải**: Giới thiệu khái niệm AgenticOps, vai trò của AI Agent trong Cloud Operations, cách AI hỗ trợ giám sát hệ thống, phân tích log, phát hiện sự cố, tối ưu tài nguyên và tự động hóa quy trình vận hành trên nền tảng Cloud.
-*   **Giá trị dành cho người tham dự**: Giúp người tham dự hiểu được xu hướng kết hợp AI với Cloud, nắm được các ứng dụng thực tế của AI trong vận hành hệ thống và định hướng phát triển các kỹ năng cần thiết trong lĩnh vực Cloud và DevOps.
+### Thông tin chung về sự kiện & Cuộc thi
+*   **Tên cuộc thi**: FCAJ BUILDRATHON 2026 — Season 01
+*   **Đơn vị tổ chức**: Cộng đồng First Cloud Journey (FCAJ) phối hợp cùng AWS Vietnam
+*   **Thời gian phát động & Đăng ký**: Tháng 09/2026 (Hạn chót đăng ký: 15/09/2026 — Lộ trình dự thi 6 tháng)
+*   **Địa điểm sinh hoạt & Chung kết**: Văn phòng AWS Vietnam – Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Đống Đa, Hà Nội
+*   **Hình thức tham gia**: Đội thi (2 – 5 thành viên)
+*   **Vai trò của sinh viên**: Thí sinh / Thành viên đội phát triển giải pháp Cloud & AI
+*   **Đề tài đăng ký dự thi**: *First Cloud AI Journey — Serverless & Event-Driven Game Backend trên AWS*
 
 ---
 
-### Nội dung nổi bật
-
-#### 1. Tổng quan vấn đề thực tế
-Trong quá trình vận hành hạ tầng Cloud, người quản trị phải theo dõi nhiều dịch vụ, xử lý log, cảnh báo, giám sát tài nguyên và khắc phục sự cố trong thời gian ngắn. Khi quy mô hệ thống ngày càng lớn, việc quản lý thủ công trở nên phức tạp, dễ xảy ra sai sót và tiêu tốn nhiều thời gian.
-
-#### 4. Demo và Case Study thực tế
-Workshop trình bày các ví dụ về việc ứng dụng AI vào quản lý hệ thống Cloud, từ quá trình thu thập dữ liệu vận hành, phân tích log, phát hiện sự cố cho đến đề xuất phương án xử lý. Thông qua các tình huống thực tế, người tham dự hiểu rõ hơn cách AI Agent hỗ trợ giảm thời gian phản hồi, tăng độ chính xác trong vận hành và nâng cao hiệu quả quản trị hạ tầng Cloud.
+### Mục đích & Triết lý của Buildrathon
+*   **Khác biệt so với Hackathon ngắn ngày thông thường**: Không dừng lại ở một cuộc thi chạy nước rút 2-3 ngày rồi bỏ dở sản phẩm, **FCAJ Buildrathon** là một hành trình rèn luyện 6 tháng để người tham gia thực sự **BUILD** được một sản phẩm Cloud / AI hoàn chỉnh, chạy được trên môi trường Production.
+*   **Triết lý cốt lõi**: *"Không chỉ học cho biết — mà học để làm"*. Mục tiêu là tạo ra sản phẩm thực tế, có kiến trúc chuẩn doanh nghiệp, giải quyết bài toán thực tiễn và định hướng tương lai cho bản thân.
+*   **Môi trường sinh hoạt thực tế**: Các đội thi được tạo điều kiện lên trực tiếp Văn phòng AWS để học tập, làm việc nhóm, sinh hoạt chuyên đề và nhận sự cố vấn (mentoring) 1-1 từ các Solution Architect của AWS.
 
 ---
 
-### Những gì học được
+### Sự kết nối giữa Kỳ thực tập 8 tuần và Cuộc thi Buildrathon
 
-#### 1. Tư duy và phương pháp
-Hiểu được AI không chỉ là công cụ hỗ trợ tạo nội dung mà còn có thể trở thành trợ lý thông minh trong việc quản trị hệ thống Cloud. Việc kết hợp giữa kiến thức chuyên môn và AI sẽ giúp nâng cao hiệu quả công việc.
+Để đảm bảo tính khoa học và phù hợp với khung thời gian **8 tuần thực tập tại trường (03/08 – 27/09/2026)**, kế hoạch tham gia được phân kỳ rõ ràng:
 
-#### 2. Kiến thức kỹ thuật
-*   Hiểu khái niệm **AgenticOps**.
-*   Biết vai trò của **AI Agent** trong Cloud Operations.
-*   Hiểu cách AI hỗ trợ **Monitoring, Logging** và **Incident Management**.
-*   Nắm được quy trình ứng dụng AI trong quản trị hạ tầng Cloud.
+{{< mermaid >}}
+gantt
+    title Lộ trình phân kỳ: Thực tập 8 tuần & Cuộc thi Buildrathon 2026
+    dateFormat  YYYY-MM-DD
+    section Giai đoạn Thực tập (8 tuần)
+    Học Core AWS & Kiến trúc: 2026-08-03, 28d
+    Kick-off & Đăng ký Buildrathon: 2026-09-07, 7d
+    Hoàn thành Prototype & Báo cáo tốt nghiệp: 2026-09-14, 14d
+    section Giai đoạn Mở rộng Buildrathon
+    Phát triển sản phẩm hoàn chỉnh cùng Mentors: 2026-09-28, 75d
+    Kiểm định Well-Architected & Chung kết Top 20: 2026-12-15, 60d
+{{< /mermaid >}}
 
-#### 3. Best Practices
-*   Kết hợp AI với kiến thức nền tảng thay vì phụ thuộc hoàn toàn vào AI.
-*   Luôn giám sát và kiểm tra kết quả do AI đề xuất trước khi áp dụng vào hệ thống thực tế.
-*   Tận dụng AI để tự động hóa các công việc lặp lại nhằm nâng cao hiệu suất vận hành.
+#### 1. Giai đoạn 1 (Nằm trong kỳ thực tập 8 tuần):
+*   Tham dự buổi phát động và đăng ký dự thi chính thức tại Văn phòng AWS trước hạn 15/09/2026.
+*   Hoàn thành việc nghiên cứu kiến trúc Serverless, thiết kế hệ thống và xây dựng phiên bản thử nghiệm (Prototype / MVP) cho đề tài Game Backend.
+*   Tổng hợp kết quả kỹ thuật để hoàn thành hồ sơ Báo cáo thực tập tốt nghiệp nộp về Nhà trường.
 
-#### 4. Kinh nghiệm thực tế
-Workshop cho thấy AI đang trở thành xu hướng quan trọng trong lĩnh vực Cloud Computing. Người làm Cloud cần liên tục cập nhật kiến thức mới để thích nghi với sự phát triển của AI và các công nghệ tự động hóa.
-
----
-
-### Ứng dụng vào công việc
-*   **Áp dụng cho dự án hiện tại**: Có thể nghiên cứu áp dụng AI để hỗ trợ giám sát hệ thống, phân tích log, theo dõi hiệu năng và phát hiện sự cố trong các dự án triển khai trên nền tảng AWS.
-*   **Công nghệ muốn thử nghiệm tiếp theo**: Tìm hiểu thêm về các giải pháp AI tích hợp với AWS nhằm xây dựng hệ thống Cloud thông minh, tự động hóa quy trình quản trị và tối ưu chi phí vận hành.
-*   **Cải thiện quy trình làm việc**: Tận dụng AI để hỗ trợ theo dõi hệ thống, phân tích dữ liệu vận hành và đề xuất phương án xử lý nhanh hơn, từ đó giảm thời gian xử lý sự cố và nâng cao chất lượng dịch vụ.
-
----
-
-### Trải nghiệm trong sự kiện
-*   **Học hỏi từ chương trình**: Hiểu rõ hơn về xu hướng kết hợp AI với Cloud Computing và tầm quan trọng của việc tự động hóa trong quản trị hệ thống hiện đại.
-*   **Trải nghiệm thực hành**: Quan sát các ví dụ và mô hình ứng dụng AI vào vận hành Cloud giúp hình dung rõ hơn cách triển khai trong môi trường doanh nghiệp.
-*   **Giao lưu và kết nối**: Có cơ hội trao đổi với những người quan tâm đến Cloud và AI, mở rộng kiến thức cũng như học hỏi thêm nhiều kinh nghiệm thực tế trong lĩnh vực Cloud Computing.
-*   **Điều ấn tượng nhất**: Ấn tượng nhất là khả năng AI Agent có thể hỗ trợ người quản trị Cloud trong việc phân tích dữ liệu, phát hiện sự cố và đề xuất phương án xử lý gần như theo thời gian thực, góp phần nâng cao hiệu quả vận hành hệ thống.
+#### 2. Giai đoạn 2 (Giai đoạn mở rộng tiếp nối sau thực tập):
+*   Tiếp tục cùng đội nhóm phát triển sâu các tính năng nâng cao (AI Telemetry, Matchmaking logic nâng cao).
+*   Trải qua các đợt Review kiến trúc theo chuẩn **AWS Well-Architected Framework** và tranh tài tại Vòng Chung kết Top 20.
 
 ---
 
-### Bài học rút ra
-*   **Kiến thức quan trọng nhất**: AI sẽ trở thành công cụ hỗ trợ đắc lực trong lĩnh vực Cloud, tuy nhiên người kỹ sư vẫn cần có kiến thức nền tảng vững chắc để đánh giá, kiểm chứng và đưa ra quyết định chính xác.
-*   **Kinh nghiệm thực tế**: Việc kết hợp giữa kỹ năng chuyên môn và AI sẽ giúp nâng cao năng suất làm việc, giảm các tác vụ thủ công và tối ưu quy trình quản trị hạ tầng Cloud.
-*   **Định hướng học tập tiếp theo**: Tiếp tục tìm hiểu về AI Agent, Cloud Automation, DevOps và các dịch vụ AI trên AWS để nâng cao kỹ năng triển khai, quản trị và vận hành hệ thống Cloud trong thực tế.
+### Cơ cấu vòng thi & Giải thưởng
+
+*   **Vòng Chung kết**: **Top 20 đội** có sản phẩm hoàn thiện và vượt qua kiểm định chất lượng kỹ thuật sẽ bước vào vòng thuyết trình chung kết.
+*   **Vinh danh & Trao giải**: **Top 10 đội** xuất sắc nhất (kết hợp giữa chất lượng giải pháp và điểm chuyên cần sinh hoạt) sẽ nhận bằng chứng nhận chính thức được trao trực tiếp tại **Văn phòng AWS**.
+*   **Hội đồng Giám khảo**: Gồm các chuyên gia AWS và các **Industry Experts** (Chuyên gia công nghệ ngoài AWS), đánh giá công tâm theo độ phức tạp kỹ thuật và tính thực tiễn của sản phẩm.
 
 ---
 
-### Một số hình ảnh khi tham gia sự kiện
+### Quyền lợi nổi bật khi tham gia
 
-![Slide giới thiệu về AgenticOps cho hạ tầng Cloud](/images/4-eventparticipated/event2/slide_agenticops.jpg?v=2)
+1.  **Kho tài nguyên chuẩn AWS**: Được cung cấp giáo trình, tài liệu thực hành Cloud & AI được tuyển chọn kỹ lưỡng.
+2.  **Đồng hành cùng Mentors**: Nhận sự hướng dẫn trực tiếp từ các anh chị AWS Community Hero, AWS Community Builder và các kỹ sư Cloud nhiều năm kinh nghiệm.
+3.  **Hỗ trợ mộc thực tập**: Hỗ trợ xác nhận và đóng mộc thực tập cho sinh viên hoàn tất sản phẩm đầu ra đạt yêu cầu chất lượng.
+4.  **Cơ hội chia sẻ (Speaker)**: Được ưu tiên đăng ký làm diễn giả chia sẻ kinh nghiệm kỹ thuật tại các buổi meetup định kỳ của cộng đồng.
+5.  **Mạng lưới nghề nghiệp lâu dài**: Sau khi hoàn tất chương trình, các thành viên tiếp tục gắn kết, chia sẻ cơ hội việc làm và hợp tác dự án lâu dài.
 
-![Toàn cảnh diễn giả chia sẻ tại hội trường sự kiện FCAJ Community Day](/images/4-eventparticipated/event2/event_hall_presentation.jpg?v=2)
+---
 
-![Hình ảnh tập thể tất cả các thành viên tham gia sự kiện FCAJ Community Day](/images/4-eventparticipated/event2/group_photo_fcaj.png?v=2)
+### Cảm nhận và Bài học thu được
+
+*   **Tinh thần dấn thân**: Tham gia cuộc thi ngay trong kỳ thực tập giúp sinh viên biến những kiến thức lý thuyết trên giảng đường và bài lab thực tập thành một sản phẩm có giá trị thực tiễn cao.
+*   **Kỹ năng làm việc nhóm & Quản trị dự án**: Hiểu được tầm quan trọng của việc phân chia công việc, giao tiếp nhóm và quản lý tiến độ trong một dự án công nghệ kéo dài.
+*   **Tác phong chuyên nghiệp**: Được làm việc và sinh hoạt tại Văn phòng AWS mang lại trải nghiệm thực tế quý báu, giúp em tự tin hơn trên con đường phát triển sự nghiệp trong ngành Điện toán đám mây.

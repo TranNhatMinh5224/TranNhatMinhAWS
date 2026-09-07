@@ -1,22 +1,25 @@
 ---
 title: "Worklog Tuần 2"
-date: 2026-05-05
+date: 2026-08-10
 weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
 
 ### Mục tiêu tuần 2:
-* Tìm hiểu tổng quan về kiến trúc đám mây AWS và tạo tài khoản thực hành.
-* Hoàn thành các bài học cơ bản về Điện toán đám mây và AWS.
+* Nghiên cứu các dịch vụ cốt lõi của AWS bao gồm EC2, S3, và IAM.
+* Thực hành tạo máy ảo EC2 và kết nối SSH, quản lý tệp trên S3.
+* Tìm hiểu sâu về phân quyền với IAM theo nguyên tắc đặc quyền tối thiểu (Least Privilege).
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | Tìm hiểu tổng quan kiến trúc AWS và lập tài khoản thực hành | 05/05/2026 | 05/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Thực hiện các bài học về AWS, Cloud | 06/05/2026 | 08/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Tìm hiểu các lý thuyết liên quan đến Cloud Computing | 08/05/2026 | 11/05/2026 | |
+| 2 | Tìm hiểu AWS Core Services: EC2, S3, IAM | 10/08/2026 | 11/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Thực hành tạo EC2 instance, kết nối SSH | 11/08/2026 | 12/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Upload & quản lý file trên S3 | 13/08/2026 | 14/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Tìm hiểu IAM User, Role, Policy và cách phân quyền | 14/08/2026 | 16/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 2:
-* Hiểu tổng quan kiến trúc AWS và tạo tài khoản thực hành thành công.
-* Tiếp thu lý thuyết cơ bản về Cloud và hoàn thành các bài học nhập môn.
+* Nắm vững kiến thức về EC2, S3 và IAM.
+* Tạo thành công EC2 instance, kết nối SSH và quản lý lưu trữ với S3.
+* Biết cách thiết lập và cấu hình người dùng, vai trò, chính sách bảo mật trong IAM.

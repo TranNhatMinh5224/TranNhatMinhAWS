@@ -1,27 +1,27 @@
 ---
 title: "Worklog Tuần 6"
-date: 2026-05-31
+date: 2026-09-07
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
 
 ### Mục tiêu tuần 6:
-* Tìm hiểu kiến trúc Serverless trên AWS thông qua dịch vụ AWS Lambda.
-* Thực hành viết mã nguồn Python để tạo Lambda Function.
-* Tích hợp Lambda Function với lưu trữ S3 và cổng API Gateway.
-* Theo dõi và giám sát logs của Lambda bằng CloudWatch.
+* Nghiên cứu dịch vụ cân bằng tải Elastic Load Balancer (ELB) và tự động co giãn Auto Scaling.
+* Thực hành tạo Application Load Balancer để định tuyến lưu lượng đến các máy ảo EC2.
+* Cấu hình Auto Scaling Group để tự động tăng/giảm số lượng EC2.
+* Thực hiện tải ảo để kiểm tra khả năng co giãn và cân bằng tải.
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | Tìm hiểu AWS Lambda và mô hình Serverless | 31/05/2026 | 02/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Thực hành viết mã và tạo Lambda Function bằng Python | 02/06/2026 | 03/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Cấu hình kết nối Lambda với S3 (triggers) và API Gateway (endpoints) | 04/06/2026 | 05/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Kiểm tra hoạt động hệ thống và xem giám sát log bằng CloudWatch | 05/06/2026 | 05/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | Tìm hiểu Elastic Load Balancer (ELB) và Auto Scaling | 07/09/2026 | 08/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Thực hành tạo Load Balancer (ALB) cho các máy ảo EC2 | 08/09/2026 | 09/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Cấu hình Launch Template và Auto Scaling Group | 10/09/2026 | 11/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Chạy thử nghiệm giả lập tải, kiểm tra khả năng tự co giãn và cân bằng tải | 11/09/2026 | 13/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 6:
-* Hiểu cơ chế hoạt động, thanh toán và lợi ích của mô hình Serverless trên AWS.
-* Phát triển thành công mã nguồn Python chạy trực tiếp trên Lambda không cần máy chủ.
-* Cấu hình thành công trigger từ S3 và tạo API endpoints để kích hoạt Lambda qua HTTP.
-* Thành thạo kỹ năng tìm lỗi bằng cách tra cứu logs trên AWS CloudWatch.
+* Hiểu nguyên lý hoạt động của ELB (ALB, NLB) và Auto Scaling Group.
+* Phân phối thành công lưu lượng truy cập web qua Application Load Balancer.
+* Thiết lập chính sách co giãn (Scaling Policy) hoạt động tự động khi lượng truy cập tăng đột biến.
+* Xác minh tính sẵn sàng cao (High Availability) và khả năng chịu lỗi (Fault Tolerance) của hệ thống.

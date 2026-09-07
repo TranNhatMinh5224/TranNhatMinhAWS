@@ -1,26 +1,26 @@
 ---
-title: "Week 5 Worklog"
-date: 2026-05-24
+title: "Worklog Week 5"
+date: 2026-08-31
 weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
 
 ### Week 5 Objectives:
-* Study database services on AWS: AWS RDS (relational) and DynamoDB (non-relational).
-* Practice creating, configuring, and connecting databases from an EC2 instance.
-* Understand backup mechanisms and data snapshots on AWS.
+* Deep dive into monitoring and auditing services: AWS CloudWatch and CloudTrail.
+* Monitor performance and health of EC2 instances and Lambda functions.
+* Master core concepts of Log Groups, Metrics, and Alarms.
+* Setup automated alarms and notifications upon resource thresholds.
 
-### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
+### Tasks Scheduled for this Week:
+| Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | Learn about AWS RDS and DynamoDB databases | 24/05/2026 | 26/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Practice creating and configuring relational databases on AWS RDS | 26/05/2026 | 27/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Connect EC2 instance to RDS database and verify connectivity | 28/05/2026 | 28/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Research database backup procedures and snapshotting on AWS | 29/05/2026 | 29/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | Learn AWS CloudWatch (Monitoring) and CloudTrail (Auditing) | 31/08/2026 | 31/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 - 5 | National Day 2/9 Holiday (Self-study theory at home) | 01/09/2026 | 03/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | Configure CloudWatch dashboards for EC2 and Lambda | 04/09/2026 | 04/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 7 - Sun | Study Custom Metrics, setup Alarms and SNS email notifications | 05/09/2026 | 06/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Week 5 Achievements:
-* Gained clear differentiation of the use cases for AWS RDS and DynamoDB.
-* Successfully initialized and configured a SQL database instance inside RDS.
-* Built dynamic database connections between code running on EC2 and RDS.
-* Mastered snapshotting techniques for database backup and recovery.
+### Results Achieved in Week 5:
+* Clarified distinctions between CloudWatch metrics and CloudTrail API call logs.
+* Built real-time monitoring dashboards for infrastructure components.
+* Configured automated alarm actions and alert delivery pipelines.

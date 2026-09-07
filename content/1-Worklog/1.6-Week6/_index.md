@@ -1,27 +1,27 @@
 ---
-title: "Week 6 Worklog"
-date: 2026-05-31
+title: "Worklog Week 6"
+date: 2026-09-07
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
 
 ### Week 6 Objectives:
-* Research Serverless computing concepts on AWS with AWS Lambda.
-* Learn to develop and deploy Lambda Functions using Python.
-* Integrate Lambda with S3 events and API Gateway HTTP endpoints.
-* Monitor function execution logs using Amazon CloudWatch.
+* Research Elastic Load Balancers (ELB) and Auto Scaling Groups (ASG).
+* Practice setting up Application Load Balancers for EC2 traffic routing.
+* Configure Launch Templates and dynamic scaling policies.
+* Conduct load testing to validate elastic scaling and health checks.
 
-### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
+### Tasks Scheduled for this Week:
+| Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | Learn about AWS Lambda and Serverless architecture | 31/05/2026 | 02/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Develop and run Python-based AWS Lambda Functions | 02/06/2026 | 03/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Connect Lambda triggers to S3 and build API Gateway REST routes | 04/06/2026 | 05/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Verify Lambda code execution and analyze logs in CloudWatch Logs | 05/06/2026 | 05/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | Explore Elastic Load Balancing and Auto Scaling principles | 07/09/2026 | 08/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Create and configure Application Load Balancers (ALB) | 08/09/2026 | 09/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Setup Launch Templates and Auto Scaling Group target tracking | 10/09/2026 | 11/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Run synthetic load testing and monitor scaling events | 11/09/2026 | 13/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Week 6 Achievements:
-* Gained strong comprehension of event-driven and Serverless models.
-* Programmed Python business logic running on serverless compute.
-* Configured automated S3 events and exposed API Gateway paths.
-* Debugged serverless architectures using CloudWatch Insights.
+### Results Achieved in Week 6:
+* Understood ALB/NLB architectures and health checking mechanisms.
+* Distributed traffic evenly across multi-AZ compute fleets.
+* Validated dynamic scaling policies responding to fluctuating workloads.
+* Ensured high availability and fault tolerance of the application stack.
