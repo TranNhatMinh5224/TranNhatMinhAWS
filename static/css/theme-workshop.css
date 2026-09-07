@@ -148,6 +148,28 @@ a:hover {
   border-color: var(--MENU-SECTION-HR-color);
 }
 
+#sidebar .language-switcher {
+  align-items: center;
+  color: var(--MENU-SECTIONS-LINK-color);
+  display: flex;
+  gap: 8px;
+}
+
+#sidebar .language-switcher .language-switcher-label {
+  flex: 0 0 auto;
+  font-size: 14px;
+}
+
+#sidebar .language-switcher .select-style {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+#sidebar .language-switcher select {
+  cursor: pointer;
+  width: 100%;
+}
+
 #navigation a.nav-prev,
 #navigation a.nav-next {
   color: #f19e39 !important;
