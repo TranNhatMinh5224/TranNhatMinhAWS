@@ -1,6 +1,6 @@
-baseURL = "/"
+baseURL = "https://trannhatminh5224.github.io/TranNhatMinhAWS/"
 relativeURLs = false
-canonifyURLs = false
+canonifyURLs = true
 defaultContentLanguage = "vi"
 buildFuture = true
 buildDrafts = true
