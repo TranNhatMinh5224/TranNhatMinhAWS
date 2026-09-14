@@ -1,5 +1,5 @@
 baseURL = "/"
-relativeURLs = true
+relativeURLs = false
 canonifyURLs = false
 defaultContentLanguage = "vi"
 buildFuture = true
