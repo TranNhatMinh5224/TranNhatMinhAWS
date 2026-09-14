@@ -18,7 +18,7 @@ Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, c
 > [!NOTE]
 > * **Dự án**: Enterprise Knowledge AI RAG Assistant
 > * **Kho mã nguồn (GitHub Repository)**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
-> * **Kiến trúc cốt lõi**: Multi-AZ VPC, Amazon S3 Document Lake, Amazon RDS PostgreSQL, Qdrant Vector Store trên EC2 Graviton (ARM64), Amazon ECS Fargate Serverless, Application Load Balancer (ALB) và tích hợp mô hình ngôn ngữ lớn (Amazon Bedrock / Gemini API).
+> * **Kiến trúc cốt lõi**: Multi-AZ VPC, Amazon S3 Document Lake, Amazon RDS PostgreSQL, Qdrant Vector Store, Máy chủ tính toán EC2 Container Runtime (Docker Compose), Application Load Balancer (ALB) và tích hợp mô hình ngôn ngữ lớn (Amazon Bedrock / Gemini API).
 
 ---
 

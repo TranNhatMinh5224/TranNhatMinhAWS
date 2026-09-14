@@ -90,8 +90,12 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ssh-terminal-ec2.png" alt="Kết nối SSH Terminal thành công vào máy chủ EC2" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.1.4: Minh chứng đăng nhập SSH thành công vào máy chủ EC2 (prompt ubuntu@ip-10-0-24-186)</em></p>
+  <p><em>Hình 5.4.1.3: Minh chứng đăng nhập SSH thành công vào máy chủ EC2 với Private IP nội bộ ip-10-0-24-186</em></p>
 </div>
+
+> [!NOTE]
+> * **Giải pháp tối ưu hóa chi phí thực nghiệm**: Máy chủ EC2 được đặt tại `project-subnet-public2-ap-southeast-1b` (IP nội bộ `10.0.24.186`) có gán IPv4 công khai nhằm tiết kiệm chi phí vận hành dịch vụ NAT Gateway (~$32/tháng trên tài khoản AWS Free Tier). Tuy nhiên, toàn bộ các cổng nghiệp vụ vẫn được bảo vệ nghiêm ngặt qua Security Group `rag-ec2-sg`.
+> * Do cơ chế Dynamic IPv4 của AWS, địa chỉ IP công khai có thể thay đổi sau mỗi chu kỳ Stop/Start instance (như `13.215.207.214` và `13.250.121.137`), nhưng IP nội bộ cố định `10.0.24.186` luôn được giữ nguyên vẹn trong VPC.
 
 ---
 
@@ -111,7 +115,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 #### Bước 1: Khởi tạo Application Load Balancer
 1. Truy cập **EC2 Console** → **Load Balancers** → bấm **Create load balancer**.
-2. Chọn loại: **Application Load Balancer (ALB)**.
+2. Chọn loại: **Application Load Balancer (ALB)** (cân bằng tải Layer 7 thông minh).
 3. **Basic configuration**:
    * Load balancer name: **`rag-lb`**.
    * Scheme: **Internet-facing**.
@@ -125,7 +129,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.2-create-alb-wizard.png" alt="Khởi tạo Application Load Balancer rag-lb" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.2.1: Các thiết lập cơ bản cho Application Load Balancer rag-lb (Internet-facing, Multi-AZ Mappings)</em></p>
+  <p><em>Hình 5.4.2.1: Giao diện lựa chọn loại Application Load Balancer (ALB) trên AWS Management Console</em></p>
 </div>
 
 ---
@@ -161,7 +165,7 @@ Bấm **Create load balancer**. Chờ vài phút để hệ thống AWS phân ph
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.2-alb-details-active.png" alt="Chi tiết Load Balancer rag-lb ở trạng thái Active" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.2.3: Trang tổng quan của rag-lb xác nhận trạng thái Active và tên miền DNS khả dụng</em></p>
+  <p><em>Hình 5.4.2.3: Trang tổng quan quản trị của rag-lb xác nhận trạng thái phân phối Active và tên miền DNS khả dụng</em></p>
 </div>
 
 ---
@@ -272,6 +276,9 @@ $$\text{URL: } \texttt{http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com
 
 Minh chứng này xác nhận chuỗi kết nối từ **Người dùng Internet → ALB → Target Group → Docker Container trên EC2** đã thông suốt hoàn toàn với độ trễ cực thấp.
 
+> [!TIP]
+> Phản hồi JSON trên xác thực kết nối Layer 7 trực tiếp tới Backend Target Group thành công. Khi người dùng truy cập giao diện ứng dụng hoàn chỉnh ở **Lab 5.5**, toàn bộ giao diện Web Next.js (NexusDoc AI) sẽ được tải về mượt mà qua tên miền ALB DNS này.
+
 ---
 
 ### Tóm kết Lab 5.4:
@@ -281,4 +288,4 @@ Hoàn thành Lab 5.4 đánh dấu việc đưa toàn bộ hệ thống ứng d�
 3. Cơ chế **Path-Based Routing** hoạt động mượt mà, phân luồng chính xác giữa API Backend và giao diện người dùng Frontend.
 4. **Health Check** tự động đảm bảo lưu lượng luôn chỉ được gửi đến các container khỏe mạnh.
 
-Tiếp theo: **Lab 5.5: Kiểm thử Pipeline RAG, Guardrails An toàn & Giám sát với Amazon CloudWatch**.
+Tiếp theo: [**Lab 5.5: Kiểm thử Toàn trình Pipeline RAG & Security Guardrails**](../5.5-testing-rag/).

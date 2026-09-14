@@ -54,7 +54,7 @@ Navigate to the application web interface using the ALB DNS hostname:
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-citation.png" alt="NexusDoc AI Information Extraction and Precise Source Citation" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.5.1: NexusDoc AI Assistant synthesizing knowledge, returning the exact Bitexco 36th-floor address and citing TTTN-01.docx - Page 1</em></p>
+  <p><em>Figure 5.5.1.1: NexusDoc AI Assistant synthesizing knowledge, returning the exact Bitexco 36th-floor address and citing TTTN-01.docx - Page 1</em></p>
 </div>
 
 ---
@@ -66,7 +66,7 @@ Navigate to the application web interface using the ALB DNS hostname:
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-product.png" alt="Testing Retrieval of Expected Project Deliverables" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.5.2: AI Assistant accurately extracting the project deliverable: "Capstone Project building real-world application on AWS Free Tier" grounded in Page 1</em></p>
+  <p><em>Figure 5.5.1.2: AI Assistant accurately extracting the project deliverable: "Capstone Project building real-world application on AWS Free Tier" grounded in Page 1</em></p>
 </div>
 
 ---
@@ -117,7 +117,7 @@ Challenge the system with out-of-domain speculative questions (e.g. corporate fi
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.2-nexusdoc-guardrail-amazon-stocks.png" alt="Testing Guardrails Out-of-Domain Financial Refusal" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.5.3: System guardrail triggered, safely declining ungrounded financial forecast: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
+  <p><em>Figure 5.5.2.1: System guardrail triggered, safely declining ungrounded financial forecast: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
 </div>
 
 #### Evaluation Highlights:

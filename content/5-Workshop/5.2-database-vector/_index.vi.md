@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Triển khai Tầng Dữ liệu & Vector Database"
 date: 2026-08-25
 weight: 2
@@ -99,7 +99,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 ## 5.2.2. Khởi tạo Amazon RDS PostgreSQL trong Isolated Subnet
 
 ### 1. Mục tiêu kỹ thuật
-* Khởi tạo cơ sở dữ liệu quan hệ **Amazon RDS PostgreSQL** (phiên bản 16.3) đảm bảo tính toàn vẹn (ACID) cho dữ liệu nghiệp vụ: quản lý tài khoản người dùng, phân quyền vai trò (Role-based access), lưu trữ lược đồ tài liệu và lịch sử các phiên đối thoại RAG.
+* Khởi tạo cơ sở dữ liệu quan hệ **Amazon RDS PostgreSQL** (phiên bản 18.3) đảm bảo tính toàn vẹn (ACID) cho dữ liệu nghiệp vụ: quản lý tài khoản người dùng, phân quyền vai trò (Role-based access), lưu trữ lược đồ tài liệu và lịch sử các phiên đối thoại RAG.
 * Đặt cơ sở dữ liệu trong **Private Subnet** (`project-subnet-private2-ap-southeast-1b`), ngăn chặn mọi truy cập trực tiếp từ Internet công cộng.
 * Sử dụng kiến trúc vi xử lý **AWS Graviton (`db.t4g.micro`)** giúp tiết kiệm tới 20% chi phí vận hành và nâng cao 40% hiệu năng tính toán so với các dòng vi xử lý x86 tương đương.
 * Kích hoạt cơ chế mã hóa dữ liệu tại chỗ (**Encryption at Rest**) với khóa **AWS KMS** chuyên dụng (`aws/rds`).
@@ -111,7 +111,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 | Thuộc tính (Property) | Giá trị cấu hình thực tế | Ý nghĩa an toàn & Hiệu năng |
 | :--- | :--- | :--- |
 | **DB Identifier** | `rag-db` | Tên định danh thực thể cơ sở dữ liệu trên AWS |
-| **Database Engine** | **PostgreSQL (v16.3)** | Hỗ trợ chuẩn SQL hiện đại, tương thích ORM SQLAlchemy |
+| **Database Engine** | **PostgreSQL (v18.3)** | Hỗ trợ chuẩn SQL hiện đại, tương thích ORM SQLAlchemy |
 | **DB Instance Class** | **`db.t4g.micro`** (2 vCPU, 1 GB RAM) | Vi xử lý AWS Graviton thế hệ mới, tối ưu chi phí |
 | **Region & AZ** | `ap-southeast-1b` (Singapore) | Nằm trong phân vùng Private Subnet của VPC `vpc-03228d0b15b9ea7be` |
 | **Database Name** | `rag_db` | Tên cơ sở dữ liệu logic lưu trữ schema RAG |
@@ -127,7 +127,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 #### Bước 1: Khởi tạo RDS PostgreSQL Instance
 1. Truy cập **Amazon RDS Console** → chọn **Databases** → bấm **Create database**.
 2. Chọn phương thức khởi tạo: **Standard create**.
-3. **Engine options**: Chọn **PostgreSQL** (phiên bản `16.3`).
+3. **Engine options**: Chọn **PostgreSQL** (phiên bản `18.3`).
 4. **Templates**: Chọn **Free tier** hoặc **Dev/Test**.
 5. **Settings**:
    * DB instance identifier: `rag-db`.
@@ -148,7 +148,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 
 <div align="center">
   <img src="/images/5-Workshop/5.2/5.2.2-rds-postgresql-configuration.png" alt="Cấu hình chi tiết RDS PostgreSQL rag-db trên AWS Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.2.2.1: Chi tiết bảng thông số cấu hình cơ sở dữ liệu rag-db (PostgreSQL 16.3, db.t4g.micro, KMS Encryption Enabled)</em></p>
+  <p><em>Hình 5.2.2.1: Chi tiết bảng thông số cấu hình cơ sở dữ liệu rag-db (PostgreSQL 18.3, db.t4g.micro, KMS Encryption Enabled)</em></p>
 </div>
 
 ---

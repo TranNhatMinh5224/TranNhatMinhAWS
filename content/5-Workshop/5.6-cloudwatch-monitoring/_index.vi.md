@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch"
 date: 2026-08-25
 weight: 6
@@ -47,12 +47,12 @@ Truy cập **CloudWatch Management Console** → chọn **Metrics** → mục **
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-per-appelb-metrics.png" alt="Danh sách metrics của Load Balancer rag-lb trên CloudWatch" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.1: Giao diện CloudWatch Metrics theo dõi chi tiết tài nguyên Load Balancer app/rag-lb/dd9f64ed734dab43</em></p>
+  <p><em>Hình 5.6.1.1: Giao diện CloudWatch Metrics theo dõi chi tiết tài nguyên Load Balancer app/rag-lb/dd9f64ed734dab43</em></p>
 </div>
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-alb-metrics.png" alt="Đồ thị CloudWatch Metrics cho Application Load Balancer" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.2: Đồ thị giám sát chi tiết RequestCount, HTTPCode_Target_2XX_Count và TargetResponseTime</em></p>
+  <p><em>Hình 5.6.1.2: Đồ thị giám sát chi tiết RequestCount, HTTPCode_Target_2XX_Count và TargetResponseTime</em></p>
 </div>
 
 #### Chi tiết các thông số đo lường từ đồ thị CloudWatch:
@@ -79,7 +79,7 @@ Truy cập **CloudWatch Management Console** → chọn **Metrics** → mục **
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.2-cloudwatch-dashboard-rag.png" alt="Bảng điều khiển trực quan hóa CloudWatch Dashboard-RAG" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.3: Bảng điều khiển CloudWatch Dashboard-RAG tổng hợp trực quan các chỉ số CPU, ALB, Call/Error Count và EBS IOPS</em></p>
+  <p><em>Hình 5.6.2.1: Bảng điều khiển CloudWatch Dashboard-RAG tổng hợp trực quan các chỉ số CPU, ALB, Call/Error Count và EBS IOPS</em></p>
 </div>
 
 ---
@@ -91,14 +91,17 @@ Hệ thống thiết lập một cảnh báo giám sát chủ động (**Proacti
 #### Bước 1: Chọn Metric và điều kiện kích hoạt
 * **Namespace**: `AWS/EC2`
 * **Metric name**: `CPUUtilization`
-* **InstanceId**: Máy chủ RAG server (`enterprise-rag-server` / `i-0f7f40a8245434328`)
+* **InstanceId**: Máy chủ RAG server (`i-0f7f40a8245434328` / `i-0e3f096f3de681aaa`)
 * **Statistic**: `Average`, **Period**: `5 minutes`
 * **Threshold type**: `Static` → Điều kiện: `Greater > threshold` (vượt ngưỡng cho phép).
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-cpu-metric.png" alt="Cấu hình chỉ số CPUUtilization cho CloudWatch Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.4: Thiết lập điều kiện giám sát CPUUtilization cho máy chủ EC2 trong 5 phút</em></p>
+  <p><em>Hình 5.6.3.1: Thiết lập điều kiện giám sát CPUUtilization cho máy chủ EC2 trong 5 phút</em></p>
 </div>
+
+> [!NOTE]
+> Minh chứng cấu hình cảnh báo trên được ghi nhận trong giai đoạn kiểm thử áp lực (Stress-Testing) trên node máy chủ tính toán của dự án, thiết lập ngưỡng quá tải CPU trung bình vượt quá giới hạn an toàn trong 5 phút liên tục.
 
 #### Bước 2: Cấu hình Hành động Thông báo qua Amazon SNS
 * **Alarm state trigger**: `In alarm` (Kích hoạt khi trạng thái rơi vào ngưỡng báo động).
@@ -107,7 +110,7 @@ Hệ thống thiết lập một cảnh báo giám sát chủ động (**Proacti
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-sns-action.png" alt="Cấu hình gửi thông báo qua Amazon SNS Topic" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.5: Cấu hình hành động gửi thông báo qua SNS Topic tới email nhatminh5224.forwork@gmail.com khi có cảnh báo</em></p>
+  <p><em>Hình 5.6.3.2: Cấu hình hành động gửi thông báo qua SNS Topic tới email nhatminh5224.forwork@gmail.com khi có cảnh báo</em></p>
 </div>
 
 #### Bước 3: Đặt tên và Khởi tạo Cảnh báo thành công
@@ -116,7 +119,7 @@ Hệ thống thiết lập một cảnh báo giám sát chủ động (**Proacti
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-created-success.png" alt="Khởi tạo thành công CloudWatch Alarm RAG-Server-High-CPU-Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.6.6: CloudWatch Alarm RAG-Server-High-CPU-Alarm được khởi tạo thành công và kích hoạt tính năng gửi cảnh báo tự động</em></p>
+  <p><em>Hình 5.6.3.3: CloudWatch Alarm RAG-Server-High-CPU-Alarm được khởi tạo thành công và kích hoạt tính năng gửi cảnh báo tự động</em></p>
 </div>
 
 ---

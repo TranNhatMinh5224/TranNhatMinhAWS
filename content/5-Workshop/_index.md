@@ -18,7 +18,7 @@ This workshop provides a comprehensive step-by-step hands-on guide to architecti
 > [!NOTE]
 > * **Project**: Enterprise Knowledge AI RAG Assistant
 > * **GitHub Repository**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
-> * **Core Architecture**: Multi-AZ VPC, Amazon S3 Document Lake, Amazon RDS PostgreSQL, Qdrant Vector Store on EC2 Graviton (ARM64), Amazon ECS Fargate Serverless, Application Load Balancer (ALB), and LLM integration (Amazon Bedrock / Gemini API).
+> * **Core Architecture**: Multi-AZ VPC, Amazon S3 Document Lake, Amazon RDS PostgreSQL, Qdrant Vector Store, EC2 Compute Container Runtime (Docker Compose), Application Load Balancer (ALB), and LLM integration (Amazon Bedrock / Gemini API).
 
 ---
 

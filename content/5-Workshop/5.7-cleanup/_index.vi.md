@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Dọn dẹp Tài nguyên (Resource Cleanup)"
 date: 2026-08-25
 weight: 7
@@ -103,7 +103,7 @@ Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm t
 3. **Internet Gateway**:
    * Vào mục **Internet Gateways** → chọn **`rag-igw`** → chọn **Actions** → **Detach from VPC** → chọn **Actions** → **Delete internet gateway**.
 4. **VPC**:
-   * Vào mục **Your VPCs** → chọn **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
+   * Vào mục **Your VPCs** → chọn **`MyProjectRAGVPC`** (`vpc-03228d0b15b9ea7be`).
    * Bấm **Actions** → chọn **Delete VPC**. Hệ thống AWS sẽ tự động giải phóng toàn bộ 4 Subnets và Route Tables liên kết.
 
 ---
@@ -152,9 +152,9 @@ aws s3api delete-bucket --bucket enterprise-rag-storage-0117967 --region ap-sout
 
 Chúc mừng bạn đã hoàn thành xuất sắc toàn bộ **Chương 5: Thực hành Workshop Triển khai Hệ thống RAG Doanh nghiệp trên AWS**! 
 
-Thông qua các bài lab từ **5.1** đến **5.6**, bạn đã nắm vững quy trình kiến trúc và vận hành hệ thống đám mây chuẩn Enterprise:
+Thông qua các bài lab từ **5.1** đến **5.7**, bạn đã nắm vững quy trình kiến trúc và vận hành hệ thống đám mây chuẩn Enterprise:
 * Thiết kế phân vùng mạng **Multi-AZ VPC**, phân chia Public/Private Subnets và cấu hình Security Groups theo nguyên tắc đặc quyền tối thiểu.
 * Quản lý dữ liệu hỗn hợp: Dữ liệu phi cấu trúc trên **Amazon S3**, siêu dữ liệu trên **Amazon RDS PostgreSQL** mã hóa KMS, và dữ liệu vector nhúng trên **Qdrant Vector Database**.
 * Tự động hóa vòng đời ứng dụng qua **Amazon ECR** và **GitHub Actions CI/CD Pipeline**.
 * Vận hành hệ thống tính toán với **Amazon EC2**, định tuyến thông minh qua **Application Load Balancer (ALB)**, và kiểm thử bảo mật chống ảo giác (Anti-Hallucination).
-* Giám sát hệ thống toàn diện với **Amazon CloudWatch Metrics**.
+* Giám sát hệ thống toàn diện với **Amazon CloudWatch Metrics** và tối ưu chi phí qua quy trình dọn dẹp an toàn.

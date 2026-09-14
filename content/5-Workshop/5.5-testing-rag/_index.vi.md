@@ -54,7 +54,7 @@ Thực hiện truy cập giao diện ứng dụng thông qua tên miền ALB DNS
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-citation.png" alt="Kiểm thử NexusDoc AI trích xuất thông tin kèm trích dẫn nguồn chính xác" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.1: Giao diện NexusDoc AI Assistant trích xuất chính xác địa chỉ thực tập tại Tầng 36 Bitexco và đính kèm nguồn TTTN-01.docx - Trang 1</em></p>
+  <p><em>Hình 5.5.1.1: Giao diện NexusDoc AI Assistant trích xuất chính xác địa chỉ thực tập tại Tầng 36 Bitexco và đính kèm nguồn TTTN-01.docx - Trang 1</em></p>
 </div>
 
 ---
@@ -66,7 +66,7 @@ Thực hiện truy cập giao diện ứng dụng thông qua tên miền ALB DNS
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-product.png" alt="Kiểm thử tra cứu sản phẩm dự kiến của đề tài" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.2: Trợ lý AI trích xuất đúng sản phẩm dự kiến là "Dự án Capstone Project xây dựng ứng dụng thực tế trên AWS Free Tier" từ Trang 1 tài liệu</em></p>
+  <p><em>Hình 5.5.1.2: Trợ lý AI trích xuất đúng sản phẩm dự kiến là "Dự án Capstone Project xây dựng ứng dụng thực tế trên AWS Free Tier" từ Trang 1 tài liệu</em></p>
 </div>
 
 ---
@@ -117,7 +117,7 @@ Thử thách hệ thống bằng câu hỏi dự báo tài chính hoàn toàn n�
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.2-nexusdoc-guardrail-amazon-stocks.png" alt="Kiểm thử Guardrails từ chối câu hỏi dự báo tài chính ngoài phạm vi tài liệu" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.3: Hệ thống kích hoạt Guardrail từ chối câu hỏi dự báo tài chính ngoài lề: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
+  <p><em>Hình 5.5.2.1: Hệ thống kích hoạt Guardrail từ chối câu hỏi dự báo tài chính ngoài lề: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
 </div>
 
 #### Kết quả đánh giá tính an toàn thông tin:

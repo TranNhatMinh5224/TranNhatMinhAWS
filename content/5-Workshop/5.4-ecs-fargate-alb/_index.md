@@ -90,8 +90,12 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ssh-terminal-ec2.png" alt="SSH Terminal Connection to EC2" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.1.4: Successful SSH terminal connection to enterprise-rag-server (ubuntu@ip-10-0-24-186)</em></p>
+  <p><em>Figure 5.4.1.3: Successful SSH terminal connection to enterprise-rag-server with private IP ip-10-0-24-186</em></p>
 </div>
+
+> [!NOTE]
+> * **Cost Optimization Rationale**: The EC2 compute node is placed in `project-subnet-public2-ap-southeast-1b` (Internal IP `10.0.24.186`) with an auto-assigned public IP to avoid NAT Gateway operational costs (~$32/month under AWS Free Tier constraints). Security is maintained by strictly binding inbound ports through the `rag-ec2-sg` security group.
+> * Due to AWS dynamic public IP allocation upon instance stops and restarts, the public IP may change (e.g. from `13.215.207.214` to `13.250.121.137`), while the internal private IP `10.0.24.186` remains permanently consistent within the VPC.
 
 ---
 
@@ -111,7 +115,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 #### Step 1: Provision Application Load Balancer
 1. Navigate to **EC2 Console** → **Load Balancers** → Click **Create load balancer**.
-2. Select **Application Load Balancer (ALB)**.
+2. Select **Application Load Balancer (ALB)** (intelligent Layer 7 routing).
 3. Configure basic settings:
    * Load balancer name: **`rag-lb`**.
    * Scheme: **Internet-facing**.
@@ -123,7 +127,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.2-create-alb-wizard.png" alt="Create Application Load Balancer Wizard" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.2.1: Basic configuration for Application Load Balancer rag-lb (Internet-facing, Multi-AZ Mappings)</em></p>
+  <p><em>Figure 5.4.2.1: Selection of Application Load Balancer (ALB) type in AWS Management Console</em></p>
 </div>
 
 ---
@@ -179,15 +183,15 @@ Inspect the **Resource map** tab of `rag-lb`:
 ## 5.4.3. Path-Based Routing Implementation
 
 ### 1. Technical Objectives
-* Rather than managing multiple public load balancers or separate subdomains, the architecture uses **Layer 7 Path-Based Routing** on a single ALB.
-* Requests matching path prefix `/api/*` or documentation `/docs*` are routed to the FastAPI backend.
-* All remaining incoming web traffic (`/*`) is automatically served by the Next.js user interface.
+* Instead of running redundant load balancers or managing fragmented host headers, the architecture leverages Layer 7 **Path-Based Routing**.
+* Requests prefixed with `/api/*` or documentation endpoints `/docs*` are routed to the FastAPI backend.
+* Default traffic (`/*`) routes to the Next.js web user interface.
 
 ---
 
 ### 2. Routing Rules Matrix
 
-| Priority | Path Pattern Condition | Target Forward Action | Destination Target Group |
+| Priority | Path Condition | Action | Target Group |
 | :--- | :--- | :--- | :--- |
 | **Rule 1** (Highest) | **`Path is /api/* or /docs*`** | **Forward to** | `rag-backend-tg` (Port 8000) |
 | **Default Rule** | Any other request (`/*`) | **Forward to** | `rag-frontend-tg` (Port 3000) |
@@ -196,55 +200,58 @@ Inspect the **Resource map** tab of `rag-lb`:
 
 ### 3. Step-by-Step Implementation & Live Evidence
 
-#### Step 1: Open Listener HTTP:80
-On the `rag-lb` management page, select the **Listeners and rules** tab. Listener `HTTP:80` handles incoming requests.
+#### Step 1: Inspect HTTP:80 Listener
+On the `rag-lb` management screen, select **Listeners and rules**. The `HTTP:80` listener intercepts all incoming client connections.
 
 <div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.3-alb-listener-overview.png" alt="ALB HTTP:80 Listener Overview" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.3.1: HTTP:80 listener configuration overview prior to adding custom routing rules</em></p>
+  <img src="/images/5-Workshop/5.4/5.4.3-alb-listener-overview.png" alt="HTTP:80 Listener Overview" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.4.3.1: HTTP:80 listener configuration dashboard before defining advanced routing rules</em></p>
 </div>
 
 ---
 
-#### Step 2: Define Path Filter Conditions
-1. Click **Manage rules** → **Add rule**.
-2. Select condition type: **Path**.
-3. Specify values: `/api/*` and `/docs*`.
+#### Step 2: Define Path Conditions
+1. Click **Manage rules** → Select **Add rule**.
+2. **Step 1: Add rule conditions**:
+   * Condition type: **Path**.
+   * Values: `/api/*` and `/docs*`.
 
 <div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-path-condition.png" alt="Set Path Condition to /api/* or /docs*" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.3.2: Setting pattern matching for /api/* and /docs* URL prefixes</em></p>
+  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-path-condition.png" alt="ALB Rule Path Condition" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.4.3.2: Path condition filtering for /api/* and /docs* endpoints</em></p>
 </div>
 
 ---
 
-#### Step 3: Define Forward Target Group Action
-1. Set Action type: **Forward to target groups**.
-2. Target group: Select **`rag-backend-tg`** (100% weight).
+#### Step 3: Configure Forwarding Action
+1. **Step 2: Define actions**:
+   * Action type: **Forward to target groups**.
+   * Target group: **`rag-backend-tg`** (Weight 100%).
 
 <div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-forward-action.png" alt="Forward Traffic to rag-backend-tg" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.3.3: Configuring forward action directing API requests to rag-backend-tg</em></p>
+  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-forward-action.png" alt="Forward Action Configuration" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.4.3.3: Action definition forwarding API requests to rag-backend-tg</em></p>
 </div>
 
 ---
 
-#### Step 4: Configure Rule Priority
-1. Under **Set rule priority**, set value to **`1`** (Ensuring this rule is evaluated prior to the default fallback).
+#### Step 4: Set Rule Priority
+1. **Step 3: Set rule priority**:
+   * Assign priority value: **`1`**.
 
 <div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-priority.png" alt="Assign Priority 1 to API Routing Rule" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.3.4: Assigning evaluation priority 1 to the backend path rule</em></p>
+  <img src="/images/5-Workshop/5.4/5.4.3-alb-rule-priority.png" alt="Rule Priority Setting" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.4.3.4: Priority 1 assigned to ensure the API rule is evaluated prior to the catch-all default</em></p>
 </div>
 
 ---
 
-#### Step 5: Validate Configured Listener Rules
-Click **Create**. The listener rule table reflects the complete routing logic:
+#### Step 5: Verify Consolidated Rule Table
+Click **Create**. The listener rules dashboard displays the active path-based configuration:
 
 <div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.3-alb-rules-completed-list.png" alt="Complete Listener Rules Table" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.3.5: Final routing rules table cleanly decoupling API and web traffic streams</em></p>
+  <img src="/images/5-Workshop/5.4/5.4.3-alb-rules-completed-list.png" alt="Completed Listener Rules Table" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.4.3.5: Final listener rule table enforcing clear separation between backend and frontend targets</em></p>
 </div>
 
 ---
@@ -267,6 +274,9 @@ $$\text{URL: } \texttt{http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com
 
 This validates that the communication path **Internet Client → ALB → Target Group → Docker Container on EC2** is fully functional with minimal network latency.
 
+> [!TIP]
+> The initial JSON response confirms direct Layer 7 routing to the backend target group. When users interact with the full web client in **Lab 5.5**, the complete Next.js UI (NexusDoc AI) is loaded seamlessly through this ALB DNS endpoint.
+
 ---
 
 ### Lab 5.4 Summary:
@@ -276,4 +286,4 @@ Completing Lab 5.4 transitions the enterprise RAG assistant into a production-re
 3. **Path-Based Routing** cleanly segregates backend AI APIs from frontend user interfaces.
 4. **Target Health Probing** guarantees traffic is only dispatched to active, responsive containers.
 
-Next Module: **Lab 5.5: End-to-End RAG Testing, Security Guardrails & Amazon CloudWatch Monitoring**.
+Next Module: [**Lab 5.5: End-to-End RAG Testing & Security Guardrails**](../5.5-testing-rag/).

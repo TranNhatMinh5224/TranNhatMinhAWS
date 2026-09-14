@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Operational Monitoring & Incident Alerting with Amazon CloudWatch"
 date: 2026-08-25
 weight: 6
@@ -47,12 +47,12 @@ Navigate to **CloudWatch Management Console** → select **Metrics** → choose 
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-per-appelb-metrics.png" alt="Load Balancer Metrics List on CloudWatch Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.1: CloudWatch Per AppELB Metrics view tracking app/rag-lb/dd9f64ed734dab43 resources</em></p>
+  <p><em>Figure 5.6.1.1: CloudWatch Per AppELB Metrics view tracking app/rag-lb/dd9f64ed734dab43 resources</em></p>
 </div>
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-alb-metrics.png" alt="CloudWatch Metrics Monitoring for Application Load Balancer" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.2: Amazon CloudWatch Metrics dashboard displaying RequestCount, HTTPCode_Target_2XX_Count, and TargetResponseTime</em></p>
+  <p><em>Figure 5.6.1.2: Amazon CloudWatch Metrics dashboard displaying RequestCount, HTTPCode_Target_2XX_Count, and TargetResponseTime</em></p>
 </div>
 
 #### Telemetry Analysis Breakdown:
@@ -79,7 +79,7 @@ To provide technical teams with single-pane-of-glass operational visibility, a c
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.2-cloudwatch-dashboard-rag.png" alt="Unified CloudWatch Dashboard-RAG Visualization" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.3: Unified CloudWatch Dashboard-RAG summarizing CPU, ALB metrics, Call/Error Counts, and EBS Volume IOPS</em></p>
+  <p><em>Figure 5.6.2.1: Unified CloudWatch Dashboard-RAG summarizing CPU, ALB metrics, Call/Error Counts, and EBS Volume IOPS</em></p>
 </div>
 
 ---
@@ -91,14 +91,17 @@ The system configures a proactive **Metric Alarm** to immediately notify operati
 #### Step 1: Select Metric and Trigger Conditions
 * **Namespace**: `AWS/EC2`
 * **Metric name**: `CPUUtilization`
-* **InstanceId**: RAG server instance (`enterprise-rag-server` / `i-0f7f40a8245434328`)
+* **InstanceId**: RAG server instance (`i-0f7f40a8245434328` / `i-0e3f096f3de681aaa`)
 * **Statistic**: `Average`, **Period**: `5 minutes`
 * **Threshold type**: `Static` → Condition: `Greater > threshold`.
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-cpu-metric.png" alt="Configuring CPUUtilization Metric for CloudWatch Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.4: Configuring 5-minute evaluation period and threshold conditions for host CPUUtilization</em></p>
+  <p><em>Figure 5.6.3.1: Configuring 5-minute evaluation period and threshold conditions for host CPUUtilization</em></p>
 </div>
+
+> [!NOTE]
+> The alarm configuration screenshot reflects data captured during performance stress-testing on the project's compute node, configuring proactive triggers whenever average CPU usage breaches safety thresholds for 5 consecutive minutes.
 
 #### Step 2: Configure Notification Actions via Amazon SNS
 * **Alarm state trigger**: `In alarm`.
@@ -107,7 +110,7 @@ The system configures a proactive **Metric Alarm** to immediately notify operati
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-sns-action.png" alt="Configuring Amazon SNS Notification Action" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.5: Configuring SNS notification action dispatching alerts to nhatminh5224.forwork@gmail.com</em></p>
+  <p><em>Figure 5.6.3.2: Configuring SNS notification action dispatching alerts to nhatminh5224.forwork@gmail.com</em></p>
 </div>
 
 #### Step 3: Alarm Name and Successful Activation
@@ -116,7 +119,7 @@ The system configures a proactive **Metric Alarm** to immediately notify operati
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-created-success.png" alt="Successfully Created CloudWatch Alarm RAG-Server-High-CPU-Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.6.6: CloudWatch Alarm RAG-Server-High-CPU-Alarm successfully provisioned with automated notification actions enabled</em></p>
+  <p><em>Figure 5.6.3.3: CloudWatch Alarm RAG-Server-High-CPU-Alarm successfully provisioned with automated notification actions enabled</em></p>
 </div>
 
 ---

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Resource Teardown & Cleanup"
 date: 2026-08-25
 weight: 7
@@ -103,7 +103,7 @@ Upon completing the practical implementation and validation phases of the **Ente
 3. **Internet Gateway**:
    * Open **Internet Gateways** → select **`rag-igw`** → click **Actions** → **Detach from VPC** → click **Actions** → **Delete internet gateway**.
 4. **VPC**:
-   * Open **Your VPCs** → select **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
+   * Open **Your VPCs** → select **`MyProjectRAGVPC`** (`vpc-03228d0b15b9ea7be`).
    * Click **Actions** → select **Delete VPC**. AWS will automatically clean up all 4 associated subnets and route tables.
 
 ---
@@ -152,7 +152,7 @@ aws s3api delete-bucket --bucket enterprise-rag-storage-0117967 --region ap-sout
 
 Congratulations on successfully completing **Workshop 5: Enterprise Knowledge AI RAG Assistant on AWS**!
 
-Across Labs **5.1** through **5.6**, you have implemented end-to-end cloud engineering best practices:
+Across Labs **5.1** through **5.7**, you have implemented end-to-end cloud engineering best practices:
 * Multi-AZ VPC network architecture with public/private tiering and least-privilege security groups.
 * Hybrid storage architectures spanning **Amazon S3**, KMS-encrypted **Amazon RDS PostgreSQL**, and **Qdrant Vector Database**.
 * Automated containerization with **Amazon ECR** and **GitHub Actions CI/CD**.

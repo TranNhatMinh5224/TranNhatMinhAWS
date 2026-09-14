@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Data Layer & Vector Database Deployment"
 date: 2026-08-25
 weight: 2
@@ -99,7 +99,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 ## 5.2.2. Amazon RDS PostgreSQL Deployment in Isolated Subnet
 
 ### 1. Technical Objectives
-* Provision an **Amazon RDS PostgreSQL** (v16.3) instance to ensure ACID compliance for transactional data: user authentication, role-based access control, document metadata, and chat session histories.
+* Provision an **Amazon RDS PostgreSQL** (v18.3) instance to ensure ACID compliance for transactional data: user authentication, role-based access control, document metadata, and chat session histories.
 * Position the database within a **Private Subnet** (`project-subnet-private2-ap-southeast-1b`), preventing direct inbound access from the public internet.
 * Utilize the **AWS Graviton processor (`db.t4g.micro`)**, achieving up to 20% cost reduction and 40% higher price-performance over comparable x86 instances.
 * Enable data encryption at rest (**KMS Encryption**) using the dedicated `aws/rds` key.
@@ -111,7 +111,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 | Property | Configured Value | Architectural Rationale |
 | :--- | :--- | :--- |
 | **DB Identifier** | `rag-db` | Cloud instance identifier |
-| **Database Engine** | **PostgreSQL (v16.3)** | Advanced open-source SQL engine compatible with SQLAlchemy ORM |
+| **Database Engine** | **PostgreSQL (v18.3)** | Advanced open-source SQL engine compatible with SQLAlchemy ORM |
 | **DB Instance Class** | **`db.t4g.micro`** (2 vCPU, 1 GB RAM) | AWS Graviton ARM64 architecture |
 | **Region & AZ** | `ap-southeast-1b` (Singapore) | Private subnet tier within VPC `vpc-03228d0b15b9ea7be` |
 | **Database Name** | `rag_db` | Logical database schema |
@@ -126,7 +126,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 
 #### Step 1: Provision RDS Instance via Console
 1. Navigate to **Amazon RDS Console** → **Databases** → Click **Create database**.
-2. Select **Standard create** → Engine: **PostgreSQL (16.3)**.
+2. Select **Standard create** → Engine: **PostgreSQL (18.3)**.
 3. Templates: **Free tier** / **Dev/Test**.
 4. Settings:
    * DB instance identifier: `rag-db`.
@@ -144,7 +144,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 
 <div align="center">
   <img src="/images/5-Workshop/5.2/5.2.2-rds-postgresql-configuration.png" alt="RDS PostgreSQL Configuration in AWS Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.2.2.1: Configuration dashboard of rag-db verifying PostgreSQL 16.3, db.t4g.micro, and KMS encryption</em></p>
+  <p><em>Figure 5.2.2.1: Configuration dashboard of rag-db verifying PostgreSQL 18.3, db.t4g.micro, and KMS encryption</em></p>
 </div>
 
 ---
