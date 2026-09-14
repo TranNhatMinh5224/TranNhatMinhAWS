@@ -2,6 +2,8 @@ baseURL = "/"
 relativeURLs = true
 canonifyURLs = false
 defaultContentLanguage = "vi"
+buildFuture = true
+buildDrafts = true
 
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
