@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Triển khai Máy chủ Ứng dụng & Cân bằng tải Application Load Balancer (ALB)"
 date: 2026-08-25
 weight: 4
@@ -45,49 +45,43 @@ Bài lab 5.4 hướng dẫn chi tiết quy trình:
 
 ### 2. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
-#### Bước 1: Khởi tạo Instance trên EC2 Launch Wizard
+#### Bước 1: Khởi tạo Máy chủ & Cấu hình Thiết lập Mạng (Network Settings)
 1. Truy cập **EC2 Management Console** → chọn **Instances** → bấm **Launch instances**.
 2. **Name and tags**: Đặt tên máy chủ là **`enterprise-rag-server`**.
-3. **Application and OS Images**: Chọn **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type**.
-4. **Instance type**: Chọn loại instance cân bằng năng lực tính toán và bộ nhớ RAM (ví dụ: `t3.small` / 2 vCPU, 2 GB RAM).
+3. **Application and OS Images**: Chọn **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type** (64-bit x86).
+4. **Instance type**: Chọn **`t3.small`** (2 vCPU, 2 GiB RAM) để đảm bảo năng lực tính toán và bộ nhớ RAM.
 5. **Key pair (login)**: Chọn cặp khóa **`Key_RAG-AWS`**.
-
-<div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.1-launch-ec2-instance.png" alt="Khởi tạo máy chủ EC2 enterprise-rag-server" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.1.1: Giao diện cấu hình khởi tạo máy chủ EC2 enterprise-rag-server với Ubuntu 24.04 và Key_RAG-AWS</em></p>
-</div>
-
----
-
-#### Bước 2: Cấu hình Thiết lập Mạng (Network Settings)
-1. Tại mục **Network settings**, bấm **Edit**.
-2. **VPC**: Chọn VPC của dự án **`vpc-03228d0b15b9ea7be`** (`MyProjectVPC`).
-3. **Subnet**: Chọn subnet phù hợp.
-4. **Firewall (security groups)**: Chọn **Select existing security group** → gán **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
-5. **Configure storage**: Cấu hình ổ đĩa gốc dung lượng 30 GiB gp3 General Purpose SSD.
+6. **Network settings**: Bấm **Edit**:
+   * **VPC**: Chọn VPC của dự án **`vpc-03228d0b15b9ea7be`** (`MyProjectRAGVPC`).
+   * **Subnet**: Chọn subnet công khai **`project-subnet-public2-ap-southeast-1b`**.
+   * **Auto-assign public IP**: Chọn **Enable** để máy chủ nhận địa chỉ IPv4 công khai.
+   * **Firewall (security groups)**: Chọn **Select existing security group** → gán **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
+7. **Configure storage**: Cấu hình ổ đĩa gốc dung lượng 30 GiB gp3 General Purpose SSD.
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ec2-network-settings.png" alt="Cấu hình Network Settings cho EC2 Instance" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.1.2: Thiết lập mạng liên kết máy chủ với VPC dự án và gán Security Group rag-ec2-sg</em></p>
+  <p><em>Hình 5.4.1.1: Thiết lập mạng liên kết máy chủ với VPC dự án và gán Security Group rag-ec2-sg</em></p>
 </div>
 
 ---
 
-#### Bước 3: Xác thực trạng thái hoạt động của máy chủ
+#### Bước 2: Xác thực trạng thái hoạt động của máy chủ
 Bấm **Launch instance**. Khi quá trình khởi động hoàn tất, instance chuyển sang trạng thái **Running** với đầy đủ các định danh:
-* **Instance ID**: `i-0e3f096f3de681aaa`
+* **Instance ID**: `i-0e3f096f3de681aaa` (`enterprise-rag-server`)
 * **Instance State**: `Running`
-* **Status check**: `2/2 checks passed`
+* **Instance Type**: `t3.small`
+* **Availability Zone**: `ap-southeast-1b`
 * **IPv4 công khai**: `13.250.121.137`
+* **IPv4 nội bộ (Private IP)**: `10.0.24.186`
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ec2-instances-list.png" alt="Danh sách EC2 Instances xác nhận enterprise-rag-server đang chạy" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.4.1.3: Bảng danh sách EC2 Instances xác thực enterprise-rag-server (i-0e3f096f3de681aaa) ở trạng thái Running</em></p>
+  <p><em>Hình 5.4.1.2: Bảng danh sách EC2 Instances xác thực enterprise-rag-server (i-0e3f096f3de681aaa) ở trạng thái Running với IP 13.250.121.137</em></p>
 </div>
 
 ---
 
-#### Bước 4: Kiểm tra kết nối quản trị SSH Terminal
+#### Bước 3: Kiểm tra kết nối quản trị SSH Terminal
 Mở terminal trên máy cá nhân và thực thi lệnh SSH xác thực qua private key:
 
 ```bash

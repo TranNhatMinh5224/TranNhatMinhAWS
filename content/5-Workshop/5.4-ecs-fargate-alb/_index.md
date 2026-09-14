@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Deploying Application Server & Application Load Balancer (ALB)"
 date: 2026-08-25
 weight: 4
@@ -45,49 +45,43 @@ Lab 5.4 provides a complete deployment guide:
 
 ### 2. Step-by-Step Implementation & Live Evidence
 
-#### Step 1: Launch Instance in EC2 Launch Wizard
-1. Open **EC2 Console** → **Instances** → Click **Launch instances**.
+#### Step 1: Launch Instance & Configure Network Settings
+1. Open **EC2 Management Console** → **Instances** → Click **Launch instances**.
 2. **Name and tags**: Set name to **`enterprise-rag-server`**.
-3. **Application and OS Images**: Select **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type**.
-4. **Instance type**: Select a compute-balanced instance (e.g., `t3.small` / 2 vCPU, 2 GB RAM).
+3. **Application and OS Images**: Select **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type** (64-bit x86).
+4. **Instance type**: Select **`t3.small`** (2 vCPU, 2 GiB RAM) to balance computational power and memory.
 5. **Key pair (login)**: Select **`Key_RAG-AWS`**.
-
-<div align="center">
-  <img src="/images/5-Workshop/5.4/5.4.1-launch-ec2-instance.png" alt="Launch EC2 Instance enterprise-rag-server" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.1.1: Launching EC2 instance enterprise-rag-server with Ubuntu 24.04 and Key_RAG-AWS</em></p>
-</div>
-
----
-
-#### Step 2: Configure Network Settings
-1. Under **Network settings**, click **Edit**.
-2. **VPC**: Select project VPC **`vpc-03228d0b15b9ea7be`** (`MyProjectVPC`).
-3. **Subnet**: Select designated project subnet.
-4. **Firewall (security groups)**: Choose **Select existing security group** → assign **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
-5. **Configure storage**: Allocate 30 GiB gp3 General Purpose SSD root volume.
+6. **Network settings**: Click **Edit**:
+   * **VPC**: Select project VPC **`vpc-03228d0b15b9ea7be`** (`MyProjectRAGVPC`).
+   * **Subnet**: Select public subnet **`project-subnet-public2-ap-southeast-1b`**.
+   * **Auto-assign public IP**: Set to **Enable** to receive a reachable public IPv4 address.
+   * **Firewall (security groups)**: Choose **Select existing security group** → assign **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
+7. **Configure storage**: Allocate 30 GiB gp3 General Purpose SSD root volume.
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ec2-network-settings.png" alt="EC2 Network Settings Configuration" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.1.2: Binding EC2 instance to project VPC and applying rag-ec2-sg firewall rules</em></p>
+  <p><em>Figure 5.4.1.1: Binding EC2 instance to project VPC and applying rag-ec2-sg firewall rules</em></p>
 </div>
 
 ---
 
-#### Step 3: Verify Instance Operational State
+#### Step 2: Verify Instance Operational State
 Click **Launch instance**. Once booted, the server transitions to the **Running** state with active health checks:
-* **Instance ID**: `i-0e3f096f3de681aaa`
+* **Instance ID**: `i-0e3f096f3de681aaa` (`enterprise-rag-server`)
 * **Instance State**: `Running`
-* **Status check**: `2/2 checks passed`
+* **Instance Type**: `t3.small`
+* **Availability Zone**: `ap-southeast-1b`
 * **Public IPv4**: `13.250.121.137`
+* **Private IPv4**: `10.0.24.186`
 
 <div align="center">
   <img src="/images/5-Workshop/5.4/5.4.1-ec2-instances-list.png" alt="EC2 Instances List" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.4.1.3: EC2 Instances dashboard confirming enterprise-rag-server running and available</em></p>
+  <p><em>Figure 5.4.1.2: EC2 Instances dashboard confirming enterprise-rag-server (i-0e3f096f3de681aaa) running with public IP 13.250.121.137</em></p>
 </div>
 
 ---
 
-#### Step 4: Verify Administrative SSH Access
+#### Step 3: Verify Administrative SSH Access
 Open a local terminal and authenticate via the private SSH key:
 
 ```bash
