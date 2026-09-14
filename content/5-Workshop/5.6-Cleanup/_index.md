@@ -1,24 +1,158 @@
 ---
-title: "Resource Cleanup"
-date: 2026-07-21
+title: "Resource Teardown & Cleanup"
+date: 2026-08-25
 weight: 6
 chapter: false
 pre: " <b> 5.6. </b> "
 aliases:
-  - /5-workshop/5.1-serverless-game-backend/5.1.6-cleanup/
-  - /5-workshop/5.1-Serverless-Game-Backend/5.1.6-cleanup/
+  - /5-workshop/5.6-cleanup/
+  - /5-Workshop/5.6-cleanup/
 ---
 
-# 5.6. Resource Cleanup
+# 5.6. Resource Teardown & Cost Optimization
 
-To prevent unnecessary continuous charges on your AWS account after completing this workshop, follow the detailed step-by-step instructions in the modules below to remove all provisioned services:
+### Lab 5.6 Overview
+
+Upon completing the practical implementation and validation phases of the **Enterprise Knowledge AI RAG Assistant** on AWS, de-provisioning active cloud infrastructure is an essential best practice:
+* **Cost Optimization**: Eliminates ongoing runtime charges for compute and networking resources (EC2 instances, Application Load Balancers, RDS instances, etc.).
+* **Infrastructure Health & Cleanliness**: Follows strict dependency hierarchies to avoid orphaned assets and lingering Elastic Network Interface (ENI) attachments.
 
 ---
 
-### Detailed Cleanup Modules:
+### Standard Dependency Teardown Order:
 
-* **[5.6.1. Cleaning up Amazon Cognito](5.6.1-cognito-cleanup/)**
-* **[5.6.2. Cleaning up Amazon DynamoDB](5.6.2-dynamodb-cleanup/)**
-* **[5.6.3. Cleaning up AWS Lambda Functions](5.6.3-lambda-cleanup/)**
-* **[5.6.4. Cleaning up Amazon API Gateway](5.6.4-api-gateway-cleanup/)**
-* **[5.6.5. Cleaning up CloudFront & AWS WAF](5.6.5-cloudfront-waf-cleanup/)**
+```
+[1. Load Balancer & Target Groups]
+               │
+               ▼
+[2. Compute EC2 Instance]
+               │
+               ▼
+[3. Amazon RDS PostgreSQL & Subnet Group]
+               │
+               ▼
+[4. AWS Secrets Manager & Amazon ECR]
+               │
+               ▼
+[5. Amazon S3 Data Lake & IAM Roles/Users]
+               │
+               ▼
+[6. Security Groups & VPC Networking (IGW, Subnets, VPC)]
+```
+
+---
+
+## 5.6.1. Step-by-Step AWS Management Console Guide
+
+### Step 1: Delete Application Load Balancer & Target Groups
+1. Open **EC2 Management Console** $\rightarrow$ select **Load Balancers** from the left navigation panel.
+2. Select Load Balancer **`rag-lb`** $\rightarrow$ click **Actions** $\rightarrow$ select **Delete load balancer** $\rightarrow$ confirm deletion.
+3. Switch to **Target Groups** $\rightarrow$ select **`rag-backend-tg`** and **`rag-frontend-tg`** $\rightarrow$ click **Actions** $\rightarrow$ select **Delete**.
+
+> [!NOTE]
+> Deleting the Load Balancer first releases the Elastic Network Interfaces (ENIs) provisioned across your Public Subnets.
+
+---
+
+### Step 2: Terminate Amazon EC2 RAG Server
+1. Navigate to **EC2 Management Console** $\rightarrow$ **Instances**.
+2. Select the compute instance **`enterprise-rag-server`** (`i-0e3f096f3de681aaa`).
+3. Click **Instance state** $\rightarrow$ select **Terminate instance** $\rightarrow$ confirm **Terminate**.
+4. The attached root EBS storage volume will automatically be deleted according to its `Delete on Termination` policy.
+
+---
+
+### Step 3: Delete Amazon RDS PostgreSQL Database
+1. Open **RDS Management Console** $\rightarrow$ select **Databases**.
+2. Select database instance **`rag-db`**.
+3. Click **Actions** $\rightarrow$ select **Delete**.
+4. In the confirmation dialog:
+   * Uncheck **Create final snapshot** (to avoid recurring snapshot storage fees if retaining data is unnecessary).
+   * Uncheck **Retain automated backups**.
+   * Type the confirmation phrase `delete me` $\rightarrow$ click **Delete**.
+5. Once the DB instance finishes deletion, navigate to **Subnet groups** $\rightarrow$ select **`rag-db-subnet-group`** $\rightarrow$ click **Delete**.
+
+---
+
+### Step 4: Delete Secrets Manager & Amazon ECR Repositories
+1. **AWS Secrets Manager**:
+   * Open **Secrets Manager Console** $\rightarrow$ select secret **`rag/production/credentials`**.
+   * Click **Actions** $\rightarrow$ select **Delete secret** $\rightarrow$ check **Delete immediately without recovery** (if recovery is not required) $\rightarrow$ confirm **Delete**.
+2. **Amazon ECR (Elastic Container Registry)**:
+   * Open **Amazon ECR Console** $\rightarrow$ **Private registry** $\rightarrow$ **Repositories**.
+   * Select repository **`enterprise-rag-backend`** $\rightarrow$ click **Delete** $\rightarrow$ type `delete` to confirm deleting all container image tags.
+   * Repeat the exact deletion for repository **`enterprise-rag-frontend`**.
+
+---
+
+### Step 5: Empty and Delete Amazon S3 Bucket
+1. Open **Amazon S3 Console** $\rightarrow$ select bucket **`enterprise-rag-storage-0117967`**.
+2. Click **Empty** $\rightarrow$ type `permanently delete` to delete all objects and prefixes (`draff/`, `real/`).
+3. Once empty, click **Delete** $\rightarrow$ type bucket name `enterprise-rag-storage-0117967` to permanently remove the bucket.
+
+---
+
+### Step 6: Delete Security Groups & VPC Networking
+1. **Security Groups**:
+   * Open **VPC Console** $\rightarrow$ **Security Groups**.
+   * Select and delete: **`rag-rds-sg`**, **`rag-ec2-sg`**, **`rag-alb-sg`**.
+2. **VPC Endpoints**:
+   * Open **Endpoints** $\rightarrow$ select the S3 Gateway Endpoint $\rightarrow$ click **Actions** $\rightarrow$ **Delete VPC endpoint**.
+3. **Internet Gateway**:
+   * Open **Internet Gateways** $\rightarrow$ select **`rag-igw`** $\rightarrow$ click **Actions** $\rightarrow$ **Detach from VPC** $\rightarrow$ click **Actions** $\rightarrow$ **Delete internet gateway**.
+4. **VPC**:
+   * Open **Your VPCs** $\rightarrow$ select **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
+   * Click **Actions** $\rightarrow$ select **Delete VPC**. AWS will automatically clean up all 4 associated subnets and route tables.
+
+---
+
+## 5.6.2. Automated Teardown with AWS CLI
+
+For rapid teardown via the AWS CLI terminal, execute the following sequential commands:
+
+```bash
+# 1. Delete Application Load Balancer
+ALB_ARN=$(aws elbv2 describe-load-balancers --names "rag-lb" --query "LoadBalancers[0].LoadBalancerArn" --output text)
+aws elbv2 delete-load-balancer --load-balancer-arn $ALB_ARN
+
+# 2. Delete Target Groups
+TG_BACKEND=$(aws elbv2 describe-target-groups --names "rag-backend-tg" --query "TargetGroups[0].TargetGroupArn" --output text)
+TG_FRONTEND=$(aws elbv2 describe-target-groups --names "rag-frontend-tg" --query "TargetGroups[0].TargetGroupArn" --output text)
+aws elbv2 delete-target-group --target-group-arn $TG_BACKEND
+aws elbv2 delete-target-group --target-group-arn $TG_FRONTEND
+
+# 3. Terminate EC2 RAG Server
+aws ec2 terminate-instances --instance-ids "i-0e3f096f3de681aaa"
+
+# 4. Delete RDS PostgreSQL instance
+aws rds delete-db-instance \
+  --db-instance-identifier "rag-db" \
+  --skip-final-snapshot \
+  --delete-automated-backups
+
+# 5. Delete Secrets Manager credentials
+aws secretsmanager delete-secret \
+  --secret-id "rag/production/credentials" \
+  --force-delete-without-recovery
+
+# 6. Force-delete ECR repositories
+aws ecr delete-repository --repository-name "enterprise-rag-backend" --force
+aws ecr delete-repository --repository-name "enterprise-rag-frontend" --force
+
+# 7. Empty and delete S3 Bucket
+aws s3 rm s3://enterprise-rag-storage-0117967 --recursive
+aws s3api delete-bucket --bucket enterprise-rag-storage-0117967 --region ap-southeast-1
+```
+
+---
+
+### Workshop 5 Concluding Remarks
+
+Congratulations on successfully completing **Workshop 5: Enterprise Knowledge AI RAG Assistant on AWS**!
+
+Across Labs **5.1** through **5.6**, you have implemented end-to-end cloud engineering best practices:
+* Multi-AZ VPC network architecture with public/private tiering and least-privilege security groups.
+* Hybrid storage architectures spanning **Amazon S3**, KMS-encrypted **Amazon RDS PostgreSQL**, and **Qdrant Vector Database**.
+* Automated containerization with **Amazon ECR** and **GitHub Actions CI/CD**.
+* Compute scalability and intelligent path routing with **Amazon EC2** and **Application Load Balancer (ALB)**.
+* Strict hallucination guardrails and unified telemetry observability via **Amazon CloudWatch Metrics**.

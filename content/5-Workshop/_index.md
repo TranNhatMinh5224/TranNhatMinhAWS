@@ -1,44 +1,51 @@
 ---
 title: "Workshop"
-date: 2026-07-21
+date: 2026-08-25
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
+aliases:
+  - /5-workshop/
+  - /5-Workshop/
 ---
 
-# Step-by-Step Guide: Building a Serverless & Event-Driven Game Backend on AWS
+# Hands-on Guide: Building & Deploying Enterprise Knowledge AI RAG on AWS
 
 #### Workshop Overview
 
-The Workshop modules are structured under main chapters **5.1** through **5.6** and sub-modules **5.x.y** below:
+This workshop provides a comprehensive step-by-step hands-on guide to architecting, configuring, and deploying the **Enterprise Knowledge AI RAG Assistant** on Amazon Web Services (AWS), adhering to enterprise standards with Multi-AZ, Zero-Trust security, and Serverless Containers.
 
 > [!NOTE]
-> * **Live Web Demo Link**: [http://fighting-game-assets-508768431157.s3-website-ap-southeast-1.amazonaws.com/](http://fighting-game-assets-508768431157.s3-website-ap-southeast-1.amazonaws.com/)
-> * **Source Code Repository**: [https://github.com/Nothingtoread/fighting-game/tree/main](https://github.com/Nothingtoread/fighting-game/tree/main)
+> * **Project**: Enterprise Knowledge AI RAG Assistant
+> * **GitHub Repository**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
+> * **Core Architecture**: Multi-AZ VPC, Amazon S3 Document Lake, Amazon RDS PostgreSQL, Qdrant Vector Store on EC2 Graviton (ARM64), Amazon ECS Fargate Serverless, Application Load Balancer (ALB), and LLM integration (Amazon Bedrock / Gemini API).
 
 ---
 
-#### Agenda:
+#### Hands-on Workshop Modules:
 
-1. [5.1. Prerequisites & Region Setup](5.1-prerequiste/)
-2. [5.2. Amazon Cognito & DynamoDB Setup](5.2-cognito-dynamodb/)
-   * [5.2.1. Provisioning Amazon Cognito User Pool](5.2-cognito-dynamodb/5.2.1-cognito-user-pool/)
-   * [5.2.2. Provisioning Amazon Cognito Identity Pool](5.2-cognito-dynamodb/5.2.2-cognito-identity-pool/)
-   * [5.2.3. Provisioning Amazon DynamoDB Tables](5.2-cognito-dynamodb/5.2.3-dynamodb-tables/)
-3. [5.3. Lambda Matchmaker & API Gateway REST API Deployment](5.3-matchmaker-api/)
-   * [5.3.1. Provisioning AWS Lambda Matchmaker](5.3-matchmaker-api/5.3.1-lambda-matchmaker/)
-   * [5.3.2. Provisioning Amazon API Gateway REST API](5.3-matchmaker-api/5.3.2-api-gateway/)
-4. [5.4. EC2 Spot Fleet, Launch Template & GitOps CodeDeploy Setup](5.4-ec2-fleet-gitops/)
-   * [5.4.1. Sample EC2 Game Server & Baking AMI](5.4-ec2-fleet-gitops/5.4.1-ec2-ami/)
-   * [5.4.2. Launch Template & Auto Scaling Group Warm Pool](5.4-ec2-fleet-gitops/5.4.2-spot-launch-template/)
-   * [5.4.3. Amazon S3 Bucket & Static Website Hosting](5.4-ec2-fleet-gitops/5.4.3-s3-website/)
-   * [5.4.4. GitHub OIDC & AWS CodeDeploy GitOps Pipeline](5.4-ec2-fleet-gitops/5.4.4-github-codedeploy/)
-5. [5.5. Asynchronous Analytics with DynamoDB Streams & Lambda](5.5-async-analytics/)
-   * [5.5.1. Enabling DynamoDB Streams](5.5-async-analytics/5.5.1-dynamodb-streams/)
-   * [5.5.2. Creating & Connecting MatchAnalytic Lambda](5.5-async-analytics/5.5.2-match-analytic-lambda/)
-6. [5.6. Resource Cleanup](5.6-cleanup/)
-   * [5.6.1. Cleaning up Amazon Cognito](5.6-cleanup/5.6.1-cognito-cleanup/)
-   * [5.6.2. Cleaning up Amazon DynamoDB](5.6-cleanup/5.6.2-dynamodb-cleanup/)
-   * [5.6.3. Cleaning up AWS Lambda Functions](5.6-cleanup/5.6.3-lambda-cleanup/)
-   * [5.6.4. Cleaning up Amazon API Gateway](5.6-cleanup/5.6.4-api-gateway-cleanup/)
-   * [5.6.5. Cleaning up CloudFront & AWS WAF](5.6-cleanup/5.6.5-cloudfront-waf-cleanup/)
+1. [**5.1. Environment Preparation & Zero-Trust VPC Infrastructure**](5.1-vpc-network/)
+   * 5.1.1. Multi-AZ VPC Provisioning & Subnet Segmentation (Public, Private App, Isolated DB)
+   * 5.1.2. Security Groups & IAM Role Configuration (`EC2-S3-RAG`)
+   * 5.1.3. Amazon S3 Document Lake Provisioning, Block Public Access & Folder Prefixes
+2. [**5.2. Data Layer & Vector Database Deployment**](5.2-database-vector/)
+   * 5.2.1. Centralized Secret Management with AWS Secrets Manager (`DATABASE_URL`, `S3_BUCKET_NAME`...)
+   * 5.2.2. Amazon RDS PostgreSQL Deployment in Isolated Subnet (AWS Graviton `db.t4g.micro`, KMS Encryption)
+   * 5.2.3. Qdrant Vector Store Container Deployment (HNSW Graph, Cosine Metric, `BAAI/bge-m3`)
+3. [**5.3. Containerizing Applications & Pushing Images to Amazon ECR**](5.3-container-ecr/)
+   * 5.3.1. Provisioning IAM User (`github-action`) for CI/CD Automation
+   * 5.3.2. Amazon ECR Private Repositories Provisioning (`enterprise-rag-backend`, `enterprise-rag-frontend`)
+   * 5.3.3. Dockerfile Architecture & Automated GitHub Actions Pipeline
+4. [**5.4. Deploying Application Server & Application Load Balancer (ALB)**](5.4-ecs-fargate-alb/)
+   * 5.4.1. EC2 Compute Node Provisioning & Remote Administration (`enterprise-rag-server`, Ubuntu 24.04, SSH Key)
+   * 5.4.2. Application Load Balancer (`rag-lb`) & Target Groups Configuration (`rag-backend-tg`, `rag-frontend-tg`)
+   * 5.4.3. Path-Based Routing Implementation (`/api/*`, `/docs*`, `/*`)
+   * 5.4.4. End-to-End Verification via ALB Public DNS Endpoint
+5. [**5.5. End-to-End RAG Testing, Security Guardrails & CloudWatch Telemetry**](5.5-testing-cloudwatch/)
+   * 5.5.1. End-to-End Ingestion Pipeline Testing (Document Upload, Chunking & Embedding) & RAG Q&A
+   * 5.5.2. 2-Tier Enterprise Security Guardrail Testing (Code-level regex filter & System prompt hardening)
+   * 5.5.3. Operational Monitoring with Amazon CloudWatch Metrics & Logs
+6. [**5.6. Resource Cleanup**](5.6-cleanup/)
+   * 5.6.1. Decommissioning Application Load Balancer (ALB) & Target Groups
+   * 5.6.2. Terminating EC2 RAG Server, RDS PostgreSQL & Deleting Secrets
+   * 5.6.3. Removing Amazon ECR Repositories, S3 Document Lake & VPC Network
