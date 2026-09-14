@@ -1,1 +1,5 @@
 public/*
+.hugo_build.lock
+scratch/
+*.CR2
+*.bak.docx
