@@ -1,17 +1,19 @@
 ---
 title: "Dọn dẹp Tài nguyên (Resource Cleanup)"
 date: 2026-08-25
-weight: 6
+weight: 7
 chapter: false
-pre: " <b> 5.6. </b> "
+pre: " <b> 5.7. </b> "
 aliases:
+  - /5-workshop/5.7-cleanup/
+  - /5-Workshop/5.7-cleanup/
   - /5-workshop/5.6-cleanup/
   - /5-Workshop/5.6-cleanup/
 ---
 
-# 5.6. Dọn dẹp Tài nguyên (Resource Cleanup & Cost Optimization)
+# 5.7. Dọn dẹp Tài nguyên (Resource Cleanup & Cost Optimization)
 
-### Tổng quan bài Lab 5.6
+### Tổng quan bài Lab 5.7
 
 Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm thu dự án **Enterprise Knowledge AI RAG Assistant** trên AWS, việc giải phóng tài nguyên là bước vô cùng quan trọng nhằm:
 * **Tối ưu hóa chi phí (Cost Optimization)**: Ngăn chặn việc tiếp tục phát sinh cước phí ngoài ý muốn đối with các tài nguyên tính phí theo thời gian chạy (EC2 Instances, Application Load Balancer, RDS Multi-AZ/Single-AZ, v.v.).
@@ -42,7 +44,7 @@ Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm t
 
 ---
 
-## 5.6.1. Hướng dẫn chi tiết qua AWS Management Console
+## 5.7.1. Hướng dẫn chi tiết qua AWS Management Console
 
 ### Bước 1: Xóa Application Load Balancer & Target Groups
 1. Mở **EC2 Management Console** $\rightarrow$ mục **Load Balancers** ở menu bên trái.
@@ -106,7 +108,7 @@ Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm t
 
 ---
 
-## 5.6.2. Kịch bản Dọn dẹp Tự động qua AWS CLI
+## 5.7.2. Kịch bản Dọn dẹp Tự động qua AWS CLI
 
 Nếu bạn muốn dọn dẹp nhanh chóng toàn bộ môi trường thông qua terminal AWS CLI, có thể sử dụng chuỗi lệnh tuần tự dưới đây:
 

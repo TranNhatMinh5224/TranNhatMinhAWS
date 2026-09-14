@@ -1,17 +1,19 @@
 ---
 title: "Resource Teardown & Cleanup"
 date: 2026-08-25
-weight: 6
+weight: 7
 chapter: false
-pre: " <b> 5.6. </b> "
+pre: " <b> 5.7. </b> "
 aliases:
+  - /5-workshop/5.7-cleanup/
+  - /5-Workshop/5.7-cleanup/
   - /5-workshop/5.6-cleanup/
   - /5-Workshop/5.6-cleanup/
 ---
 
-# 5.6. Resource Teardown & Cost Optimization
+# 5.7. Resource Teardown & Cost Optimization
 
-### Lab 5.6 Overview
+### Lab 5.7 Overview
 
 Upon completing the practical implementation and validation phases of the **Enterprise Knowledge AI RAG Assistant** on AWS, de-provisioning active cloud infrastructure is an essential best practice:
 * **Cost Optimization**: Eliminates ongoing runtime charges for compute and networking resources (EC2 instances, Application Load Balancers, RDS instances, etc.).
@@ -42,7 +44,7 @@ Upon completing the practical implementation and validation phases of the **Ente
 
 ---
 
-## 5.6.1. Step-by-Step AWS Management Console Guide
+## 5.7.1. Step-by-Step AWS Management Console Guide
 
 ### Step 1: Delete Application Load Balancer & Target Groups
 1. Open **EC2 Management Console** $\rightarrow$ select **Load Balancers** from the left navigation panel.
@@ -106,7 +108,7 @@ Upon completing the practical implementation and validation phases of the **Ente
 
 ---
 
-## 5.6.2. Automated Teardown with AWS CLI
+## 5.7.2. Automated Teardown with AWS CLI
 
 For rapid teardown via the AWS CLI terminal, execute the following sequential commands:
 

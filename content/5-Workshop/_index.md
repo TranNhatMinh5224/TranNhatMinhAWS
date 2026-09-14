@@ -41,11 +41,13 @@ This workshop provides a comprehensive step-by-step hands-on guide to architecti
    * 5.4.2. Application Load Balancer (`rag-lb`) & Target Groups Configuration (`rag-backend-tg`, `rag-frontend-tg`)
    * 5.4.3. Path-Based Routing Implementation (`/api/*`, `/docs*`, `/*`)
    * 5.4.4. End-to-End Verification via ALB Public DNS Endpoint
-5. [**5.5. End-to-End RAG Testing, Security Guardrails & CloudWatch Telemetry**](5.5-testing-cloudwatch/)
-   * 5.5.1. End-to-End Ingestion Pipeline Testing (Document Upload, Chunking & Embedding) & RAG Q&A
-   * 5.5.2. 2-Tier Enterprise Security Guardrail Testing (Code-level regex filter & System prompt hardening)
-   * 5.5.3. Operational Monitoring with Amazon CloudWatch Metrics & Logs
-6. [**5.6. Resource Cleanup**](5.6-cleanup/)
-   * 5.6.1. Decommissioning Application Load Balancer (ALB) & Target Groups
-   * 5.6.2. Terminating EC2 RAG Server, RDS PostgreSQL & Deleting Secrets
-   * 5.6.3. Removing Amazon ECR Repositories, S3 Document Lake & VPC Network
+5. [**5.5. End-to-End RAG Pipeline Testing & Security Guardrails**](5.5-testing-rag/)
+   * 5.5.1. End-to-End Ingestion & Factual Knowledge Retrieval (NexusDoc AI, Grounded Citations)
+   * 5.5.2. 2-Tier Enterprise Security Guardrail Testing (Zero-Hallucination Policy)
+6. [**5.6. Operational Monitoring & Incident Alerting with Amazon CloudWatch**](5.6-cloudwatch-monitoring/)
+   * 5.6.1. Application Load Balancer Network Telemetry (`RequestCount`, `2XX`, `ResponseTime`)
+   * 5.6.2. Centralized Observability Dashboard (`Dashboard-RAG`)
+   * 5.6.3. Automated Alerting with Amazon SNS (`RAG-Server-High-CPU-Alarm`)
+7. [**5.7. Resource Teardown & Cost Optimization**](5.7-cleanup/)
+   * 5.7.1. Step-by-Step AWS Management Console Guide
+   * 5.7.2. Automated Teardown with AWS CLI

@@ -41,12 +41,14 @@ Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, c
    * 5.4.2. Cấu hình Application Load Balancer (`rag-lb`) & 2 Target Groups (`rag-backend-tg`, `rag-frontend-tg`)
    * 5.4.3. Cấu hình Định tuyến Thông minh dựa trên đường dẫn (Path-Based Routing: `/api/*`, `/docs*`, `/*`)
    * 5.4.4. Kiểm chứng Vận hành Toàn diện qua ALB DNS công khai
-5. [**5.5. Kiểm thử Pipeline RAG, Security Guardrails & Giám sát CloudWatch**](5.5-testing-cloudwatch/)
-   * 5.5.1. Kiểm thử Ingestion Pipeline (Upload văn bản, Chunking & Embedding) & Hỏi đáp RAG qua ALB
-   * 5.5.2. Kiểm thử 2-Tier Enterprise Guardrails (Code-level regex filter & System prompt hardening)
-   * 5.5.3. Giám sát Vận hành Hệ thống với Amazon CloudWatch Metrics & Logs
-6. [**5.6. Dọn dẹp Tài nguyên (Resource Cleanup)**](5.6-cleanup/)
-   * 5.6.1. Xóa bỏ Application Load Balancer (ALB) & Target Groups
-   * 5.6.2. Dọn dẹp Máy chủ EC2 RAG Server, RDS PostgreSQL & AWS Secrets Manager
-   * 5.6.3. Xóa Amazon ECR Repositories, S3 Document Lake & VPC Network
+5. [**5.5. Kiểm thử Toàn trình Pipeline RAG & Security Guardrails**](5.5-testing-rag/)
+   * 5.5.1. Kiểm thử End-to-End Ingestion & Tra cứu Tri thức (NexusDoc AI, Grounded Citations)
+   * 5.5.2. Kiểm thử 2 Tầng Phòng vệ Bảo mật (Security Guardrails & Chống ảo giác Zero-Hallucination)
+6. [**5.6. Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch**](5.6-cloudwatch-monitoring/)
+   * 5.6.1. Giám sát Chỉ số Mạng Application Load Balancer (`RequestCount`, `2XX`, `ResponseTime`)
+   * 5.6.2. Thiết lập Bảng điều khiển Giám sát Tập trung (`Dashboard-RAG`)
+   * 5.6.3. Cấu hình Cảnh báo Tự động qua Amazon SNS (`RAG-Server-High-CPU-Alarm`)
+7. [**5.7. Dọn dẹp Tài nguyên (Resource Cleanup)**](5.7-cleanup/)
+   * 5.7.1. Hướng dẫn chi tiết qua AWS Management Console
+   * 5.7.2. Kịch bản Dọn dẹp Tự động qua AWS CLI
 
