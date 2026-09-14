@@ -1,4 +1,4 @@
----
+﻿---
 title: "Chuẩn bị Môi trường & Hạ tầng Mạng VPC Zero-Trust"
 date: 2026-08-25
 weight: 1
@@ -67,7 +67,7 @@ Trước khi khởi tạo tài nguyên, đảm bảo tài khoản AWS Console đ
 ---
 
 #### Bước 2: Khởi tạo VPC bằng công cụ "VPC and more"
-1. Truy cập **VPC Dashboard** $\rightarrow$ chọn **Create VPC**.
+1. Truy cập **VPC Dashboard** → chọn **Create VPC**.
 2. Chọn chế độ cấu hình: **VPC and more** (tự động liên kết các thành phần VPC, Subnets, Route Tables, Internet Gateway và Gateway Endpoint trong một luồng trực quan duy nhất).
 3. Thiết lập thông số:
    * **Name tag auto-generation**: `project` (hoặc `MyProjectVPC`).
@@ -78,8 +78,8 @@ Trước khi khởi tạo tài nguyên, đảm bảo tài khoản AWS Console đ
    * **NAT Gateways**: `None` (hoặc cấu hình theo nhu cầu chi phí bài lab).
    * **VPC Endpoints**: Chọn **S3 Gateway** (Tạo kết nối riêng tới S3 không tốn phí truyền dữ liệu).
    * **DNS Options**: Đánh dấu chọn cả hai mục:
-     * `Enable DNS hostnames` $\rightarrow$ gán DNS công khai/riêng cho các instance.
-     * `Enable DNS resolution` $\rightarrow$ cho phép phân giải tên miền nội bộ AWS.
+     * `Enable DNS hostnames` → gán DNS công khai/riêng cho các instance.
+     * `Enable DNS resolution` → cho phép phân giải tên miền nội bộ AWS.
 4. Bấm **Create VPC** và chờ hệ thống hoàn tất quy trình khởi tạo.
 
 <div align="center">
@@ -201,7 +201,7 @@ aws ec2 describe-vpcs \
 ### 3. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo và khảo sát danh sách Security Groups
-Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** và lọc theo VPC `vpc-03228d0b15b9ea7be`:
+Truy cập **EC2 Management Console** → chọn **Security Groups** và lọc theo VPC `vpc-03228d0b15b9ea7be`:
 
 <div align="center">
   <img src="/images/5-Workshop/5.1/5.1.2-security-groups-list.png" alt="Danh sách Security Groups trong hệ thống" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
@@ -215,7 +215,7 @@ Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** v
 ---
 
 #### Bước 2: Cấu hình quy tắc Inbound cho máy chủ EC2 (`rag-ec2-sg`)
-1. Chọn `rag-ec2-sg` $\rightarrow$ chọn tab **Inbound rules** $\rightarrow$ bấm **Edit inbound rules**.
+1. Chọn `rag-ec2-sg` → chọn tab **Inbound rules** → bấm **Edit inbound rules**.
 2. Thiết lập danh sách các cổng phục vụ ứng dụng RAG Assistant:
    * **Cổng 22 (SSH)**: Giới hạn theo IP của quản trị viên để bảo mật truy cập terminal.
    * **Cổng 3000 (Custom TCP)**: Mở cho ứng dụng giao diện Next.js Web Frontend.
@@ -230,7 +230,7 @@ Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** v
 ---
 
 #### Bước 3: Cấu hình quy tắc Inbound bảo vệ Cơ sở dữ liệu RDS (`rag-rds-sg`)
-1. Chọn Security Group `rag-rds-sg` (ID: `sg-0e06a5a9265f5c77d`) $\rightarrow$ tab **Inbound rules**.
+1. Chọn Security Group `rag-rds-sg` (ID: `sg-0e06a5a9265f5c77d`) → tab **Inbound rules**.
 2. Thiết lập quy tắc kiểm soát truy cập nghiêm ngặt vào cổng cơ sở dữ liệu:
    * **Type**: `PostgreSQL`
    * **Protocol**: `TCP`
@@ -246,7 +246,7 @@ Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** v
 ---
 
 #### Bước 4: Khởi tạo IAM Role cho EC2 Server
-1. Truy cập **IAM Console** $\rightarrow$ chọn **Roles** $\rightarrow$ bấm **Create role**.
+1. Truy cập **IAM Console** → chọn **Roles** → bấm **Create role**.
 2. Tại mục **Trusted entity type**, chọn **AWS service**.
 3. Tại mục **Use case**, chọn dịch vụ **EC2** (Cho phép máy chủ EC2 đại diện người dùng thực thi các API nội bộ của AWS).
 
@@ -306,8 +306,8 @@ Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** v
 ---
 
 #### Bước 6: Đính kèm IAM Role vào máy chủ EC2 (`enterprise-rag-server`)
-1. Truy cập **EC2 Console** $\rightarrow$ **Instances** $\rightarrow$ chọn máy chủ `enterprise-rag-server` (ID: `i-0e3f096f3de681aaa`).
-2. Chọn menu **Actions** $\rightarrow$ **Security** $\rightarrow$ **Modify IAM role**.
+1. Truy cập **EC2 Console** → **Instances** → chọn máy chủ `enterprise-rag-server` (ID: `i-0e3f096f3de681aaa`).
+2. Chọn menu **Actions** → **Security** → **Modify IAM role**.
 3. Tại trường **IAM role**, chọn role **`EC2-S3-RAG`** vừa tạo.
 4. Bấm **Update IAM role** để lưu thay đổi.
 
@@ -348,7 +348,7 @@ Truy cập **EC2 Management Console** $\rightarrow$ chọn **Security Groups** v
 ### 3. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo S3 Bucket qua AWS Management Console
-1. Truy cập **Amazon S3 Console** $\rightarrow$ chọn **Create bucket**.
+1. Truy cập **Amazon S3 Console** → chọn **Create bucket**.
 2. Thiết lập thông số:
    * **Bucket name**: `enterprise-rag-storage-0117967`.
    * **AWS Region**: `Asia Pacific (Singapore) ap-southeast-1`.

@@ -19,13 +19,8 @@ During my internship, I participated in events that provided valuable insights i
 
 &emsp;**Role:** Participant
 
-### [Event 2](4.2-event2/)
-&emsp;**Competition Title:** FCAJ BUILDRATHON 2026 — Season 01
+---
 
-&emsp;**Kick-off & Registration:** September 2026 (Deadline: September 15, 2026 — 6-Month Journey)
+> [!TIP]
+> For the long-term tech competition **FCAJ BUILDRATHON 2026 — Season 01**, full details regarding team formation, activity logs, and evaluation results are documented in depth in [6. Competitions & Extended Activities](../6-competitions/).
 
-&emsp;**Location & Grand Finale:** AWS Vietnam Office – 7th Floor, Grand Terra Tower, 36 Cat Linh, Hanoi
-
-&emsp;**Organizer:** First Cloud Journey (FCAJ) in collaboration with AWS Vietnam
-
-&emsp;**Role:** Contestant / Team Member (Cloud & AI Solution Development)

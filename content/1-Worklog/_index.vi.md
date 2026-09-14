@@ -22,4 +22,4 @@ Dưới đây là nhật ký công việc chi tiết của tôi qua 8 tuần th�
 
 **Tuần 7 (14/09/2026 – 20/09/2026):** [Tìm hiểu AWS ECS và kiến thức Docker cơ bản](1.7-week7/)
 
-**Tuần 8 (21/09/2026 – 27/09/2026):** [Thực hiện dự án tổng hợp trên AWS (Capstone Project: Serverless & Event-Driven Game Backend trên AWS) và tổng kết](1.8-week8/)
+**Tuần 8 (21/09/2026 – 27/09/2026):** [Thực hiện dự án tổng hợp trên AWS (Capstone Project: Trợ Lý AI Tra Cứu Văn Bản Nội Bộ Doanh Nghiệp - Enterprise Knowledge AI RAG trên AWS) và tổng kết](1.8-week8/)

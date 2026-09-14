@@ -1,4 +1,4 @@
----
+﻿---
 title: "Dọn dẹp Tài nguyên (Resource Cleanup)"
 date: 2026-08-25
 weight: 7
@@ -47,9 +47,9 @@ Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm t
 ## 5.7.1. Hướng dẫn chi tiết qua AWS Management Console
 
 ### Bước 1: Xóa Application Load Balancer & Target Groups
-1. Mở **EC2 Management Console** $\rightarrow$ mục **Load Balancers** ở menu bên trái.
-2. Chọn Load Balancer **`rag-lb`** $\rightarrow$ bấm **Actions** $\rightarrow$ chọn **Delete load balancer** $\rightarrow$ xác nhận xóa.
-3. Chuyển sang mục **Target Groups** $\rightarrow$ chọn lần lượt **`rag-backend-tg`** và **`rag-frontend-tg`** $\rightarrow$ bấm **Actions** $\rightarrow$ chọn **Delete**.
+1. Mở **EC2 Management Console** → mục **Load Balancers** ở menu bên trái.
+2. Chọn Load Balancer **`rag-lb`** → bấm **Actions** → chọn **Delete load balancer** → xác nhận xóa.
+3. Chuyển sang mục **Target Groups** → chọn lần lượt **`rag-backend-tg`** và **`rag-frontend-tg`** → bấm **Actions** → chọn **Delete**.
 
 > [!NOTE]
 > Cần xóa Load Balancer trước để giải phóng các Elastic Network Interfaces (ENI) mà ALB đang chiếm dụng trong các Public Subnet.
@@ -57,54 +57,54 @@ Sau khi hoàn thành toàn bộ chuỗi thực hành và kiểm thử nghiệm t
 ---
 
 ### Bước 2: Hủy máy chủ tính toán Amazon EC2
-1. Tại **EC2 Management Console** $\rightarrow$ chọn **Instances**.
+1. Tại **EC2 Management Console** → chọn **Instances**.
 2. Chọn máy chủ **`enterprise-rag-server`** (`i-0e3f096f3de681aaa`).
-3. Bấm **Instance state** $\rightarrow$ chọn **Terminate instance** $\rightarrow$ xác nhận **Terminate**.
+3. Bấm **Instance state** → chọn **Terminate instance** → xác nhận **Terminate**.
 4. Ổ đĩa EBS Root Volume gắn kèm máy chủ sẽ tự động được xóa theo thiết lập `Delete on Termination`.
 
 ---
 
 ### Bước 3: Xóa Cơ sở dữ liệu Amazon RDS PostgreSQL
-1. Truy cập **RDS Management Console** $\rightarrow$ chọn **Databases**.
+1. Truy cập **RDS Management Console** → chọn **Databases**.
 2. Chọn cơ sở dữ liệu **`rag-db`**.
-3. Bấm **Actions** $\rightarrow$ chọn **Delete**.
+3. Bấm **Actions** → chọn **Delete**.
 4. Trong cửa sổ xác nhận:
    * Bỏ chọn (Uncheck) mục **Create final snapshot** (để tránh lưu trữ snapshot tính phí nếu không cần giữ lại dữ liệu).
    * Bỏ chọn mục **Retain automated backups**.
-   * Nhập cụm từ xác nhận `delete me` $\rightarrow$ bấm **Delete**.
-5. Sau khi DB Instance bị xóa hoàn tất, chuyển sang mục **Subnet groups** $\rightarrow$ chọn **`rag-db-subnet-group`** $\rightarrow$ bấm **Delete**.
+   * Nhập cụm từ xác nhận `delete me` → bấm **Delete**.
+5. Sau khi DB Instance bị xóa hoàn tất, chuyển sang mục **Subnet groups** → chọn **`rag-db-subnet-group`** → bấm **Delete**.
 
 ---
 
 ### Bước 4: Xóa Secrets Manager & Kho chứa Amazon ECR
 1. **AWS Secrets Manager**:
-   * Truy cập **Secrets Manager Console** $\rightarrow$ chọn secret **`rag/production/credentials`**.
-   * Bấm **Actions** $\rightarrow$ chọn **Delete secret** $\rightarrow$ chọn thời gian chờ hoặc đánh dấu **Delete immediately without recovery** (nếu không cần khôi phục) $\rightarrow$ bấm **Delete**.
+   * Truy cập **Secrets Manager Console** → chọn secret **`rag/production/credentials`**.
+   * Bấm **Actions** → chọn **Delete secret** → chọn thời gian chờ hoặc đánh dấu **Delete immediately without recovery** (nếu không cần khôi phục) → bấm **Delete**.
 2. **Amazon ECR (Elastic Container Registry)**:
-   * Mở **Amazon ECR Console** $\rightarrow$ mục **Private registry** $\rightarrow$ **Repositories**.
-   * Chọn kho chứa **`enterprise-rag-backend`** $\rightarrow$ bấm **Delete** $\rightarrow$ nhập `delete` để xác nhận xóa toàn bộ image tags.
+   * Mở **Amazon ECR Console** → mục **Private registry** → **Repositories**.
+   * Chọn kho chứa **`enterprise-rag-backend`** → bấm **Delete** → nhập `delete` để xác nhận xóa toàn bộ image tags.
    * Thực hiện tương tự cho kho chứa **`enterprise-rag-frontend`**.
 
 ---
 
 ### Bước 5: Xóa dữ liệu & Bucket Amazon S3
-1. Truy cập **Amazon S3 Console** $\rightarrow$ chọn bucket **`enterprise-rag-storage-0117967`**.
-2. Bấm nút **Empty** (Làm rỗng) $\rightarrow$ nhập `permanently delete` để xóa sạch toàn bộ các đối tượng và tiền tố (`draff/`, `real/`).
-3. Sau khi bucket rỗng, bấm nút **Delete** $\rightarrow$ nhập tên bucket `enterprise-rag-storage-0117967` để xác nhận xóa vĩnh viễn.
+1. Truy cập **Amazon S3 Console** → chọn bucket **`enterprise-rag-storage-0117967`**.
+2. Bấm nút **Empty** (Làm rỗng) → nhập `permanently delete` để xóa sạch toàn bộ các đối tượng và tiền tố (`draff/`, `real/`).
+3. Sau khi bucket rỗng, bấm nút **Delete** → nhập tên bucket `enterprise-rag-storage-0117967` để xác nhận xóa vĩnh viễn.
 
 ---
 
 ### Bước 6: Xóa Security Groups & Tài nguyên Mạng VPC
 1. **Security Groups**:
-   * Truy cập **VPC Console** $\rightarrow$ mục **Security Groups**.
+   * Truy cập **VPC Console** → mục **Security Groups**.
    * Chọn và xóa lần lượt: **`rag-rds-sg`**, **`rag-ec2-sg`**, **`rag-alb-sg`** (chú ý xóa SG tham chiếu trước, hoặc xóa đồng thời).
 2. **VPC Endpoints**:
-   * Vào mục **Endpoints** $\rightarrow$ chọn S3 Gateway Endpoint liên kết với VPC $\rightarrow$ bấm **Actions** $\rightarrow$ **Delete VPC endpoint**.
+   * Vào mục **Endpoints** → chọn S3 Gateway Endpoint liên kết với VPC → bấm **Actions** → **Delete VPC endpoint**.
 3. **Internet Gateway**:
-   * Vào mục **Internet Gateways** $\rightarrow$ chọn **`rag-igw`** $\rightarrow$ chọn **Actions** $\rightarrow$ **Detach from VPC** $\rightarrow$ chọn **Actions** $\rightarrow$ **Delete internet gateway**.
+   * Vào mục **Internet Gateways** → chọn **`rag-igw`** → chọn **Actions** → **Detach from VPC** → chọn **Actions** → **Delete internet gateway**.
 4. **VPC**:
-   * Vào mục **Your VPCs** $\rightarrow$ chọn **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
-   * Bấm **Actions** $\rightarrow$ chọn **Delete VPC**. Hệ thống AWS sẽ tự động giải phóng toàn bộ 4 Subnets và Route Tables liên kết.
+   * Vào mục **Your VPCs** → chọn **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
+   * Bấm **Actions** → chọn **Delete VPC**. Hệ thống AWS sẽ tự động giải phóng toàn bộ 4 Subnets và Route Tables liên kết.
 
 ---
 

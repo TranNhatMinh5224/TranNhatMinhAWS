@@ -22,4 +22,4 @@ Below is my detailed worklog across the 8-week internship program in accordance 
 
 **Week 7 (14/09/2026 – 20/09/2026):** [AWS ECS & Docker Fundamentals](1.7-week7/)
 
-**Week 8 (21/09/2026 – 27/09/2026):** [Capstone Project on AWS & Final Summary](1.8-week8/)
+**Week 8 (21/09/2026 – 27/09/2026):** [Capstone Project: Enterprise Knowledge AI RAG Assistant on AWS & Final Summary](1.8-week8/)

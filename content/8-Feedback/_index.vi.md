@@ -1,9 +1,9 @@
 ---
 title: "Chia sẻ, đóng góp ý kiến"
 date: 2026-09-26
-weight: 7
+weight: 8
 chapter: false
-pre: " <b> 7. </b> "
+pre: " <b> 8. </b> "
 ---
 
 Trải qua kỳ thực tập **First Cloud AI Journey** đầy ý nghĩa, tôi xin chia sẻ những ý kiến cá nhân và đóng góp phản hồi dưới đây nhằm góp phần hoàn thiện chương trình cho các khóa sau:

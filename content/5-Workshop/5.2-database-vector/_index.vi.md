@@ -1,4 +1,4 @@
----
+﻿---
 title: "Triển khai Tầng Dữ liệu & Vector Database"
 date: 2026-08-25
 weight: 2
@@ -58,7 +58,7 @@ Bài lab 5.2 hướng dẫn chi tiết quy trình thiết lập tầng dữ li�
 ### 3. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo Secret trên AWS Secrets Manager
-1. Truy cập **AWS Secrets Manager Console** $\rightarrow$ bấm **Store a new secret**.
+1. Truy cập **AWS Secrets Manager Console** → bấm **Store a new secret**.
 2. Chọn **Secret type**: **Other type of secret**.
 3. Tại phần **Key/value pairs**, nhập các cặp tham số cấu hình cơ sở dữ liệu và hệ sinh thái RAG.
 4. Đặt tên Secret: `rag/production/credentials`.
@@ -125,7 +125,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 ### 3. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo RDS PostgreSQL Instance
-1. Truy cập **Amazon RDS Console** $\rightarrow$ chọn **Databases** $\rightarrow$ bấm **Create database**.
+1. Truy cập **Amazon RDS Console** → chọn **Databases** → bấm **Create database**.
 2. Chọn phương thức khởi tạo: **Standard create**.
 3. **Engine options**: Chọn **PostgreSQL** (phiên bản `16.3`).
 4. **Templates**: Chọn **Free tier** hoặc **Dev/Test**.
@@ -134,7 +134,7 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
    * Master username: `postgres`.
    * Master password: Nhập mật khẩu bảo mật (và lưu đồng bộ vào Secrets Manager).
 6. **Instance configuration**:
-   * DB instance class: **Burstable classes (includes t classes)** $\rightarrow$ chọn `db.t4g.micro`.
+   * DB instance class: **Burstable classes (includes t classes)** → chọn `db.t4g.micro`.
 7. **Connectivity**:
    * Virtual private cloud (VPC): Chọn `vpc-03228d0b15b9ea7be`.
    * DB Subnet group: Chọn subnet group chứa các Private Subnets.

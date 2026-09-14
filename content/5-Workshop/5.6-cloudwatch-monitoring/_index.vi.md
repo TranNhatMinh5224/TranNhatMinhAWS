@@ -1,4 +1,4 @@
----
+﻿---
 title: "Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch"
 date: 2026-08-25
 weight: 6
@@ -43,7 +43,7 @@ Bài lab 5.6 tập trung vào 3 trọng tâm kỹ thuật:
 
 ### 2. Bằng chứng giám sát thực tế trên AWS Console (Evidence)
 
-Truy cập **CloudWatch Management Console** $\rightarrow$ chọn **Metrics** $\rightarrow$ mục **All metrics** $\rightarrow$ chọn namespace **`ApplicationELB`** $\rightarrow$ **`Per AppELB Metrics`** $\rightarrow$ chọn Load Balancer **`app/rag-lb/dd9f64ed734dab43`**.
+Truy cập **CloudWatch Management Console** → chọn **Metrics** → mục **All metrics** → chọn namespace **`ApplicationELB`** → **`Per AppELB Metrics`** → chọn Load Balancer **`app/rag-lb/dd9f64ed734dab43`**.
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-per-appelb-metrics.png" alt="Danh sách metrics của Load Balancer rag-lb trên CloudWatch" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
@@ -70,7 +70,7 @@ Truy cập **CloudWatch Management Console** $\rightarrow$ chọn **Metrics** $\
 ### 1. Mục tiêu kỹ thuật
 Để đội ngũ kỹ sư vận hành có cái nhìn tổng thể toàn diện về tình trạng sức khỏe của hệ thống RAG trong thời gian thực, một Dashboard tùy biến mang tên **`Dashboard-RAG`** đã được khởi tạo:
 
-1. Tại **CloudWatch Console** $\rightarrow$ chọn **Dashboards** $\rightarrow$ bấm **Create dashboard** $\rightarrow$ đặt tên là **`Dashboard-RAG`**.
+1. Tại **CloudWatch Console** → chọn **Dashboards** → bấm **Create dashboard** → đặt tên là **`Dashboard-RAG`**.
 2. Thêm các widget trực quan hóa đa chiều:
    * **Widget 1 (CPUUtilization)**: Giám sát phần trăm sử dụng CPU của máy chủ tính toán EC2.
    * **Widget 2 (HTTPCode_Target_2XX_Count, RequestCount, TargetResponseTime)**: Theo dõi lưu lượng và độ trễ của ALB.
@@ -93,7 +93,7 @@ Hệ thống thiết lập một cảnh báo giám sát chủ động (**Proacti
 * **Metric name**: `CPUUtilization`
 * **InstanceId**: Máy chủ RAG server (`enterprise-rag-server` / `i-0f7f40a8245434328`)
 * **Statistic**: `Average`, **Period**: `5 minutes`
-* **Threshold type**: `Static` $\rightarrow$ Điều kiện: `Greater > threshold` (vượt ngưỡng cho phép).
+* **Threshold type**: `Static` → Điều kiện: `Greater > threshold` (vượt ngưỡng cho phép).
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-cpu-metric.png" alt="Cấu hình chỉ số CPUUtilization cho CloudWatch Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />

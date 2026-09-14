@@ -1,4 +1,4 @@
----
+﻿---
 title: "Resource Teardown & Cleanup"
 date: 2026-08-25
 weight: 7
@@ -47,9 +47,9 @@ Upon completing the practical implementation and validation phases of the **Ente
 ## 5.7.1. Step-by-Step AWS Management Console Guide
 
 ### Step 1: Delete Application Load Balancer & Target Groups
-1. Open **EC2 Management Console** $\rightarrow$ select **Load Balancers** from the left navigation panel.
-2. Select Load Balancer **`rag-lb`** $\rightarrow$ click **Actions** $\rightarrow$ select **Delete load balancer** $\rightarrow$ confirm deletion.
-3. Switch to **Target Groups** $\rightarrow$ select **`rag-backend-tg`** and **`rag-frontend-tg`** $\rightarrow$ click **Actions** $\rightarrow$ select **Delete**.
+1. Open **EC2 Management Console** → select **Load Balancers** from the left navigation panel.
+2. Select Load Balancer **`rag-lb`** → click **Actions** → select **Delete load balancer** → confirm deletion.
+3. Switch to **Target Groups** → select **`rag-backend-tg`** and **`rag-frontend-tg`** → click **Actions** → select **Delete**.
 
 > [!NOTE]
 > Deleting the Load Balancer first releases the Elastic Network Interfaces (ENIs) provisioned across your Public Subnets.
@@ -57,54 +57,54 @@ Upon completing the practical implementation and validation phases of the **Ente
 ---
 
 ### Step 2: Terminate Amazon EC2 RAG Server
-1. Navigate to **EC2 Management Console** $\rightarrow$ **Instances**.
+1. Navigate to **EC2 Management Console** → **Instances**.
 2. Select the compute instance **`enterprise-rag-server`** (`i-0e3f096f3de681aaa`).
-3. Click **Instance state** $\rightarrow$ select **Terminate instance** $\rightarrow$ confirm **Terminate**.
+3. Click **Instance state** → select **Terminate instance** → confirm **Terminate**.
 4. The attached root EBS storage volume will automatically be deleted according to its `Delete on Termination` policy.
 
 ---
 
 ### Step 3: Delete Amazon RDS PostgreSQL Database
-1. Open **RDS Management Console** $\rightarrow$ select **Databases**.
+1. Open **RDS Management Console** → select **Databases**.
 2. Select database instance **`rag-db`**.
-3. Click **Actions** $\rightarrow$ select **Delete**.
+3. Click **Actions** → select **Delete**.
 4. In the confirmation dialog:
    * Uncheck **Create final snapshot** (to avoid recurring snapshot storage fees if retaining data is unnecessary).
    * Uncheck **Retain automated backups**.
-   * Type the confirmation phrase `delete me` $\rightarrow$ click **Delete**.
-5. Once the DB instance finishes deletion, navigate to **Subnet groups** $\rightarrow$ select **`rag-db-subnet-group`** $\rightarrow$ click **Delete**.
+   * Type the confirmation phrase `delete me` → click **Delete**.
+5. Once the DB instance finishes deletion, navigate to **Subnet groups** → select **`rag-db-subnet-group`** → click **Delete**.
 
 ---
 
 ### Step 4: Delete Secrets Manager & Amazon ECR Repositories
 1. **AWS Secrets Manager**:
-   * Open **Secrets Manager Console** $\rightarrow$ select secret **`rag/production/credentials`**.
-   * Click **Actions** $\rightarrow$ select **Delete secret** $\rightarrow$ check **Delete immediately without recovery** (if recovery is not required) $\rightarrow$ confirm **Delete**.
+   * Open **Secrets Manager Console** → select secret **`rag/production/credentials`**.
+   * Click **Actions** → select **Delete secret** → check **Delete immediately without recovery** (if recovery is not required) → confirm **Delete**.
 2. **Amazon ECR (Elastic Container Registry)**:
-   * Open **Amazon ECR Console** $\rightarrow$ **Private registry** $\rightarrow$ **Repositories**.
-   * Select repository **`enterprise-rag-backend`** $\rightarrow$ click **Delete** $\rightarrow$ type `delete` to confirm deleting all container image tags.
+   * Open **Amazon ECR Console** → **Private registry** → **Repositories**.
+   * Select repository **`enterprise-rag-backend`** → click **Delete** → type `delete` to confirm deleting all container image tags.
    * Repeat the exact deletion for repository **`enterprise-rag-frontend`**.
 
 ---
 
 ### Step 5: Empty and Delete Amazon S3 Bucket
-1. Open **Amazon S3 Console** $\rightarrow$ select bucket **`enterprise-rag-storage-0117967`**.
-2. Click **Empty** $\rightarrow$ type `permanently delete` to delete all objects and prefixes (`draff/`, `real/`).
-3. Once empty, click **Delete** $\rightarrow$ type bucket name `enterprise-rag-storage-0117967` to permanently remove the bucket.
+1. Open **Amazon S3 Console** → select bucket **`enterprise-rag-storage-0117967`**.
+2. Click **Empty** → type `permanently delete` to delete all objects and prefixes (`draff/`, `real/`).
+3. Once empty, click **Delete** → type bucket name `enterprise-rag-storage-0117967` to permanently remove the bucket.
 
 ---
 
 ### Step 6: Delete Security Groups & VPC Networking
 1. **Security Groups**:
-   * Open **VPC Console** $\rightarrow$ **Security Groups**.
+   * Open **VPC Console** → **Security Groups**.
    * Select and delete: **`rag-rds-sg`**, **`rag-ec2-sg`**, **`rag-alb-sg`**.
 2. **VPC Endpoints**:
-   * Open **Endpoints** $\rightarrow$ select the S3 Gateway Endpoint $\rightarrow$ click **Actions** $\rightarrow$ **Delete VPC endpoint**.
+   * Open **Endpoints** → select the S3 Gateway Endpoint → click **Actions** → **Delete VPC endpoint**.
 3. **Internet Gateway**:
-   * Open **Internet Gateways** $\rightarrow$ select **`rag-igw`** $\rightarrow$ click **Actions** $\rightarrow$ **Detach from VPC** $\rightarrow$ click **Actions** $\rightarrow$ **Delete internet gateway**.
+   * Open **Internet Gateways** → select **`rag-igw`** → click **Actions** → **Detach from VPC** → click **Actions** → **Delete internet gateway**.
 4. **VPC**:
-   * Open **Your VPCs** $\rightarrow$ select **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
-   * Click **Actions** $\rightarrow$ select **Delete VPC**. AWS will automatically clean up all 4 associated subnets and route tables.
+   * Open **Your VPCs** → select **`rag-vpc`** (`vpc-03228d0b15b9ea7be`).
+   * Click **Actions** → select **Delete VPC**. AWS will automatically clean up all 4 associated subnets and route tables.
 
 ---
 

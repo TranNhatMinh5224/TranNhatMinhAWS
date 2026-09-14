@@ -1,19 +1,14 @@
 ---
 title: "Blogs Posted"
-date: 2024-01-01
+date: 2026-08-03
 weight: 3
 chapter: false
 pre: " <b> 3. </b> "
 ---
 
+### Technical Blog Posts
 
-Below is the list of technical posts I have published on the AWS Study Group community during my internship:
+This section is dedicated to archiving and summarizing technical sharing articles and specialized knowledge about AWS services and related technologies developed during the internship.
 
-###  [Blog 1 - INNOVATION SANDBOX ON AWS WITH REAL-TIME ANALYTICS DASHBOARD](3.1-Blog1/)
-This blog introduces the Innovation Sandbox solution on AWS, which combines a real-time analytics dashboard and the Amazon Q Business AI assistant for automated account provisioning and resource monitoring.
-
-###  [Blog 2 - HOW ALS GEOANALYTICS’ LITHOLENS REVOLUTIONIZES CORE LOGGING THROUGH MACHINE LEARNING WITH AMAZON EKS](3.2-Blog2/)
-This blog analyzes the LithoLens architecture using Machine Learning on Amazon EKS to digitize and accelerate geological core sample logging from weeks to hours.
-
-###  [Blog 3 - PROVISION ORACLE DATABASE@AWS RESOURCES USING TERRAFORM](3.3-Blog3/)
-This blog introduces the Oracle Database@AWS solution provisioning process using Terraform as the primary IaC tool, achieving low-latency connection between AWS EC2 and OCI Exadata.
+> [!NOTE]
+> Technical posts will be updated here upon publication on community platforms (AWS Study Group, Personal Tech Blog, etc.).

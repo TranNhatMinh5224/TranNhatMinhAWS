@@ -4,178 +4,266 @@ date: 2026-08-25
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
+aliases:
+  - /2-proposal/
+  - /2-Proposal/
 ---
 
-# Serverless & Event-Driven Game Backend on AWS
-## Cost-Optimized & Scalable Backend Architecture for Live-Service Games
-
-### 1. Executive Summary
-This proposal outlines an architectural solution for a **Live-Service Game Backend** running on AWS cloud infrastructure. Instead of maintaining an idle game server fleet 24/7 when no players are active, the system strictly adheres to an **on-demand compute provisioning model**: compute resources are spun up only during login, matchmaking, and live game session execution.
-
-The entire **Metagame** (authentication, asset distribution, matchmaking, and post-match storage) is built completely serverless. Live game sessions requiring dedicated hardware are hosted within an **EC2 Spot Fleet (Graviton ARM64 architecture)**, dynamically spun up on-demand by the Matchmaker. Deployment and updates are managed entirely via **GitOps (CI/CD Pipelines)**, eliminating manual code pushes to production environments.
-
----
-
-### 2. Problem Statement
-
-#### Current Problem
-*   **Substantial Idle Costs**: Traditional game server architectures maintain 24/7 dedicated virtual instances, creating immense infrastructure waste during off-peak hours when player traffic is minimal.
-*   **High Egress & Egress Gateway Costs**: Persistent NAT Gateways and Load Balancers incur continuous hourly charges and data transfer fees regardless of active usage.
-*   **Deployment & Release Overhead**: Deploying small game patches or updating server binaries traditionally requires rebaking full AMIs, slowing down release cycles and risking downtime.
-*   **Network Security Exposure**: Permanently open security group ports on game servers invite DDoS attempts and unauthorized network scanning.
-
-#### Proposed Solution
-The system enforces a core design rule: **Serverless for everything except live game sessions**. Dedicated game sessions reside behind a dedicated network boundary within a VPC, fully decoupled from authentication and matchmaking flows.
-
-The architecture comprises four independent processing flows with isolated triggers and trust boundaries:
-1.  **Flow C (GitOps Deployment Loop)**: Automates CI/CD via GitHub Actions and AWS CodeDeploy, updates Lambda Alias versions, uploads asset bundles to S3, and updates EC2 Launch Templates without impacting active matches.
-2.  **Flow A (Player Auth & Asset Distribution)**: Authenticates players via Amazon Cognito User Pool and grants scoped temporary IAM credentials via Cognito Identity Pool for direct asset/patch downloads from S3.
-3.  **Flow R (Synchronous Matchmaking & EC2 Control Plane)**: Handles synchronous matchmaking requests via CloudFront + WAF, API Gateway, and Matchmaker Lambda in a Private Subnet. Lambda invokes the EC2 Control Plane over a private VPC Interface Endpoint to request warm Spot instances, opens dynamic Security Group rules per player/session, and returns connection endpoints to the client.
-4.  **Flow E (Asynchronous Post-Match Processing & Analytics)**: Asynchronously captures post-match logs and metrics using DynamoDB Streams and Async Lambda, fully decoupled to avoid matchmaking latency.
-
-#### Benefits & Return on Investment (ROI)
-*   **Up to 70-80% Cost Savings**: Leverages ARM64 Graviton EC2 Spot instances combined with zero-idle serverless compute. Eliminates NAT Gateway and persistent Load Balancer costs.
-*   **Enhanced Security Posture**: All requests require valid JWT validation before reaching application code. Game server security groups open dynamically per player IP during a match and are revoked immediately afterward.
-*   **Zero-Downtime Patching**: Centralized S3 asset bundling enables EC2 UserData scripts to pull the latest binaries on boot without requiring full AMI rebakes.
+# Enterprise Knowledge AI RAG — Autonomous Knowledge Assistant for Enterprise Internal Documents
+## Enterprise Cloud Architecture on AWS: Multi-AZ Resiliency, Zero-Trust Security, Serverless Containers & Cost Optimization
 
 ---
 
-### 3. Solution Architecture
+### 1. Business Context, Problem Statement & Proposal Objectives
 
-#### Overall Architecture Diagram
-![Serverless & Event-Driven Game Backend Architecture](/images/2-Proposal/serverless_game_backend_architecture.png)
+#### 1.1. Challenges in Managing and Querying Internal Enterprise Documents
+*   **Fragmented & Rapidly Accumulating Internal Knowledge**: In any enterprise, operational knowledge assets (Company Charters, Financial & Procurement Regulations, Internal Labor Codes, Employee Handbooks, Standard Operating Procedures - SOPs, Commercial & Labor Contracts, Technical Reports) continually grow across diverse formats (`.pdf`, `.docx`, `.xlsx`, `.pptx`, scanned receipts/images).
+*   **Substantial Search & Onboarding Overhead**: New hires, operational staff, and management expend substantial hours each week attempting to locate specific rules or thresholds (e.g., *"Equipment purchase approval limits exceeding 50M VND"*, *"Remote work policy and annual leave eligibility conditions"*).
+*   **Severe Data Privacy & Leakage Risks with Public AI**: Organizations **strictly cannot upload** proprietary documents (trade secrets, personnel records, internal financial audits, confidential contracts) to external public AI services without end-to-end encryption and guaranteed multi-tenant data isolation (**Multi-Tenancy**).
+*   **The Hallucination Dilemma in Generic LLMs**: Public foundation models lack visibility into company-private governance policies; when queried, they easily fabricate plausible-sounding answers that contradict internal governance rules.
+*   **Hierarchical Structure of Corporate Governance Documents**: Core governance papers are formally organized in nested hierarchical layers (`Chapter -> Article -> Clause`) and frequently include internal cross-citations (*"Pursuant to Article 15 of this Regulation..."*). Conventional token-based chunking truncates clauses arbitrarily, stripping vital parent context.
 
-#### Architectural Flow Breakdown:
-
-##### 1. Flow C — GitOps Deployment Loop
-*   **C1 - C2**: Developers push code and IaC to the Git Repository. GitHub Actions triggers the artifact build pipeline.
-*   **C3**: CodeDeploy performs traffic shifting to new Lambda Version Aliases and updates EC2 Launch Templates.
-*   **C4**: Client builds, patches, and server bundles are uploaded to Amazon S3. Faulty releases trigger automatic rollbacks without interrupting live matchmaking.
-
-##### 2. Flow A — Player Auth & Security
-*   **A1 - A2**: Players log in; Cognito User Pool authenticates and issues JWT Tokens.
-*   **A3 - A4**: Clients exchange JWTs at Cognito Identity Pool for scoped temporary IAM credentials to download assets directly from S3.
-*   **A5**: JWT Tokens are passed to Flow R where API Gateway Cognito Authorizers validate requests before invoking the Matchmaker Lambda.
-
-##### 3. Flow R — Request & Matchmaking
-*   **R1 - R2**: Matchmaking requests pass through CloudFront + AWS WAF to API Gateway.
-*   **R3 - R4**: Matchmaker Lambda (in a Private Subnet) writes match state to Amazon DynamoDB via a VPC Gateway Endpoint.
-*   **G1 - G2**: Matchmaker Lambda calls the EC2 Control Plane via a private VPC Interface Endpoint to request warm instances from the ASG Spot fleet and opens dynamic Security Group rules.
-*   **G3 - G4**: EC2 Spot instances boot in the Public Subnet, using UserData scripts and IAM Instance Profiles to pull the latest server binaries from S3.
-*   **R5**: Lambda returns the public IP/Port to the client, establishing direct UDP/TCP game connections via the Internet Gateway.
-
-##### 4. Flow E — Asynchronous Processing
-*   **E1 - E3**: Post-match results are written to DynamoDB. DynamoDB Streams automatically trigger Async Lambda functions to process logs and push analytics, completely decoupled from matchmaking latency.
-
-#### AWS Services Used
--   **Amazon Cognito**: User authentication (User Pool) and scoped temporary credential delegation (Identity Pool).
--   **Amazon API Gateway & CloudFront + AWS WAF**: Edge request routing, DDoS protection, and web application security.
--   **AWS Lambda**: Serverless matchmaking logic, version aliasing, and post-match processing.
--   **Amazon EC2 Spot Fleet (Graviton ARM64)**: Cost-optimized live game server instances.
--   **Amazon DynamoDB**: Single Table Design for match state and event streaming via DynamoDB Streams.
--   **Amazon S3**: Centralized asset, build, patch, and server bundle repository.
--   **VPC Endpoints**: Gateway Endpoint (DynamoDB) and Interface Endpoint (EC2 API) for private, in-network service communication.
--   **AWS CodeDeploy & GitHub Actions**: Automated GitOps deployment pipeline.
--   **AWS KMS & Amazon CloudWatch**: Encryption at rest/in transit and comprehensive monitoring.
+#### 1.2. Cloud Modernization Objectives on AWS
+This proposal focuses on **modernizing and transitioning** the containerized application prototype into a production-ready **Enterprise Cloud Architecture on Amazon Web Services (AWS)** to achieve:
+1.  **High Availability (Multi-AZ Resiliency)**: Resilient operation across multiple Availability Zones with automated hardware failover.
+2.  **Enterprise-Grade Security (Zero-Trust Model)**: Isolated database subnets, IAM least-privilege roles, and end-to-end data-at-rest encryption via AWS KMS.
+3.  **Elastic Scalability (Auto-Scaling Serverless Containers)**: Amazon ECS Fargate decoupling high-speed REST APIs from heavy background ingestion workers (Celery + Redis).
+4.  **Cost-Optimized Total Cost of Ownership (TCO)**: Leveraging **AWS Graviton3 (ARM64)** for vector search and **Amazon S3 Lifecycle** tiering to achieve **65% – 75%** monthly infrastructure cost savings over traditional architectures.
 
 ---
 
-### 4. Technical Implementation
+### 2. System Architecture & Real Tech Stack
 
-#### Implementation Phases
-1.  **Phase 1: Architecture Research & Design (Month 1)**
-    *   Latency and bandwidth requirements analysis; DynamoDB Single Table schema design.
-    *   VPC network layout (Public Subnets for EC2 Game Fleet, Private Subnets for Matchmaker Lambda and VPC Endpoints).
-2.  **Phase 2: IaC & GitOps Pipeline Setup (Months 1-2)**
-    *   Provision AWS infrastructure using Terraform / AWS CDK.
-    *   Establish GitHub Actions CI/CD workflows for Flow C (artifact build, S3 upload, and CodeDeploy automation).
-3.  **Phase 3: Auth & Matchmaking Flow Implementation (Month 2)**
-    *   Configure Cognito User Pool & Identity Pool (Flow A).
-    *   Develop Matchmaker Lambda, API Gateway Cognito Authorizers, and CloudFront + WAF edge security (Flow R).
-4.  **Phase 4: EC2 Spot Fleet & VPC Endpoints Integration (Months 2-3)**
-    *   Create Launch Templates for Graviton ARM64 EC2 Spot Fleets with UserData boot scripts.
-    *   Deploy VPC Gateway Endpoints (DynamoDB) and Interface Endpoints (EC2 API).
-    *   Implement dynamic Security Group IP rule management for player sessions.
-5.  **Phase 5: Asynchronous Analytics & Load Testing (Month 3)**
-    *   Enable DynamoDB Streams and Async Lambda functions for post-match data pipelines (Flow E).
-    *   Perform load testing, simulate player traffic spikes, and validate Spot interruption handling.
+The application follows Clean Architecture principles, packaged as modular microservices:
 
-#### Technical Requirements & Security
--   **Multi-Layer Authentication**: Strict JWT token validation on all API endpoints.
--   **Dynamic Port Security**: No permanently open inbound ports. Security group rules are granted dynamically per player IP during active matches and revoked immediately post-match.
--   **Private Network Isolation**: Matchmaker Lambda resides in Private Subnets, interacting with DynamoDB and EC2 APIs via private VPC Endpoints.
--   **Data Protection**: Data at rest encrypted via AWS KMS; data in transit encrypted via TLS 1.3.
+*   **Project Source Code (GitHub Repository)**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
+*   **Frontend UI**: React 18 / Next.js — Modern, responsive interface delivering an interactive *"NotebookLM-style"* multi-document analysis experience.
+*   **Backend API**: FastAPI (Python 3.10+) — High-concurrency asynchronous RESTful API with OAuth2 / JWT authentication (30-minute Access Token, 7-day Refresh Token) and Clean Architecture repository patterns.
+*   **Relational Database**: PostgreSQL — Stores user credentials, session threads, chat histories, and document chunk metadata.
+*   **Vector Database**: Qdrant — High-speed vector similarity engine hosting 1024-dimensional embeddings, supporting instantaneous Hard-Filter payload execution filtered by `user_id` and `document_ids`.
+*   **Asynchronous Processing**: Celery Worker + Redis — Offloads compute-heavy ingestion jobs (OCR extraction, hierarchical chunking, and embedding generation) from the main API thread.
+*   **AI Pipeline (LangChain)**:
+    *   *Embedding Model*: `BAAI/bge-m3` — Dense embedding model with native Vietnamese multilingual support, running locally with 1024 dimensions.
+    *   *Re-ranking Model*: `BAAI/bge-reranker-v2-m3` — Cross-Encoder precision filter isolating the top 3 relevant context passages.
+    *   *Foundation LLM*: `Google Gemini 2.5 Flash` (with hybrid local fallback via Ollama and Amazon Bedrock).
+    *   *Optical Character Recognition (OCR)*: `PaddleOCR PP-OCRv4` — Fallback engine for extracting Vietnamese text from scanned paperwork, receipts, and images.
 
 ---
 
-### 5. Timeline & Milestones
+### 3. Core System Capabilities
 
-```
-+-----------------------------------------------------------------------------------+
-| Month 1: Research & IaC Infrastructure Design                                     |
-|   - VPC, Subnet, and Security Group layout design                                 |
-|   - DynamoDB Single Table schema and Serverless architecture definition           |
-+-----------------------------------------------------------------------------------+
-                                  |
-                                  v
-+-----------------------------------------------------------------------------------+
-| Month 2: Auth, Matchmaking & EC2 Spot Fleet Development                           |
-|   - Cognito User Pool / Identity Pool & S3 Scoped Credentials setup               |
-|   - API Gateway, Matchmaker Lambda & VPC Endpoints development                    |
-|   - Graviton ARM64 EC2 Spot Fleet Launch Template creation                        |
-+-----------------------------------------------------------------------------------+
-                                  |
-                                  v
-+-----------------------------------------------------------------------------------+
-| Month 3: GitOps Automation, Async Processing & Load Testing                       |
-|   - GitHub Actions + CodeDeploy CI/CD pipeline automation                         |
-|   - DynamoDB Streams + Async Lambda analytics pipeline implementation             |
-|   - Load testing, cost optimization, and final documentation                      |
-+-----------------------------------------------------------------------------------+
-```
+#### 3.1. Identity Management, Access Control & Multi-Tenancy
+*   Robust OAuth2 / JWT user authentication with cryptographically hashed passwords.
+*   **Absolute Multi-Tenant Data Isolation**: Every vector chunk in Qdrant is partitioned with `user_id` metadata. Queries issued by one employee or department can never cross over into another tenant's vector space.
+
+#### 3.2. Multi-Format Processing & Structured Clause Parsing
+*   **Broad Office File Support**: Ingests `.pdf`, `.docx`, `.xlsx`, `.pptx`, `.png`, and `.jpg`.
+*   **Hierarchical Parsing**: Automatically identifies governance documents with `Chapter -> Article -> Clause` structures, preserving complete parent breadcrumb context (`[Document Title] > [Chapter X] > [Article Y]`).
+*   **Integrated PaddleOCR**: Automatically engages OCR when scanned documents or raster image files are uploaded.
+*   **Excel to Markdown Conversion**: Converts numerical spreadsheets and tables into clean Markdown Tables so the LLM can easily reason over tabular data.
+*   **Cascading Lifecycle Deletion**: Deleting a document from the interface purges the database record in PostgreSQL, deletes the physical file, and cleans up all related vector embeddings in Qdrant.
+
+#### 3.3. Scoped Knowledge Spaces ("NotebookLM-Style")
+*   Users can attach individual chat sessions to a **specific list of selected documents** (e.g., one chat focused solely on *"Financial Regulations 2026"*, another on *"Vendor Contract A"*).
+*   Locks the AI within that specific knowledge scope, preventing cross-contamination from unrelated documents.
 
 ---
 
-### 6. Budget Estimation
+### 4. Deep-Dive AI RAG Pipeline Analysis
 
-By eliminating persistent NAT Gateways, avoiding standing Load Balancers, and utilizing Graviton ARM64 EC2 Spot instances, infrastructure costs are minimized:
+The system operates a specialized 3-stage intelligence pipeline:
 
-| AWS Service | Configuration / Estimated Scale | Estimated Monthly Cost (USD) |
+<div style="text-align: center; margin: 30px 0;">
+  <img src="/images/2-Proposal/pipeline_rag.png" alt="Deep-Dive AI RAG 3-Stage Pipeline Diagram" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Deep-Dive AI RAG 3-Stage Pipeline: Ingestion Pipeline, Agentic Retrieval & Generation</p>
+</div>
+
+#### Stage 1: Ingestion Pipeline (Intake & Pre-processing)
+*   **Dual-Engine Extraction**: Digital PDFs and DOCX are parsed via PyMuPDF; scanned documents trigger PaddleOCR.
+*   **Smart Segmentation**: Regex-based hierarchical parsing handles charters and contracts; non-structured prose uses `SemanticChunker` (80th percentile threshold).
+*   **Vector Ingestion**: Chunks are embedded via `BAAI/bge-m3` into Qdrant alongside rich metadata (`source`, `page`, `chuong`, `dieu`, `user_id`).
+
+#### Stage 2: Retrieval Pipeline (Agentic-Grade Context Gathering)
+*   **Self-Query Retriever**: Distills user intent and attributes (document category, effective year) into hard filters executed directly against Qdrant payloads.
+*   **Hybrid Search**: Merges dense semantic vector similarity and sparse keyword search (BM25) over candidate pools, discarding boilerplate table of contents.
+*   **Cross-Encoder Re-ranking**: `BAAI/bge-reranker-v2-m3` re-scores candidate pairs to isolate the top 3 most relevant segments.
+*   **Cross-Reference Agent (Second-Hop Search)**: Detects statutory citations (*"Pursuant to Article 12..."*). If absent from the initial context, it executes a second-hop search to append the referenced clause into context.
+
+#### Stage 3: Generation Pipeline (Synthesis & Citation Grounding)
+*   **Hierarchical Breadcrumb Injection**: Prepends document structure to every chunk fed to the LLM.
+*   **Anti-Hallucination Guardrails**: Mandates that the LLM return "Information not found in the documents" when ungrounded, and requires verified in-line citations.
+*   **LLM Synthesis**: Dispatches payload to Gemini 2.5 Flash or Amazon Bedrock for high-speed, grounded response generation.
+
+---
+
+### 5. Production Application Screenshots
+
+Below are actual production screenshots from the operational internal document assistant:
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/1.png" alt="Internal Knowledge Chatbot Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 1: Internal Knowledge Chatbot answering operational queries with precise clause citations</p>
+
+  <img src="/images/2-Proposal/2.png" alt="Verification and Citation Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 2: Grounded Q&A experience pairing answers with source filenames and page numbers</p>
+
+  <img src="/images/2-Proposal/3.png" alt="Internal Document Workspace" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 3: Document management repository and Knowledge Scope selector</p>
+
+  <img src="/images/2-Proposal/4.png" alt="Conversation Management Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px;">Figure 4: Threaded multi-session management inspired by NotebookLM</p>
+</div>
+
+---
+
+### 6. Deep-Dive Enterprise Cloud Architecture on AWS
+
+To transition the **Enterprise Knowledge AI RAG** system from local Docker environments into an enterprise-ready, production-grade cloud solution, the proposed AWS architecture adheres to High Availability (HA), Zero-Trust, and Serverless Containerization standards:
+
+#### 6.1. High-Level AWS Architecture Diagram:
+
+<div style="text-align: center; margin: 30px 0;">
+  <img src="/images/2-Proposal/enterprise_aws_architecture.png" alt="Enterprise AWS Cloud Architecture Diagram" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5: Detailed Production Architecture of Enterprise Knowledge AI RAG on AWS (Multi-AZ Resilient & Zero-Trust Security)</p>
+</div>
+
+---
+
+#### 6.2. Multi-AZ VPC Network Planning & Subnet Partitioning
+
+The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availability Zones** (`ap-southeast-1a` and `ap-southeast-1b`) in AWS Singapore Region:
+
+| Subnet Tier | Availability Zone | CIDR Block | Architectural Purpose |
+| :--- | :--- | :--- | :--- |
+| **Public Subnet 1** | `ap-southeast-1a` | `10.0.1.0/24` | Application Load Balancer Node 1, NAT Gateway 1, Internet Gateway ingress. |
+| **Public Subnet 2** | `ap-southeast-1b` | `10.0.2.0/24` | Application Load Balancer Node 2, NAT Gateway 2 (Failover Resiliency). |
+| **Private App Subnet 1** | `ap-southeast-1a` | `10.0.10.0/24` | ECS Fargate API Container, Celery Worker Node 1, ElastiCache Redis Primary. |
+| **Private App Subnet 2** | `ap-southeast-1b` | `10.0.20.0/24` | ECS Fargate API Replica, ElastiCache Redis Read Replica (Auto-failover). |
+| **Isolated Data Subnet 1**| `ap-southeast-1a` | `10.0.100.0/24`| RDS PostgreSQL Primary Instance, Qdrant Vector Store on EC2 Graviton (No Internet Inbound/Outbound). |
+| **Isolated Data Subnet 2**| `ap-southeast-1b` | `10.0.200.0/24`| RDS PostgreSQL Standby Replica (Multi-AZ Synchronous), EBS Snapshots. |
+
+> [!IMPORTANT]
+> **AWS PrivateLink Integration (VPC Endpoints)**:
+> Eliminates data leakage vectors when interacting with internal AWS services:
+> *   **Gateway Endpoint**: For **Amazon S3** (zero data egress cost, direct connection from private subnets).
+> *   **Interface Endpoints**: For **Amazon ECR**, **AWS Secrets Manager**, and **Amazon Bedrock**. Model inference queries never traverse the public Internet.
+
+---
+
+#### 6.3. Security Groups Least-Privilege Matrix
+
+Enforcing a **Zero-Trust Network Model** where no tier trusts another without explicitly defined firewall parameters:
+
+| Security Group | Protocol / Port | Allowed Source | Technical Purpose |
+| :--- | :--- | :--- | :--- |
+| **`sg-alb`** | TCP `443` (HTTPS)<br/>TCP `80` (HTTP) | `0.0.0.0/0` (via CloudFront) | Accepts incoming user traffic, redirects HTTP to HTTPS. |
+| **`sg-ecs-api`** | TCP `8000` | Only `sg-alb` | Restricts API access solely to the ALB, rejecting direct internet traffic. |
+| **`sg-ecs-worker`** | No Inbound | None | Worker acts strictly as an outbound consumer pulling jobs from Redis. |
+| **`sg-elasticache`**| TCP `6379` | Only `sg-ecs-api` & `sg-ecs-worker` | Guards Celery queue broker and session storage against unauthorized access. |
+| **`sg-rds`** | TCP `5432` | Only `sg-ecs-api` & `sg-ecs-worker` | Restricts database access strictly to authorized application containers. |
+| **`sg-qdrant`** | TCP `6333` | Only `sg-ecs-api` & `sg-ecs-worker` | Shields the vector engine, blocking external vector manipulation. |
+
+---
+
+#### 6.4. Application Module to AWS Service Mapping:
+
+| Application Source Component | AWS Service Equivalent | Architectural Role |
 | :--- | :--- | :--- |
-| **AWS Lambda** (Matchmaker & Async) | 1,000,000 requests/month, 512MB RAM | ~$0.20 |
-| **Amazon API Gateway** | 1,000,000 HTTP requests/month | ~$1.00 |
-| **Amazon DynamoDB** | On-Demand Mode (Read/Write capacity units) | ~$2.50 |
-| **Amazon Cognito** | < 10,000 MAU (Monthly Active Users) | **Free Tier** |
-| **Amazon S3** | 20GB Asset, Client Build, Patch & Server Bundle storage | ~$0.46 |
-| **Amazon CloudFront & AWS WAF** | 50GB Egress, WAF Basic Rules | ~$3.50 |
-| **Amazon EC2 Spot Fleet** (Graviton ARM64) | `c6g.large` Spot Instance (~$0.02/hr), avg. 100 match hours/month | ~$2.00 |
-| **VPC Endpoints** | Gateway Endpoint (Free) + Interface Endpoint | ~$7.20 |
-| **Total Estimated Cost** | **Serverless & Event-Driven Game Backend** | **~$16.86 USD / Month** |
-
-> [!TIP]
-> **Key Cost Highlights**:
-> 1. Zero NAT Gateway charges (saves ~$32/month).
-> 2. Zero standing Load Balancer charges (saves ~$20/month).
-> 3. Graviton ARM64 EC2 Spot reduces compute cost by 70-80%.
-> 4. Centralized S3 bundling maintains thin AMIs with minimal snapshot storage costs.
+| **Frontend Web (React / Next.js)** | **Amazon S3 + CloudFront** | S3 hosts static artifacts; CloudFront CDN distributes globally with free SSL via ACM. |
+| **Edge Firewall & Load Balancer** | **AWS WAF + ALB** | WAF inspects traffic with `AWSManagedRulesCommonRuleSet`; ALB balances loads across Multi-AZ targets. |
+| **Backend API (FastAPI)** | **Amazon ECS Fargate** | Serverless API containers auto-scaling based on CPU utilization thresholds (70%). |
+| **Background Processing (Celery)** | **Amazon ECS Fargate Worker** | Specialized asynchronous containers executing OCR, hierarchical parsing, and vector embeddings. |
+| **Queue Broker & Session Cache** | **Amazon ElastiCache Redis** | Multi-AZ Redis cluster with automated failover and sub-millisecond latency. |
+| **Relational Database (PostgreSQL)** | **Amazon RDS PostgreSQL** | `db.t4g.medium` Multi-AZ with daily automated backups and storage auto-scaling. |
+| **Vector Database (Qdrant)** | **Qdrant on EC2 Graviton (ARM64)** | `c7g.xlarge` powered by AWS Graviton3, equipped with `gp3` storage (3000 IOPS, 125 MB/s throughput). |
+| **Raw Storage (Document Lake)** | **Amazon S3 (Standard + Glacier)** | Automated S3 Lifecycle transitioning documents older than 90 days to Glacier Instant Retrieval; SSE-KMS encrypted. |
+| **Foundation Models (LLM)** | **Amazon Bedrock / Google Gemini** | Connects to Bedrock via VPC Interface Endpoint; Gemini 2.5 Flash via NAT Gateway. |
+| **Secrets & Observability** | **AWS Secrets Manager & CloudWatch** | Centralizes secrets management with rotation; CloudWatch collects logs and triggers SNS alerts. |
 
 ---
 
-### 7. Risk Assessment
+#### 6.5. IAM Governance & Zero-Trust Security Framework
 
-#### Risk Matrix & Mitigation Strategies
+Strict separation of duties enforced through granular IAM Roles:
 
-| Identified Risk | Impact | Probability | Mitigation Strategy |
-| :--- | :---: | :---: | :--- |
-| **EC2 Spot Interruption** | High | Medium | Utilize Auto Scaling Groups with diversified Spot pools (Multi-AZ / Multi-Instance types). ASGs automatically rebalance upon receiving 2-minute interruption notices. |
-| **Traffic Spikes** | Medium | Medium | Metagame components (Cognito, API Gateway, Lambda, DynamoDB) are pure Serverless and auto-scale instantly with incoming demand. |
-| **Security Breach / Unauthorized Access** | High | Low | Enforce JWT token verification at API Gateway. Dynamically revoke Security Group rules post-match. Private Subnet isolation via VPC Endpoints. |
-| **Faulty Build Deployment** | Medium | Low | GitOps pipeline supports automated zero-downtime rollbacks for Lambda Version Aliases and Launch Templates. |
+1.  **ECS Task Execution Role (`ecsTaskExecutionRole`)**:
+    *   Grants ECS Agent permissions to pull container images from **Amazon ECR**.
+    *   Grants rights to create log streams in **Amazon CloudWatch Logs**.
+    *   Grants permission to decrypt sensitive environment variables (DB secrets, API keys) from **AWS Secrets Manager** (`secretsmanager:GetSecretValue`).
+2.  **ECS Task Role (`ecsLegalRAGTaskRole`)**:
+    *   Grants FastAPI runtime permissions to read/write objects in **Amazon S3 Document Lake** (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`).
+    *   Grants cryptographic access to **AWS KMS Customer Managed Keys** (`kms:Decrypt`, `kms:GenerateDataKey`).
+    *   Grants model invocation privileges on **Amazon Bedrock** (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`).
+3.  **End-to-End Cryptography**:
+    *   *In-Transit*: Enforces TLS 1.3 encryption across all client, CDN, ALB, and container hops.
+    *   *At-Rest*: All S3 Buckets, RDS PostgreSQL data volumes, and Qdrant EBS drives are encrypted using AWS KMS Customer Managed Keys.
 
 ---
 
-### 8. Expected Outcomes
+#### 6.6. CI/CD GitOps Pipeline & Telemetry Observability
 
-*   **Architectural Excellence**: Successful deployment of a Production-Ready, Serverless & Event-Driven Game Backend delivering ultra-low matchmaking latency and instant scalability.
-*   **Extreme Cost Efficiency**: Demonstrates a true pay-as-you-go operational model, delivering >75% cost savings over traditional 24/7 server infrastructure.
-*   **Long-Term Value**: Provides a reusable **Architectural Blueprint** for deploying future live-service games on AWS.
+<div style="text-align: center; margin: 30px 0;">
+  <img src="/images/2-Proposal/cicd_observability.png" alt="CI/CD GitOps Pipeline & Telemetry Observability Diagram" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 6: CI/CD GitOps Automated Pipeline & Comprehensive Observability Architecture on AWS</p>
+</div>
+
+*   **Zero-Downtime Rolling Deployments**: ECS Fargate provisions new container tasks, waits for healthy ALB target responses (`/api/health`), and only then terminates obsolete tasks.
+*   **Deep Observability**:
+    *   **CloudWatch Container Insights**: Tracks container CPU, memory utilization, and network traffic.
+    *   **AWS X-Ray**: Distributed tracing isolates latency bottlenecks across embedding generation, vector querying, and LLM inference.
+
+---
+
+### 7. Cost Analysis & Investment Optimization (AWS Cost Breakdown & TCO)
+
+#### 7.1. Itemized Monthly AWS Service Bill Estimate:
+
+| AWS Service | Selected Configuration | Pricing Methodology | Estimated Monthly Cost |
+| :--- | :--- | :--- | :--- |
+| **Amazon ECS Fargate (API)** | 2 Always-on Tasks (0.5 vCPU, 1 GB RAM) | ~$0.024/hr x 730 hrs x 2 | ~$35.00 |
+| **Amazon ECS Fargate (Worker)**| 1 On-demand Task (1.0 vCPU, 2 GB RAM) | Runs ~120 hrs/mo on intake spikes | ~$6.50 |
+| **EC2 Qdrant (Graviton3)** | 1x `c7g.xlarge` (4 vCPU, 8 GB RAM) + 100GB gp3 | ~$0.145/hr x 730 hrs + 100GB gp3 | ~$115.00 |
+| **Amazon RDS PostgreSQL** | `db.t4g.medium` (2 vCPU, 4 GB RAM) Multi-AZ | ~$0.068 x 2 x 730 hrs + 50GB storage | ~$58.00 |
+| **Amazon ElastiCache Redis** | `cache.t4g.micro` (0.5 GB RAM) Single-node | ~$0.016/hr x 730 hrs | ~$11.50 |
+| **Amazon S3 Document Lake** | 200 GB S3 Standard + 500 GB S3 Glacier Tier | Storage + PUT/GET Request charges | ~$12.00 |
+| **CloudFront & AWS WAF** | 1TB Egress Data Transfer + WAF Rule Group | 1TB Free Tier + WAF Web ACL ($5/mo) | ~$6.00 |
+| **Networking & Telemetry** | 1x ALB + 1x NAT Gateway + CloudWatch Logs | ALB base + NAT Gateway data processing | ~$35.00 |
+| **TOTAL ESTIMATED MONTHLY** | **AWS Serverless & Graviton Model** | **Production-Grade Infrastructure** | **~$270 – $280 / month** |
+
+#### 7.2. Traditional Dedicated Architecture vs. Proposed AWS Model:
+
+| Comparison Metric | Traditional Dedicated Model (24/7 x86 EC2) | Proposed AWS Model (Serverless & Graviton) | Optimization Level |
+| :--- | :--- | :--- | :--- |
+| **Compute Efficiency** | Servers run at 100% capacity overnight | Fargate scales dynamically during office hours | **~73% Savings** |
+| **Vector Store Efficiency** | Expensive, power-hungry x86 Intel/AMD nodes | AWS Graviton3 ARM64 optimizes price-performance | **~25% Savings** |
+| **Document Storage** | Fixed-capacity expensive EBS block drives | S3 Standard paired with automated S3 Glacier lifecycle | **~80% Savings** |
+| **Maintenance & Operations** | Dedicated DevOps staff required for OS patching | Fully managed services (RDS, Fargate) automate patching | **Substantial reduction in human operational overhead** |
+| **TOTAL MONTHLY TCO** | **~$600 – $800 / month** | **~$240 – $280 / month** | **~65% – 70% Overall Savings** |
+
+---
+
+### 8. Full Alignment with the 6 Pillars of the AWS Well-Architected Framework
+
+1.  **Operational Excellence**: Infrastructure provisioned as code (IaC); automated testing and deployment pipelines managed through GitHub Actions and Amazon ECR; centralized telemetry with CloudWatch and AWS X-Ray.
+2.  **Security (Zero-Trust Model)**: Complete network isolation of databases in Isolated Subnets; IAM least-privilege policies separating Execution and Task roles; end-to-end encryption at-rest and in-transit via AWS KMS and TLS 1.3.
+3.  **Reliability**: Dual-AZ distribution across 2 Availability Zones; automated failover with RDS Multi-AZ and ElastiCache; self-healing container task recovery on ECS Fargate.
+4.  **Performance Efficiency**: Matrix-optimized **AWS Graviton3 ARM64** processors for Qdrant Vector DB; in-memory caching via ElastiCache Redis; edge caching via CloudFront CDN.
+5.  **Cost Optimization**: Pay-as-you-go serverless billing eliminating idle runtime waste; automated S3 Lifecycle tiering transitioning stale files to S3 Glacier.
+6.  **Sustainability (Green Cloud)**: Adopting **AWS Graviton3** chips reduces energy consumption by **up to 60%** compared to equivalent x86 instances, while serverless computing eliminates idle server carbon footprints.
+
+---
+
+### 9. Implementation Roadmap & Quality Verification Metrics (KPIs)
+
+*   **5-Phase Cloud Deployment Roadmap**:
+    1.  *Phase 1 (Networking & Security Baseline)*: Provision VPC `10.0.0.0/16`, configure Public/Private/Isolated Subnets across 2 AZs, establish Security Groups and VPC Endpoints.
+    2.  *Phase 2 (Storage & Database Infrastructure)*: Set up KMS-encrypted S3 Document Lake, provision RDS PostgreSQL Multi-AZ, and launch Graviton EC2 for Qdrant.
+    3.  *Phase 3 (Compute Tier Packaging & Rollout)*: Build Docker containers for FastAPI and Celery Worker, push to Amazon ECR, configure ECS Task Definitions, and launch ECS Fargate behind ALB.
+    4.  *Phase 4 (Frontend & Edge Distribution)*: Deploy React build to Amazon S3, configure CloudFront CDN distribution, bind ACM SSL certificates, and activate AWS WAF rules.
+    5.  *Phase 5 (End-to-End Verification & Benchmarking)*: Ingest sample internal enterprise regulations and policies; validate recursive cross-reference resolution and measure latency under load.
+*   **Target Key Performance Indicators (KPIs)**:
+    *   **Context Precision**: Over **95%** accuracy in retrieving correct internal policy clauses.
+    *   **Filter Accuracy**: Over **98%** precision in Self-Query extraction of metadata filters.
+    *   **Cross-Reference Resolution Rate**: Over **95%** success rate in autonomously fetching cross-statutory citations.
+    *   **Response Latency (TTFT)**: Time to First Token under **2.5 seconds** for streaming output.
+    *   **Service Uptime SLA**: Guaranteed **99.9%** availability powered by Multi-AZ infrastructure.

@@ -35,7 +35,6 @@ aliases:
 *   **Tuan Vu**: Software Engineer & Open-Source AI Agent Specialist.
 *   **Nguyen Thu & Nam La**: Digital Transformation & Enterprise AI Solution Consultants.
 *   **Henry (Duc) Bui**: Senior Tech Lead & Agile Engineering Practitioner.
-*   **Dung Luong**: Cloud & AI Agent Solution Architect on AWS.
 
 ---
 
@@ -63,13 +62,7 @@ aliases:
     *   The "With AI, Not By AI" mindset: AI functions as a force multiplier accelerating coding, testing, refactoring, and CI/CD releases.
     *   Emphasized the engineer's core role in architecture governance, risk mitigation, and code review rather than blindly relying on generative tools.
 
-#### 5. Selecting the Right AI Agent Pattern on AWS
-*   **Speaker**: Dung Luong.
-*   **Key Highlights**:
-    *   Architectural taxonomy of AI Agents: *Single Agent, Multi-Agent Collaboration, Router Pattern, Evaluator-Optimizer, Human-in-the-loop*.
-    *   AWS service mapping: leveraging **Amazon Bedrock (Agents & Knowledge Bases)**, combined with **AWS Lambda** for serverless tool execution, **Amazon Step Functions** for state machine orchestration, and **Amazon DynamoDB** for session state persistence.
-
-#### 6. Tea Break & Networking
+#### 5. Tea Break & Networking
 *   Engaged in direct discussions with speakers and fellow community members at the AWS Hanoi Office regarding Cloud/AI career pathways, internship experiences, and modern architectural practices.
 
 ---
@@ -93,6 +86,6 @@ aliases:
 
 ### Practical Application to Internship & Capstone Project
 
-*   **Application to Capstone Project**: Applied serverless architecture principles (AWS Lambda, DynamoDB, API Gateway) learned at the meetup to the **Serverless & Event-Driven Game Backend on AWS** project.
-*   **Architecture Expansion**: Explored pairing DynamoDB Streams with Lambda for asynchronous event processing, laying the groundwork for intelligent player telemetry analytics.
-*   **Engineering Discipline**: Adopted the "Ship Fast with AI" ethos to streamline technical research, documentation creation, and automated Hugo reporting.
+*   **Application to Capstone Project**: Applied AI agent architectures and cloud integration models learned at the meetup to develop the **AI Chatbot RAG** system — addressing enterprise intelligent document retrieval, mitigating model hallucinations, and ensuring strict source attribution.
+*   **AWS Cloud Expansion**: Researched deploying Chatbot RAG components onto AWS cloud infrastructure (containerized backend on ECS/App Runner, document storage on Amazon S3, and high-performance vector database integration).
+*   **Engineering Productivity**: Leveraged AI tools as assistive accelerators for code generation, technical research, and system testing, while actively maintaining strict oversight over architecture design and code quality.

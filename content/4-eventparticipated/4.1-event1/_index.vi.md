@@ -35,7 +35,6 @@ aliases:
 *   **Tuấn Vũ**: Kỹ sư phần mềm & Chuyên gia AI Agent mã nguồn mở.
 *   **Nguyễn Thu & Nam La**: Chuyên gia tư vấn giải pháp Chuyển đổi số & AI Doanh nghiệp.
 *   **Henry (Đức) Bùi**: Chuyên gia công nghệ cao cấp, chuyên sâu về phương pháp phát triển sản phẩm tinh gọn.
-*   **Dũng Lương**: Chuyên gia giải pháp Kiến trúc Cloud & AI Agent trên nền tảng AWS.
 
 ---
 
@@ -63,13 +62,7 @@ aliases:
     *   Phương pháp tư duy "Đồng hành cùng AI" (With AI, not By AI): AI đóng vai trò như một đòn bẩy gia tốc (accelerator) giúp kỹ sư viết mã, kiểm thử, refactor và triển khai sản phẩm thần tốc.
     *   Nhấn mạnh tầm quan trọng của người kỹ sư trong việc làm chủ kiến trúc, kiểm soát rủi ro bảo mật và thẩm định chất lượng thay vì phó mặc hoàn toàn cho công cụ sinh mã.
 
-#### 5. Selecting the Right AI Agent Pattern on AWS
-*   **Diễn giả**: Dũng Lương.
-*   **Nội dung**:
-    *   Phân loại các mẫu kiến trúc AI Agent phổ biến: *Single Agent, Multi-Agent Collaboration, Router Pattern, Evaluator-Optimizer, Human-in-the-loop*.
-    *   Hướng dẫn lựa chọn dịch vụ AWS tối ưu cho từng mẫu thiết kế: sử dụng **Amazon Bedrock (Agents & Knowledge Bases)**, kết hợp với **AWS Lambda** thực thi hàm không máy chủ, **Amazon Step Functions** điều phối quy trình phức tạp và **Amazon DynamoDB** lưu trữ session state.
-
-#### 6. Tea Break & Networking
+#### 5. Tea Break & Networking
 *   Khoảng thời gian giao lưu trực tiếp tại văn phòng AWS Hà Nội, trao đổi với các diễn giả và các thành viên cộng đồng AWS về cơ hội thực tập, định hướng nghề nghiệp Cloud/DevOps/AI và giải đáp các thắc mắc chuyên sâu.
 
 ---
@@ -93,9 +86,9 @@ aliases:
 
 ### Ứng Dụng Vào Đợt Thực Tập & Dự Án
 
-*   **Ứng dụng vào Capstone Project**: Vận dụng tư duy kiến trúc Serverless (AWS Lambda, DynamoDB, API Gateway) đã học tại meetup vào dự án xây dựng hệ thống **Serverless & Event-Driven Game Backend trên AWS**.
-*   **Định hướng mở rộng**: Tìm hiểu cách kết hợp DynamoDB Streams để phân tích dữ liệu trận đấu và thử nghiệm tích hợp các mô hình phân tích hành vi người chơi với Amazon Bedrock.
-*   **Tác phong làm việc**: Áp dụng triết lý "Ship Fast with AI" để tăng tốc quá trình học hỏi, viết tài liệu kỹ thuật và xây dựng hệ thống báo cáo thực tập trên nền tảng Hugo một cách chuyên nghiệp, chỉn chu.
+*   **Ứng dụng vào Capstone Project**: Vận dụng kiến thức về kiến trúc AI Agent và các mô hình tích hợp đám mây đã học tại meetup vào dự án xây dựng hệ thống **AI Chatbot RAG** — giải quyết bài toán tra cứu văn bản thông minh, hạn chế ảo giác (hallucination) và trích xuất thông tin có trích dẫn nguồn chuẩn xác.
+*   **Định hướng mở rộng trên AWS**: Nghiên cứu đưa các thành phần của hệ thống Chatbot RAG lên hạ tầng đám mây AWS (sử dụng container trên ECS/App Runner, lưu trữ tài liệu với Amazon S3, và kết nối CSDL Vector Database hiệu năng cao).
+*   **Tối ưu năng suất kỹ thuật**: Tận dụng AI như một công cụ hỗ trợ tăng tốc quá trình viết mã, tìm hiểu tài liệu và kiểm thử giải pháp, đồng thời luôn chủ động kiểm soát chặt chẽ kiến trúc và chất lượng phần mềm.
 
 ---
 

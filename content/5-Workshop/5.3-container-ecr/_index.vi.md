@@ -1,4 +1,4 @@
----
+﻿---
 title: "Đóng gói Container & Đẩy Image lên Amazon ECR"
 date: 2026-08-25
 weight: 3
@@ -42,7 +42,7 @@ Bài lab 5.3 tập trung vào quy trình tự động hóa chu trình DevOps:
 ### 2. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Điều hướng đến giao diện quản trị IAM Users
-Đăng nhập **AWS Management Console** $\rightarrow$ chọn dịch vụ **Identity and Access Management (IAM)** $\rightarrow$ chọn mục **IAM users** trên thanh điều hướng bên trái.
+Đăng nhập **AWS Management Console** → chọn dịch vụ **Identity and Access Management (IAM)** → chọn mục **IAM users** trên thanh điều hướng bên trái.
 
 <div align="center">
   <img src="/images/5-Workshop/5.3/5.3.1-iam-users-nav.png" alt="Điều hướng đến mục IAM Users trên AWS Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 40%; height: auto; margin-bottom: 20px;" />
@@ -81,7 +81,7 @@ Bài lab 5.3 tập trung vào quy trình tự động hóa chu trình DevOps:
 
 #### Bước 4: Hoàn tất khởi tạo User & Tạo Access Key
 1. Bấm **Create user**. Màn hình thông báo màu xanh `User created successfully` xác nhận hoàn thành.
-2. Truy cập vào user `github-action` $\rightarrow$ chọn tab **Security credentials** $\rightarrow$ chọn **Create access key**.
+2. Truy cập vào user `github-action` → chọn tab **Security credentials** → chọn **Create access key**.
 3. Chọn Use case: **Third-party service (GitHub Actions)**.
 4. Tải file CSV chứa **Access Key ID** và **Secret Access Key**.
 
@@ -90,7 +90,7 @@ Bài lab 5.3 tập trung vào quy trình tự động hóa chu trình DevOps:
   <p><em>Hình 5.3.1.5: Thông báo User created successfully xác nhận người dùng github-action đã sẵn sàng</em></p>
 </div>
 
-5. Cấu hình cặp khóa bí mật này vào GitHub Repo tại: **Settings** $\rightarrow$ **Secrets and variables** $\rightarrow$ **Actions**:
+5. Cấu hình cặp khóa bí mật này vào GitHub Repo tại: **Settings** → **Secrets and variables** → **Actions**:
    * `AWS_ACCESS_KEY_ID`: `AKIA...`
    * `AWS_SECRET_ACCESS_KEY`: `wJalr...`
    * `AWS_REGION`: `ap-southeast-1`
@@ -118,7 +118,7 @@ Bài lab 5.3 tập trung vào quy trình tự động hóa chu trình DevOps:
 ### 3. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo ECR Repository cho Backend
-1. Truy cập **Amazon ECR Console** $\rightarrow$ chọn **Repositories** $\rightarrow$ bấm **Create repository**.
+1. Truy cập **Amazon ECR Console** → chọn **Repositories** → bấm **Create repository**.
 2. **General settings**:
    * Visibility settings: **Private**.
    * Repository name: **`enterprise-rag-backend`**.

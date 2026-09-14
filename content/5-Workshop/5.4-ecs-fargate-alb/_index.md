@@ -1,4 +1,4 @@
----
+﻿---
 title: "Deploying Application Server & Application Load Balancer (ALB)"
 date: 2026-08-25
 weight: 4
@@ -46,7 +46,7 @@ Lab 5.4 provides a complete deployment guide:
 ### 2. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Launch Instance in EC2 Launch Wizard
-1. Open **EC2 Console** $\rightarrow$ **Instances** $\rightarrow$ Click **Launch instances**.
+1. Open **EC2 Console** → **Instances** → Click **Launch instances**.
 2. **Name and tags**: Set name to **`enterprise-rag-server`**.
 3. **Application and OS Images**: Select **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type**.
 4. **Instance type**: Select a compute-balanced instance (e.g., `t3.small` / 2 vCPU, 2 GB RAM).
@@ -63,7 +63,7 @@ Lab 5.4 provides a complete deployment guide:
 1. Under **Network settings**, click **Edit**.
 2. **VPC**: Select project VPC **`vpc-03228d0b15b9ea7be`** (`MyProjectVPC`).
 3. **Subnet**: Select designated project subnet.
-4. **Firewall (security groups)**: Choose **Select existing security group** $\rightarrow$ assign **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
+4. **Firewall (security groups)**: Choose **Select existing security group** → assign **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
 5. **Configure storage**: Allocate 30 GiB gp3 General Purpose SSD root volume.
 
 <div align="center">
@@ -116,7 +116,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 ### 2. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Provision Application Load Balancer
-1. Navigate to **EC2 Console** $\rightarrow$ **Load Balancers** $\rightarrow$ Click **Create load balancer**.
+1. Navigate to **EC2 Console** → **Load Balancers** → Click **Create load balancer**.
 2. Select **Application Load Balancer (ALB)**.
 3. Configure basic settings:
    * Load balancer name: **`rag-lb`**.
@@ -135,7 +135,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 ---
 
 #### Step 2: Provision 2 Target Groups
-Open **Target Groups** $\rightarrow$ Click **Create target group**:
+Open **Target Groups** → Click **Create target group**:
 1. **Backend Target Group (`rag-backend-tg`)**:
    * Target type: `Instances`.
    * Protocol: `HTTP`, Port: `8000`.
@@ -213,7 +213,7 @@ On the `rag-lb` management page, select the **Listeners and rules** tab. Listene
 ---
 
 #### Step 2: Define Path Filter Conditions
-1. Click **Manage rules** $\rightarrow$ **Add rule**.
+1. Click **Manage rules** → **Add rule**.
 2. Select condition type: **Path**.
 3. Specify values: `/api/*` and `/docs*`.
 
@@ -271,7 +271,7 @@ $$\text{URL: } \texttt{http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com
 {"message":"Hệ thống RAG Backend đang hoạt động trơn tru!"}
 ```
 
-This validates that the communication path **Internet Client $\rightarrow$ ALB $\rightarrow$ Target Group $\rightarrow$ Docker Container on EC2** is fully functional with minimal network latency.
+This validates that the communication path **Internet Client → ALB → Target Group → Docker Container on EC2** is fully functional with minimal network latency.
 
 ---
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Data Layer & Vector Database Deployment"
 date: 2026-08-25
 weight: 2
@@ -58,7 +58,7 @@ Lab 5.2 details the end-to-end setup of a hardened data tier:
 ### 3. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Store New Secret in AWS Secrets Manager
-1. Navigate to **AWS Secrets Manager Console** $\rightarrow$ Click **Store a new secret**.
+1. Navigate to **AWS Secrets Manager Console** → Click **Store a new secret**.
 2. Select **Secret type**: **Other type of secret**.
 3. Under **Key/value pairs**, add the database connection parameters and RAG system flags.
 4. Set Secret name: `rag/production/credentials`.
@@ -125,8 +125,8 @@ def load_secrets_from_aws(secret_name="rag/production/credentials", region_name=
 ### 3. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Provision RDS Instance via Console
-1. Navigate to **Amazon RDS Console** $\rightarrow$ **Databases** $\rightarrow$ Click **Create database**.
-2. Select **Standard create** $\rightarrow$ Engine: **PostgreSQL (16.3)**.
+1. Navigate to **Amazon RDS Console** → **Databases** → Click **Create database**.
+2. Select **Standard create** → Engine: **PostgreSQL (16.3)**.
 3. Templates: **Free tier** / **Dev/Test**.
 4. Settings:
    * DB instance identifier: `rag-db`.

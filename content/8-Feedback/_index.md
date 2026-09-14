@@ -1,9 +1,9 @@
 ---
 title: "Sharing and Feedback"
 date: 2026-09-26
-weight: 7
+weight: 8
 chapter: false
-pre: " <b> 7. </b> "
+pre: " <b> 8. </b> "
 ---
 
 Having completed my meaningful internship journey in the **First Cloud AI Journey** program, I would like to share my personal feedback and suggestions to help improve the experience for future cohorts:

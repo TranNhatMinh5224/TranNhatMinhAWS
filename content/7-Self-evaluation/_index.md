@@ -1,9 +1,9 @@
 ---
 title: "Self-Assessment"
 date: 2026-09-25
-weight: 6
+weight: 7
 chapter: false
-pre: " <b> 6. </b> "
+pre: " <b> 7. </b> "
 ---
 
 During my internship at **Amazon Web Services Viet Nam Company Limited (AWS Viet Nam)** from **03/08/2026** to **27/09/2026**, I had the opportunity to learn, practice, and apply my Computer Science academic knowledge from Hanoi University of Civil Engineering (HUCE) to a real-world cloud computing environment.
@@ -13,19 +13,19 @@ In this internship, I participated in the **Workforce Bootcamp - First Cloud AI 
 To objectively reflect on my internship progress, I evaluate myself based on the following criteria:
 
 | No. | Criteria | Description | Good | Fair | Average |
-| --- | --- | --- | --- | --- | --- |
-| 1 | **Professional knowledge & skills** | Understanding of AWS services, setting up secure configurations, and lab quality | ☐ | ✅ | ☐ |
+| :---: | --- | --- | :---: | :---: | :---: |
+| 1 | **Professional knowledge & skills** | Understanding of AWS services, setting up secure configurations, and lab quality | ✅ | ☐ | ☐ |
 | 2 | **Ability to learn** | Learning speed of new cloud concepts, architectures, and tech tools | ✅ | ☐ | ☐ |
-| 3 | **Proactiveness** | Taking initiative to search docs and completing assignments without reminders | ☐ | ✅ | ☐ |
+| 3 | **Proactiveness** | Taking initiative to search docs and completing assignments without reminders | ✅ | ☐ | ☐ |
 | 4 | **Sense of responsibility** | Ensuring lab works and worklogs are completed on schedule | ✅ | ☐ | ☐ |
 | 5 | **Discipline** | Compliance with attendance, workshop hours, and bootcamp rules | ✅ | ☐ | ☐ |
 | 6 | **Progressive mindset** | Receptiveness to feedback from mentors and instructors to improve work | ✅ | ☐ | ☐ |
-| 7 | **Communication** | Expressing technical queries and reporting progress clearly | ☐ | ✅ | ☐ |
+| 7 | **Communication** | Expressing technical queries and reporting progress clearly | ✅ | ☐ | ☐ |
 | 8 | **Teamwork** | Sharing knowledge, collaborating, and supporting study group peers during labs | ✅ | ☐ | ☐ |
 | 9 | **Professional conduct** | Respecting mentors, peers, and maintaining workplace ethics | ✅ | ☐ | ☐ |
-| 10 | **Problem-solving skills** | Diagnosing environment setup issues and troubleshooting errors | ☐ | ✅ | ☐ |
-| 11 | **Contribution to project/team** | Overall performance and contribution to the final capstone project | ☐ | ✅ | ☐ |
-| 12 | **Overall** | General assessment of progress and achievements during the internship | ☐ | ✅ | ☐ |
+| 10 | **Problem-solving skills** | Diagnosing environment setup issues and troubleshooting errors | ✅ | ☐ | ☐ |
+| 11 | **Contribution to project/team** | Overall performance and contribution to the final capstone project | ✅ | ☐ | ☐ |
+| 12 | **Overall** | General assessment of progress and achievements during the internship | ✅ | ☐ | ☐ |
 
 ### Areas for Self-Improvement
 

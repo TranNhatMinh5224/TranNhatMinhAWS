@@ -17,15 +17,10 @@ Trong quá trình thực tập, em đã tham gia các sự kiện với mỗi s�
 
 &emsp;**Đơn vị tổ chức:** AWS Vietnam Community
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
+&emsp;**Vai trò trong sự kiện:** Người tham dự
 
-### [Event 2](4.2-event2/)
-&emsp;**Tên cuộc thi:** FCAJ BUILDRATHON 2026 — Season 01
+---
 
-&emsp;**Thời gian phát động & Đăng ký:** Tháng 09/2026 (Hạn chót: 15/09/2026 — Hành trình 6 tháng)
+> [!TIP]
+> Đối với cuộc thi phát triển sản phẩm công nghệ dài hạn **FCAJ BUILDRATHON 2026 — Season 01**, chi tiết về quá trình thành lập đội, nhật ký làm việc và kết quả đánh giá các vòng thi được trình bày chuyên sâu tại mục [6. Cuộc thi & Hoạt động mở rộng](../6-competitions/).
 
-&emsp;**Địa điểm sinh hoạt & Chung kết:** Văn phòng AWS Vietnam – Tầng 7, Grand Terra, 36 Cát Linh, Hà Nội
-
-&emsp;**Đơn vị tổ chức:** Cộng đồng First Cloud Journey (FCAJ) phối hợp cùng AWS Vietnam
-
-&emsp;**Vai trò tham gia:** Thí sinh / Đội thi phát triển giải pháp Cloud & AI 

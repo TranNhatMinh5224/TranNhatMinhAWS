@@ -1,27 +1,27 @@
 ---
 title: "Worklog Week 8"
-date: 2026-08-03
+date: 2026-09-07
 weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
 
 ### Week 8 Objectives:
-* Finalize and deliver the Capstone Project: **Serverless & Event-Driven Game Backend on AWS**.
-* Implement cost-effective architectures utilizing EC2 Spot Fleet (Graviton ARM64), Cognito, API Gateway, Lambda Matchmaker, and DynamoDB.
-* Establish GitOps CI/CD pipelines via AWS CodeDeploy and GitHub Actions.
+* Finalize and deliver the Capstone Project: **Enterprise Knowledge AI RAG Assistant on AWS** (Internal Enterprise Document & Policy Knowledge Engine).
+* Implement cost-effective and highly secure architectures: Multi-AZ Zero-Trust VPC, Amazon S3 Document Lake, RDS PostgreSQL, Qdrant Vector Store on EC2 Graviton (ARM64), ECS Fargate Serverless, and AI Inference integration (Amazon Bedrock / Gemini API).
+* Establish CI/CD GitOps pipelines via GitHub Actions, Amazon ECR, ECS Rolling Update, and CloudWatch Telemetry.
 * Package Workshop lab guides and summarize the complete 8-week internship results.
 
 ### Tasks Scheduled for this Week:
 | Day | Task | Start Date | End Date | Resource |
 | --- | --- | --- | --- | --- |
-| 2 | System architecture design, DynamoDB Single Table & Cognito Pools | 21/09/2026 | 22/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | Develop Matchmaker Lambda, API Gateway Authorizer & VPC Endpoints | 22/09/2026 | 23/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | Configure EC2 Spot Fleet, Launch Templates & CodeDeploy GitOps | 24/09/2026 | 25/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | Asynchronous post-match analytics with DynamoDB Streams & Final Review | 25/09/2026 | 27/09/2026 | <https://github.com/Nothingtoread/fighting-game> |
+| 2 | System architecture design: Multi-AZ VPC, Security Groups & Amazon S3 Document Lake | 21/09/2026 | 22/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3 | Provision Amazon RDS PostgreSQL, deploy Qdrant Vector DB on EC2 Graviton & configure Secrets Manager | 22/09/2026 | 23/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | Package FastAPI backend Dockerfile, push Image to Amazon ECR & configure ECS Fargate Service | 24/09/2026 | 25/09/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | Configure Application Load Balancer (ALB), AI inference integration, CloudWatch telemetry & final review | 25/09/2026 | 27/09/2026 | <https://github.com/TranNhatMinh5224/RAG> |
 
 ### Results Achieved in Week 8:
-* Successfully built and verified Capstone Project on AWS infrastructure.
-* Reduced operational overhead by 70-80% through serverless and Spot Graviton instances.
+* Successfully built and verified Capstone Project: **Enterprise Knowledge AI RAG Assistant on AWS**.
+* Reduced operational overhead by 65-70% through serverless ECS Fargate and Graviton ARM64 instances.
 * Published complete hands-on step-by-step Workshop tutorials on this documentation site.
 * Accomplished all learning objectives declared in official internship plans (TTTN-01 & TTTN-02).

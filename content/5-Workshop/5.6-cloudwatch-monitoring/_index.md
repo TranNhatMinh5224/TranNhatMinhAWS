@@ -1,4 +1,4 @@
----
+﻿---
 title: "Operational Monitoring & Incident Alerting with Amazon CloudWatch"
 date: 2026-08-25
 weight: 6
@@ -43,7 +43,7 @@ Lab 5.6 focuses on three technical milestones:
 
 ### 2. Live AWS Console Telemetry Evidence
 
-Navigate to **CloudWatch Management Console** $\rightarrow$ select **Metrics** $\rightarrow$ choose **All metrics** $\rightarrow$ select namespace **`ApplicationELB`** $\rightarrow$ **`Per AppELB Metrics`** $\rightarrow$ select Load Balancer **`app/rag-lb/dd9f64ed734dab43`**.
+Navigate to **CloudWatch Management Console** → select **Metrics** → choose **All metrics** → select namespace **`ApplicationELB`** → **`Per AppELB Metrics`** → select Load Balancer **`app/rag-lb/dd9f64ed734dab43`**.
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.1-cloudwatch-per-appelb-metrics.png" alt="Load Balancer Metrics List on CloudWatch Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
@@ -70,7 +70,7 @@ Navigate to **CloudWatch Management Console** $\rightarrow$ select **Metrics** $
 ### 1. Technical Objectives
 To provide technical teams with single-pane-of-glass operational visibility, a customized dashboard named **`Dashboard-RAG`** was created:
 
-1. In **CloudWatch Console** $\rightarrow$ select **Dashboards** $\rightarrow$ click **Create dashboard** $\rightarrow$ name it **`Dashboard-RAG`**.
+1. In **CloudWatch Console** → select **Dashboards** → click **Create dashboard** → name it **`Dashboard-RAG`**.
 2. Add multi-dimensional visualization widgets:
    * **Widget 1 (CPUUtilization)**: Monitors EC2 host processor workload.
    * **Widget 2 (HTTPCode_Target_2XX_Count, RequestCount, TargetResponseTime)**: Tracks ALB traffic flow and response latencies.
@@ -93,7 +93,7 @@ The system configures a proactive **Metric Alarm** to immediately notify operati
 * **Metric name**: `CPUUtilization`
 * **InstanceId**: RAG server instance (`enterprise-rag-server` / `i-0f7f40a8245434328`)
 * **Statistic**: `Average`, **Period**: `5 minutes`
-* **Threshold type**: `Static` $\rightarrow$ Condition: `Greater > threshold`.
+* **Threshold type**: `Static` → Condition: `Greater > threshold`.
 
 <div align="center">
   <img src="/images/5-Workshop/5.6/5.6.3-cloudwatch-alarm-cpu-metric.png" alt="Configuring CPUUtilization Metric for CloudWatch Alarm" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />

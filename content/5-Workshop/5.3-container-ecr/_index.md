@@ -1,4 +1,4 @@
----
+﻿---
 title: "Containerizing Applications & Pushing Images to Amazon ECR"
 date: 2026-08-25
 weight: 3
@@ -42,7 +42,7 @@ Lab 5.3 focuses on modern DevOps automation workflows:
 ### 2. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Navigate to IAM Users Console
-Open **AWS Management Console** $\rightarrow$ Navigate to **IAM** $\rightarrow$ Click **IAM users** in the left navigation menu.
+Open **AWS Management Console** → Navigate to **IAM** → Click **IAM users** in the left navigation menu.
 
 <div align="center">
   <img src="/images/5-Workshop/5.3/5.3.1-iam-users-nav.png" alt="Navigate to IAM Users in AWS Console" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 40%; height: auto; margin-bottom: 20px;" />
@@ -81,7 +81,7 @@ Open **AWS Management Console** $\rightarrow$ Navigate to **IAM** $\rightarrow$ 
 
 #### Step 4: Finalize User Creation & Generate Access Keys
 1. Click **Create user**. The green banner `User created successfully` confirms completion.
-2. Open `github-action` $\rightarrow$ **Security credentials** tab $\rightarrow$ Click **Create access key**.
+2. Open `github-action` → **Security credentials** tab → Click **Create access key**.
 3. Select Use case: **Third-party service (GitHub Actions)**.
 4. Download the CSV containing **Access Key ID** and **Secret Access Key**.
 
@@ -118,7 +118,7 @@ Open **AWS Management Console** $\rightarrow$ Navigate to **IAM** $\rightarrow$ 
 ### 3. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Provision Backend ECR Repository
-1. Open **Amazon ECR Console** $\rightarrow$ **Repositories** $\rightarrow$ Click **Create repository**.
+1. Open **Amazon ECR Console** → **Repositories** → Click **Create repository**.
 2. Visibility: **Private**.
 3. Repository name: **`enterprise-rag-backend`**.
 4. Tag mutability: **Mutable**.

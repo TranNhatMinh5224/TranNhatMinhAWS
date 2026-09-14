@@ -44,8 +44,9 @@ chapter: false
 
 1.  [Worklog](1-Worklog/)
 2.  [Proposal](2-Proposal/)
-3.  [BlogsPosted](3-BlogsPosted/)
-4.  [Events Participated](4-EventParticipated/)
+3.  [Blogs Posted](3-BlogsPosted/)
+4.  [Events Participated](4-eventparticipated/)
 5.  [Workshop](5-Workshop/)
-6.  [Self-evaluation](6-Self-evaluation/)
-7.  [Sharing and Feedback](7-Feedback/)
+6.  [Competitions & Extended Activities](6-Competitions/)
+7.  [Self-Assessment](7-Self-evaluation/)
+8.  [Sharing and Feedback](8-Feedback/)

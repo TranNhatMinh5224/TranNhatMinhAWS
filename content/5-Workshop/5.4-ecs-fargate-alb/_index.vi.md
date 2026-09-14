@@ -1,4 +1,4 @@
----
+﻿---
 title: "Triển khai Máy chủ Ứng dụng & Cân bằng tải Application Load Balancer (ALB)"
 date: 2026-08-25
 weight: 4
@@ -46,7 +46,7 @@ Bài lab 5.4 hướng dẫn chi tiết quy trình:
 ### 2. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo Instance trên EC2 Launch Wizard
-1. Truy cập **EC2 Management Console** $\rightarrow$ chọn **Instances** $\rightarrow$ bấm **Launch instances**.
+1. Truy cập **EC2 Management Console** → chọn **Instances** → bấm **Launch instances**.
 2. **Name and tags**: Đặt tên máy chủ là **`enterprise-rag-server`**.
 3. **Application and OS Images**: Chọn **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type**.
 4. **Instance type**: Chọn loại instance cân bằng năng lực tính toán và bộ nhớ RAM (ví dụ: `t3.small` / 2 vCPU, 2 GB RAM).
@@ -63,7 +63,7 @@ Bài lab 5.4 hướng dẫn chi tiết quy trình:
 1. Tại mục **Network settings**, bấm **Edit**.
 2. **VPC**: Chọn VPC của dự án **`vpc-03228d0b15b9ea7be`** (`MyProjectVPC`).
 3. **Subnet**: Chọn subnet phù hợp.
-4. **Firewall (security groups)**: Chọn **Select existing security group** $\rightarrow$ gán **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
+4. **Firewall (security groups)**: Chọn **Select existing security group** → gán **`rag-ec2-sg`** (`sg-0c1e9bf71b2ec5149`).
 5. **Configure storage**: Cấu hình ổ đĩa gốc dung lượng 30 GiB gp3 General Purpose SSD.
 
 <div align="center">
@@ -116,7 +116,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 ### 2. Các bước triển khai chi tiết & Bằng chứng thực tế (Evidence)
 
 #### Bước 1: Khởi tạo Application Load Balancer
-1. Truy cập **EC2 Console** $\rightarrow$ **Load Balancers** $\rightarrow$ bấm **Create load balancer**.
+1. Truy cập **EC2 Console** → **Load Balancers** → bấm **Create load balancer**.
 2. Chọn loại: **Application Load Balancer (ALB)**.
 3. **Basic configuration**:
    * Load balancer name: **`rag-lb`**.
@@ -137,7 +137,7 @@ ssh -i "Key_RAG-AWS.pem" ubuntu@13.250.121.137
 ---
 
 #### Bước 2: Khởi tạo 2 Target Groups
-Truy cập **Target Groups** $\rightarrow$ chọn **Create target group** để cấu hình 2 nhóm đích:
+Truy cập **Target Groups** → chọn **Create target group** để cấu hình 2 nhóm đích:
 1. **Target Group Backend (`rag-backend-tg`)**:
    * Target type: `Instances`.
    * Protocol: `HTTP`, Port: `8000`.
@@ -215,7 +215,7 @@ Tại trang chi tiết `rag-lb`, chọn tab **Listeners and rules**. Listener c�
 ---
 
 #### Bước 2: Thêm quy tắc điều kiện đường dẫn (Path Conditions)
-1. Bấm **Manage rules** $\rightarrow$ chọn **Add rule**.
+1. Bấm **Manage rules** → chọn **Add rule**.
 2. **Step 1: Add rule conditions**:
    * Chọn loại điều kiện: **Path**.
    * Nhập giá trị: `/api/*` và `/docs*`.
@@ -276,7 +276,7 @@ $$\text{URL: } \texttt{http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com
 {"message":"Hệ thống RAG Backend đang hoạt động trơn tru!"}
 ```
 
-Minh chứng này xác nhận chuỗi kết nối từ **Người dùng Internet $\rightarrow$ ALB $\rightarrow$ Target Group $\rightarrow$ Docker Container trên EC2** đã thông suốt hoàn toàn với độ trễ cực thấp.
+Minh chứng này xác nhận chuỗi kết nối từ **Người dùng Internet → ALB → Target Group → Docker Container trên EC2** đã thông suốt hoàn toàn với độ trễ cực thấp.
 
 ---
 

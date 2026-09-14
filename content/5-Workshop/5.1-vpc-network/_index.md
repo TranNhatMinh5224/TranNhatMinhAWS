@@ -1,4 +1,4 @@
----
+﻿---
 title: "Environment Preparation & Zero-Trust VPC Infrastructure"
 date: 2026-08-25
 weight: 1
@@ -67,7 +67,7 @@ Before creating resources, verify the active console region is set to **Asia Pac
 ---
 
 #### Step 2: Provision VPC using "VPC and more"
-1. Navigate to **VPC Dashboard** $\rightarrow$ Click **Create VPC**.
+1. Navigate to **VPC Dashboard** → Click **Create VPC**.
 2. Select configuration mode: **VPC and more** (creates interconnected VPC, Subnets, Route Tables, Internet Gateway, and Endpoints in one visual workflow).
 3. Configure settings:
    * **Name tag auto-generation**: `project` (or `MyProjectVPC`).
@@ -201,7 +201,7 @@ aws ec2 describe-vpcs \
 ### 3. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Survey and Create Security Groups
-Navigate to **EC2 Console** $\rightarrow$ **Security Groups** filtered by VPC `vpc-03228d0b15b9ea7be`:
+Navigate to **EC2 Console** → **Security Groups** filtered by VPC `vpc-03228d0b15b9ea7be`:
 
 <div align="center">
   <img src="/images/5-Workshop/5.1/5.1.2-security-groups-list.png" alt="Security Groups Overview" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
@@ -215,7 +215,7 @@ Navigate to **EC2 Console** $\rightarrow$ **Security Groups** filtered by VPC `v
 ---
 
 #### Step 2: Configure Inbound Rules for RAG Server (`rag-ec2-sg`)
-1. Select `rag-ec2-sg` $\rightarrow$ Open **Inbound rules** tab $\rightarrow$ Click **Edit inbound rules**.
+1. Select `rag-ec2-sg` → Open **Inbound rules** tab → Click **Edit inbound rules**.
 2. Specify ports required for the RAG Assistant stack:
    * **Port 22 (SSH)**: Scoped to administrator personal IP for secure terminal access.
    * **Port 3000 (Custom TCP)**: Open for Next.js Web Frontend.
@@ -230,7 +230,7 @@ Navigate to **EC2 Console** $\rightarrow$ **Security Groups** filtered by VPC `v
 ---
 
 #### Step 3: Configure Inbound Rules for RDS Database (`rag-rds-sg`)
-1. Select `rag-rds-sg` (ID: `sg-0e06a5a9265f5c77d`) $\rightarrow$ Open **Inbound rules** tab.
+1. Select `rag-rds-sg` (ID: `sg-0e06a5a9265f5c77d`) → Open **Inbound rules** tab.
 2. Establish strict access controls on the relational database listener:
    * **Type**: `PostgreSQL`
    * **Protocol**: `TCP`
@@ -246,7 +246,7 @@ Navigate to **EC2 Console** $\rightarrow$ **Security Groups** filtered by VPC `v
 ---
 
 #### Step 4: Provision IAM Role for EC2 Server
-1. Navigate to **IAM Console** $\rightarrow$ **Roles** $\rightarrow$ Click **Create role**.
+1. Navigate to **IAM Console** → **Roles** → Click **Create role**.
 2. Under **Trusted entity type**, select **AWS service**.
 3. Under **Use case**, select **EC2** (Allows EC2 instances to call AWS services on your behalf).
 
@@ -306,8 +306,8 @@ To support end-to-end RAG ingestion and automated CI/CD container pulls, attach 
 ---
 
 #### Step 6: Attach IAM Role to EC2 Server (`enterprise-rag-server`)
-1. Navigate to **EC2 Console** $\rightarrow$ **Instances** $\rightarrow$ Select `enterprise-rag-server` (`i-0e3f096f3de681aaa`).
-2. Click **Actions** $\rightarrow$ **Security** $\rightarrow$ **Modify IAM role**.
+1. Navigate to **EC2 Console** → **Instances** → Select `enterprise-rag-server` (`i-0e3f096f3de681aaa`).
+2. Click **Actions** → **Security** → **Modify IAM role**.
 3. Under **IAM role**, select **`EC2-S3-RAG`**.
 4. Click **Update IAM role** to save.
 
@@ -345,7 +345,7 @@ To support end-to-end RAG ingestion and automated CI/CD container pulls, attach 
 ### 3. Step-by-Step Implementation & Live Evidence
 
 #### Step 1: Create S3 Bucket via AWS Console
-1. Navigate to **Amazon S3 Console** $\rightarrow$ Click **Create bucket**.
+1. Navigate to **Amazon S3 Console** → Click **Create bucket**.
 2. Configure settings:
    * **Bucket name**: `enterprise-rag-storage-0117967`.
    * **AWS Region**: `Asia Pacific (Singapore) ap-southeast-1`.
