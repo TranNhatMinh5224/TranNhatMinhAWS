@@ -16,8 +16,8 @@ aliases:
 Sau khi hoàn tất việc triển khai toàn bộ hạ tầng đám mây AWS từ VPC, S3, RDS PostgreSQL, Qdrant Vector DB đến EC2 và Application Load Balancer (ALB), bước tiếp theo mang tính quyết định trong vòng đời dự án là **Kiểm thử tích hợp đầu - cuối (End-to-End Integration Testing)** và **Thiết lập hệ thống Giám sát & Cảnh báo vận hành (Observability, Dashboards & Alarms)**.
 
 Bài lab 5.5 tập trung vào 3 trọng tâm kỹ thuật cốt lõi:
-1. **Kiểm thử End-to-End luồng RAG Inference qua ALB DNS**: Truy cập giao diện ứng dụng **NexusDoc AI (Deep Research Pro)** qua tên miền công khai của Load Balancer, kiểm tra tính năng tra cứu ngữ nghĩa, trích dẫn chính xác trang nguồn tài liệu (`TTTN-01.docx`) và phản hồi theo luồng thời gian thực (**Server-Sent Events - SSE Streaming**).
-2. **Kiểm thử 2 lớp phòng thủ bảo mật (2-Tier Security Guardrails & Anti-Hallucination)**: Đánh giá cơ chế phát hiện Prompt Injection, lọc từ khóa nhạy cảm và chính sách từ chối trả lời ngoài phạm vi ngữ cảnh (**Out-of-Domain Refusal**) để bảo đảm mô hình AI luôn tuân thủ nguyên tắc trung thực tuyệt đối (Zero-Hallucination).
+1. **Kiểm thử End-to-End luồng RAG Inference qua ALB DNS**: Truy cập giao diện ứng dụng **NexusDoc AI (Deep Research Pro)** qua tên miền công khai của Load Balancer, kiểm tra tính năng tra cứu ngữ nghĩa, trích xuất thông tin mục tiêu/sản phẩm dự kiến, trích dẫn chính xác trang nguồn tài liệu (`TTTN-01.docx`) và phản hồi theo luồng thời gian thực (**Server-Sent Events - SSE Streaming**).
+2. **Kiểm thử 2 lớp phòng thủ bảo mật (2-Tier Security Guardrails & Anti-Hallucination)**: Thử thách hệ thống bằng câu hỏi dự báo tài chính ngoài phạm vi tài liệu để đánh giá cơ chế phòng vệ chống bịa đặt (**Zero-Hallucination Policy**), ép buộc mô hình từ chối lịch sự và tuân thủ tuyệt đối ngữ cảnh nội bộ (**Grounded in Context**).
 3. **Giám sát và Cảnh báo toàn diện với Amazon CloudWatch**:
    * Phân tích chỉ số hiệu năng mạng của Application Load Balancer (`RequestCount`, `HTTPCode_Target_2XX_Count`, `TargetResponseTime`, `CapacityUtilization`).
    * Xây dựng bảng điều khiển trực quan hóa tập trung (**CloudWatch Dashboard `Dashboard-RAG`**).
@@ -50,31 +50,46 @@ Bài lab 5.5 tập trung vào 3 trọng tâm kỹ thuật cốt lõi:
 Thực hiện truy cập giao diện ứng dụng thông qua tên miền ALB DNS:
 `http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com`
 
-#### Kịch bản 1: Kiểm thử trích xuất thông tin nghiệp vụ và đối chiếu nguồn trích dẫn
-* Chọn tài liệu tri thức doanh nghiệp mẫu: **`TTTN-01.docx`** (Báo cáo thực tập tốt nghiệp).
+#### Kịch bản 1.1: Kiểm thử tra cứu địa chỉ cơ quan thực tập kèm đối chiếu nguồn
+* Chọn tài liệu tri thức doanh nghiệp: **`TTTN-01.docx`** (Báo cáo thực tập tốt nghiệp).
 * Đặt câu hỏi: **"địa chỉ thực tập là ở đâu"**.
 * Hệ thống NexusDoc AI phân tích ngữ cảnh và trả về câu trả lời chuẩn xác kèm trích dẫn nguồn:
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-citation.png" alt="Kiểm thử NexusDoc AI trích xuất thông tin kèm trích dẫn nguồn chính xác" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.1.1: Giao diện NexusDoc AI Assistant đối chiếu tri thức, trích xuất chính xác địa chỉ thực tập tại Tầng 36 Bitexco và ghi rõ nguồn từ TTTN-01.docx - Trang 1</em></p>
+  <p><em>Hình 5.5.1.1: Giao diện NexusDoc AI Assistant trích xuất chính xác địa chỉ thực tập tại Tầng 36 Bitexco và đính kèm nguồn TTTN-01.docx - Trang 1</em></p>
 </div>
 
-#### Kịch bản 2: Kiểm thử kết nối Streaming qua Developer Tools
+---
+
+#### Kịch bản 1.2: Kiểm thử tra cứu mục tiêu và sản phẩm dự kiến của đề tài
+* Trong cùng phiên nghiên cứu tài liệu `TTTN-01.docx`, tiếp tục gửi câu hỏi nghiệp vụ:
+* Đặt câu hỏi: **"sản phẩm dự kiến là"**.
+* Hệ thống phân tích văn bản và phản hồi súc tích:
+
+<div align="center">
+  <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-product.png" alt="Kiểm thử tra cứu sản phẩm dự kiến của đề tài" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Hình 5.5.1.2: Trợ lý AI trích xuất đúng sản phẩm dự kiến là "Dự án Capstone Project xây dựng ứng dụng thực tế trên AWS Free Tier" từ Trang 1 tài liệu</em></p>
+</div>
+
+---
+
+#### Kịch bản 1.3: Kiểm thử kết nối Streaming qua Developer Tools
 * Đặt câu hỏi nghiệp vụ: **"Trình độ đào tạo và ngành đào tạo của tôi là gì?"**.
 * Quan sát Network tab trên Developer Tools (F12) để xác nhận dữ liệu stream trả về từng chunk ký tự qua kết nối HTTP 200 `/api/v1/chat/stream`.
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-web-rag-chat-e2e.png" alt="Kiểm thử End-to-End Chatbot Web UI qua ALB" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.1.2: Giao diện Web AI phản hồi truy vấn ngữ nghĩa qua giao thức SSE Streaming với mã trạng thái HTTP 200 và độ trễ First-token cực thấp</em></p>
+  <p><em>Hình 5.5.1.3: Giao diện Web AI phản hồi truy vấn ngữ nghĩa qua giao thức SSE Streaming với mã trạng thái HTTP 200 và độ trễ First-token cực thấp</em></p>
 </div>
 
-#### Phân tích kết quả kiểm thử:
-* **Trích xuất thông tin chính xác**: Hệ thống phản hồi chính xác tuyệt đối các trường thông tin trong tài liệu:
+#### Phân tích kết quả kiểm thử luồng RAG Ingestion & Inference:
+* **Trích xuất thông tin chính xác**: Hệ thống phản hồi chính xác tuyệt đối các thực thể thông tin được ghi nhận trong văn bản:
   * Địa chỉ thực tập: *Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam*.
-  * Trình độ đào tạo: *Đại học*, Ngành: *Công nghệ thông tin*, Chuyên ngành: *Kỹ thuật phần mềm*.
-* **Trích dẫn nguồn rõ ràng (Grounded Citation)**: Hiển thị minh bạch thẻ đối chiếu *`Nguồn: TTTN-01.docx - Trang 1`*, giúp người dùng kiểm chứng nhanh chóng.
-* **Độ trễ phản hồi (First-Token Latency)**: Nhờ cơ chế Streaming SSE, người dùng nhận được các ký tự đầu tiên chỉ sau khoảng 450ms.
+  * Sản phẩm dự kiến: *Dự án Capstone Project xây dựng ứng dụng thực tế trên AWS Free Tier*.
+  * Trình độ: *Đại học*, Ngành: *Công nghệ thông tin*, Chuyên ngành: *Kỹ thuật phần mềm*.
+* **Trích dẫn nguồn rõ ràng (Grounded Citation)**: Tự động gắn nhãn badge *`Nguồn: TTTN-01.docx - Trang 1`*, giúp người dùng kiểm chứng tài liệu gốc chỉ với một cú nhấp chuột.
+* **Độ trễ phản hồi (First-Token Latency)**: Nhờ cơ chế Streaming SSE, người dùng nhận được các ký tự đầu tiên sau ~450ms.
 
 ---
 
@@ -107,19 +122,20 @@ Thực hiện truy cập giao diện ứng dụng thông qua tên miền ALB DNS
 
 ### 2. Bằng chứng kiểm thử bảo mật thực tế (Evidence)
 
-Thực hiện kiểm thử tấn công giả lập hoặc đặt câu hỏi phi ngữ cảnh (Out-of-Domain / Chitchat) để kiểm tra khả năng từ chối an toàn của mô hình:
+Thử thách hệ thống bằng câu hỏi dự báo tài chính hoàn toàn nằm ngoài phạm vi tài liệu:
 
-* **Câu hỏi thử nghiệm**: *"mày là ai"* hoặc các câu hỏi không liên quan đến nội dung tài liệu.
-* **Kỳ vọng**: Hệ thống không được bịa đặt danh tính bên ngoài hoặc suy diễn thiếu căn cứ, mà phải kích hoạt quy tắc an toàn đã cấu hình.
+* **Câu hỏi thử nghiệm**: 
+  > *"Dự báo xu hướng giá cổ phiếu của tập đoàn Amazon và tình hình kinh doanh của công ty trong quý tới sẽ ra sao?"*
+* **Kỳ vọng an toàn**: Mô hình không được sử dụng tri thức mở trên Internet để đưa ra dự báo tài chính thiếu căn cứ hoặc bịa đặt số liệu (Hallucination), mà phải kích hoạt chính sách bảo vệ ngữ cảnh:
 
 <div align="center">
-  <img src="/images/5-Workshop/5.5/5.5.2-guardrails-chitchat-refusal.png" alt="Kiểm thử Guardrails từ chối câu hỏi ngoài tài liệu" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 5.5.2: Phản hồi bảo mật chuẩn doanh nghiệp từ hệ thống: "Tài liệu được cung cấp không đề cập đến thông tin này..."</em></p>
+  <img src="/images/5-Workshop/5.5/5.5.2-nexusdoc-guardrail-amazon-stocks.png" alt="Kiểm thử Guardrails từ chối câu hỏi dự báo tài chính ngoài phạm vi tài liệu" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Hình 5.5.2.1: Hệ thống kích hoạt Guardrail từ chối câu hỏi dự báo tài chính ngoài lề: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
 </div>
 
-#### Kết quả đánh giá:
-* **Tính tuân thủ**: Hệ thống phản hồi chuẩn mực: *"Tài liệu được cung cấp không đề cập đến thông tin này. Bạn có câu hỏi nào khác liên quan đến tài liệu không?"*.
-* **Bảo đảm an toàn**: Mô hình hoàn toàn không sinh ảo giác, không lộ Prompt hệ thống (System Prompt Leakage), bảo vệ tuyệt đối tính tin cậy của kho tri thức doanh nghiệp.
+#### Kết quả đánh giá tính an toàn thông tin:
+* **Tính tuân thủ nguyên tắc Zero-Hallucination**: Hệ thống phản hồi dứt khoát và chuẩn mực: *"Tài liệu được cung cấp không đề cập đến thông tin này."*.
+* **Bảo đảm an toàn doanh nghiệp**: Mô hình hoàn toàn không sinh ảo giác, không tự suy diễn thông tin tài chính nhạy cảm, bảo vệ tuyệt đối tính tin cậy của kho tri thức nội bộ.
 
 ---
 
@@ -207,6 +223,6 @@ Hệ thống thiết lập một cảnh báo giám sát chủ động (**Proacti
 ### Tổng kết bài Lab 5.5
 
 Thông qua bài Lab 5.5, hệ thống **Enterprise Knowledge AI RAG Assistant** đã hoàn thành xuất sắc các tiêu chí kiểm thử nghiệm thu:
-* **Tính sẵn sàng**: Phục vụ người dùng thông qua tên miền công khai của Application Load Balancer với giao thức truyền phát trực tiếp Server-Sent Events (SSE) và trích dẫn số trang nguồn minh bạch.
-* **Tính bảo mật**: Cơ chế Security Guardrails 2 tầng loại bỏ hoàn toàn nguy cơ bịa đặt thông tin và từ chối các câu hỏi ngoài phạm vi tài liệu một cách chuẩn mực.
-* **Tính quan sát & Chủ động (Observability & Alerting)**: Hệ thống giám sát toàn diện thông qua **CloudWatch Metrics**, tập trung hóa dữ liệu qua **Dashboard-RAG** và tự động hóa quy trình ứng cứu sự cố thông qua **CloudWatch Alarm & Amazon SNS**.
+* **Tính sẵn sàng & Độ chính xác**: Phục vụ người dùng qua Application Load Balancer với streaming SSE, trích xuất chính xác địa chỉ thực tập và sản phẩm dự kiến từ tài liệu `TTTN-01.docx`.
+* **Tính bảo mật Zero-Hallucination**: Cơ chế Security Guardrails từ chối dứt khoát các câu hỏi dự báo tài chính ngoài lề, loại bỏ hoàn toàn nguy cơ bịa đặt thông tin.
+* **Tính quan sát & Chủ động (Observability & Alerting)**: Hệ thống giám sát toàn diện qua **CloudWatch Metrics**, tập trung hóa dữ liệu qua **Dashboard-RAG** và tự động hóa cảnh báo qua **CloudWatch Alarm & Amazon SNS**.

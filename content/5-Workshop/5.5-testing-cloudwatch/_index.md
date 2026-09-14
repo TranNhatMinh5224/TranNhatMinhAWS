@@ -16,8 +16,8 @@ aliases:
 Following the end-to-end cloud infrastructure provisioning on AWS—spanning VPC, S3 Data Lake, RDS PostgreSQL, Qdrant Vector DB, EC2 Application Server, and Application Load Balancer (ALB)—the pivotal subsequent stage in the system engineering lifecycle involves **End-to-End Integration Testing** and establishing **Operational Observability, Dashboards & Automated Alarms**.
 
 Lab 5.5 focuses on three core technical milestones:
-1. **End-to-End RAG Inference Pipeline Testing via ALB DNS**: Access the **NexusDoc AI (Deep Research Pro)** interface through the public DNS endpoint of the Load Balancer, test semantic search accuracy, verify exact document page citations (`TTTN-01.docx`), and evaluate real-time streaming responses via **Server-Sent Events (SSE Streaming)**.
-2. **2-Tier Enterprise Security Guardrails & Anti-Hallucination Testing**: Evaluate prompt injection detection mechanisms, sensitive keyword filtering, and polite **Out-of-Domain Refusal** protocols ensuring zero hallucination when queries fall outside the document context.
+1. **End-to-End RAG Inference Pipeline Testing via ALB DNS**: Access the **NexusDoc AI (Deep Research Pro)** interface through the public DNS endpoint of the Load Balancer, test semantic search accuracy, verify information extraction of internship location and intended project deliverables, and validate exact source citations (`TTTN-01.docx`).
+2. **2-Tier Enterprise Security Guardrails & Anti-Hallucination Testing**: Challenge the system with out-of-domain financial forecast inquiries to evaluate the **Zero-Hallucination Guardrail**, enforcing strict contextual adherence and polite refusal when external data is requested.
 3. **Comprehensive Observability, Dashboards & Metric Alarms with Amazon CloudWatch**:
    * Track network telemetry metrics from the Application Load Balancer (`RequestCount`, `HTTPCode_Target_2XX_Count`, `TargetResponseTime`, `CapacityUtilization`).
    * Build a centralized real-time visualization dashboard (**CloudWatch Dashboard `Dashboard-RAG`**).
@@ -50,7 +50,7 @@ Lab 5.5 focuses on three core technical milestones:
 Navigate to the application web interface using the ALB DNS hostname:
 `http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com`
 
-#### Scenario 1: Enterprise Knowledge Retrieval & Source Citation Verification
+#### Scenario 1.1: Internship Address Ingestion & Source Citation Verification
 * Select the enterprise knowledge document: **`TTTN-01.docx`** (Internship Report Document).
 * Submit the business query: **"địa chỉ thực tập là ở đâu"** *(Where is the internship address?)*.
 * The NexusDoc AI system processes the context and returns factual information with clear source attribution:
@@ -60,19 +60,34 @@ Navigate to the application web interface using the ALB DNS hostname:
   <p><em>Figure 5.5.1.1: NexusDoc AI Assistant synthesizing knowledge, returning the exact Bitexco 36th-floor address and citing TTTN-01.docx - Page 1</em></p>
 </div>
 
-#### Scenario 2: Real-time Streaming Verification via Developer Tools
+---
+
+#### Scenario 1.2: Project Deliverable Factual Extraction
+* Within the active document session for `TTTN-01.docx`, submit the follow-up prompt:
+* Query: **"sản phẩm dự kiến là"** *(What are the expected project deliverables?)*.
+* The AI Assistant retrieves and formulates the concise factual response:
+
+<div align="center">
+  <img src="/images/5-Workshop/5.5/5.5.1-nexusdoc-chat-product.png" alt="Testing Retrieval of Expected Project Deliverables" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.5.1.2: AI Assistant accurately extracting the project deliverable: "Capstone Project building real-world application on AWS Free Tier" grounded in Page 1</em></p>
+</div>
+
+---
+
+#### Scenario 1.3: Real-time Streaming Verification via Developer Tools
 * Submit an in-domain query: **"Trình độ đào tạo và ngành đào tạo của tôi là gì?"** *(What is my degree level and major?)*.
 * Inspect the browser DevTools (F12) Network tab to confirm SSE streaming chunks received over HTTP 200 `/api/v1/chat/stream`.
 
 <div align="center">
   <img src="/images/5-Workshop/5.5/5.5.1-web-rag-chat-e2e.png" alt="End-to-End Chatbot Web UI Testing via ALB" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.5.1.2: Web AI streaming semantic responses grounded in TTTN-01.docx via SSE protocol with HTTP 200 OK status</em></p>
+  <p><em>Figure 5.5.1.3: Web AI streaming semantic responses grounded in TTTN-01.docx via SSE protocol with HTTP 200 OK status</em></p>
 </div>
 
 #### Test Result Analysis:
 * **Factual Extraction Precision**: The assistant returned exact data points matching the source document:
   * Internship Address: *Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh*.
-  * Degree level: *Đại học (Bachelor's Degree)*, Major: *Công nghệ thông tin (Information Technology)*.
+  * Expected Deliverable: *Dự án Capstone Project xây dựng ứng dụng thực tế trên AWS Free Tier*.
+  * Degree & Major: *Đại học, Công nghệ thông tin, Kỹ thuật phần mềm*.
 * **Grounded Source Citation**: Transparently displays verified citation badges (*`Nguồn: TTTN-01.docx - Trang 1`*), enabling instant fact-checking.
 * **First-Token Latency**: Enabled by Server-Sent Events (SSE), initial response tokens reached the client within ~450ms.
 
@@ -107,19 +122,20 @@ For production-grade enterprise AI applications, unauthorized data leakage and o
 
 ### 2. Live Security Testing Evidence
 
-Submit out-of-domain conversational queries or simulated jailbreak prompts to assess safe rejection behavior:
+Challenge the system with out-of-domain speculative questions (e.g. corporate financial forecasting):
 
-* **Test Query**: *"mày là ai"* *(who are you)* or non-contextual chitchat questions.
-* **Expectation**: The model must not hallucinate external personas or make ungrounded inferences; it must trigger configured guardrail protocols.
+* **Test Query**: 
+  > *"Dự báo xu hướng giá cổ phiếu của tập đoàn Amazon và tình hình kinh doanh của công ty trong quý tới sẽ ra sao?"* *(What is the forecasted Amazon stock trend and financial outlook next quarter?)*
+* **Expectation**: The model must strictly avoid speculative financial advice or ungrounded claims, gracefully triggering the configured guardrail:
 
 <div align="center">
-  <img src="/images/5-Workshop/5.5/5.5.2-guardrails-chitchat-refusal.png" alt="Testing Guardrails Out-of-Domain Refusal" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 5.5.2: Enterprise guardrail response: "Tài liệu được cung cấp không đề cập đến thông tin này..." (The provided document does not mention this information)</em></p>
+  <img src="/images/5-Workshop/5.5/5.5.2-nexusdoc-guardrail-amazon-stocks.png" alt="Testing Guardrails Out-of-Domain Financial Refusal" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 5.5.2.1: System guardrail triggered, safely declining ungrounded financial forecast: "Tài liệu được cung cấp không đề cập đến thông tin này."</em></p>
 </div>
 
 #### Evaluation Highlights:
-* **Compliance & Determinism**: The system responded with standard compliance verbiage: *"Tài liệu được cung cấp không đề cập đến thông tin này. Bạn có câu hỏi nào khác liên quan đến tài liệu không?"*.
-* **Safe Containment**: No system prompt leakage or unverified claims occurred, ensuring complete data security and enterprise brand safety.
+* **Compliance & Determinism**: The system safely and cleanly replied: *"Tài liệu được cung cấp không đề cập đến thông tin này."*.
+* **Safe Containment**: Zero unverified financial speculation, preventing hallucination risks and protecting organizational trust.
 
 ---
 
@@ -207,6 +223,6 @@ The system configures a proactive **Metric Alarm** to immediately notify operati
 ### Lab 5.5 Summary
 
 Through Lab 5.5, the **Enterprise Knowledge AI RAG Assistant** successfully satisfied all production readiness standards:
-* **High Availability & Precision**: Serves users via the Application Load Balancer with responsive Server-Sent Events (SSE) streaming and grounded page citations.
-* **Enterprise Security**: 2-tier guardrails successfully suppressed ungrounded hallucinations and gracefully deflected out-of-domain inquiries.
+* **High Availability & Precision**: Serves users via the Application Load Balancer with responsive Server-Sent Events (SSE) streaming, extracting specific internship address and project deliverable entities grounded in `TTTN-01.docx`.
+* **Enterprise Security**: 2-tier guardrails cleanly declined speculative financial forecasting, eliminating hallucination risks entirely.
 * **Full Observability & Alerting**: Real-time metrics tracking via **CloudWatch Metrics**, centralized visualization through **Dashboard-RAG**, and automated incident dispatch via **CloudWatch Alarms & Amazon SNS**.
