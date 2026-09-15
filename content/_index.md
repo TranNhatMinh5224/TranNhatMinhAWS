@@ -28,11 +28,15 @@ chapter: false
 
 &emsp; **Instructor / Advisor:** ThS. Lê Văn Minh
 
-&emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
+&emsp; **Host Organization:** AMAZON WEB SERVICES VIETNAM COMPANY LIMITED IN HANOI CITY
 
-&emsp; **Company Address:** 7th Floor, Grand Terra, 36 Cat Linh, O Cho Dua, Dong Da, Hanoi
+&emsp; **Host Organization Address:** 36th Floor, Bitexco Financial Tower, No. 2 Hai Trieu Street, Saigon Ward, Ho Chi Minh City, Vietnam
 
-&emsp; **Supervisor:** Nguyễn Gia Hưng (hunggia@amazon.com.vn)
+&emsp; **Supervisor (Host Org):** Nguyễn Gia Hưng
+
+&emsp; **Phone Number:** +841277870645
+
+&emsp; **Email:** hunggia@amazon.com.vn
 
 &emsp; **Internship Position:** First Cloud AI Journey
 

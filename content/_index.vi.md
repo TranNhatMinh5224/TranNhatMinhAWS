@@ -25,11 +25,15 @@ chapter: false
 
 &emsp; **Giảng viên hướng dẫn:** ThS. Lê Văn Minh
 
-&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
+&emsp; **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM TẠI THÀNH PHỐ HÀ NỘI
 
-&emsp; **Địa chỉ ĐVHD:** Tầng 7 Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội
+&emsp; **Địa chỉ ĐVHD:** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam
 
-&emsp; **Cán bộ hướng dẫn:** Nguyễn Gia Hưng (hunggia@amazon.com.vn)
+&emsp; **Người phụ trách (ĐVHD):** Nguyễn Gia Hưng
+
+&emsp; **Số điện thoại:** +841277870645
+
+&emsp; **Email:** hunggia@amazon.com.vn
 
 &emsp; **Vị trí thực tập:** First Cloud AI Journey
 
