@@ -25,7 +25,7 @@ chapter: false
 
 &emsp; **Giảng viên hướng dẫn:** ThS. Lê Văn Minh
 
-&emsp; **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM TẠI THÀNH PHỐ HÀ NỘI
+&emsp; **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM
 
 &emsp; **Địa chỉ ĐVHD:** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam
 
