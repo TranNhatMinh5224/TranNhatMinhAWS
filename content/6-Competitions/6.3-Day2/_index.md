@@ -214,17 +214,116 @@ To overcome confirmation bias, teams employ four structured query prompts:
 
 ---
 
-### 5. Standardized 5-Block Incident Report Structure
+### 5. Live Production Incident Report: Hotel Search Degradation After Traffic Recovery
 
-The competition report is structured into 5 rigorous, standardized blocks (PDF, Doc, or Markdown):
+Read-only live incident report tracing customer-visible search failure to retry-amplified saturation of the rate-service capacity boundary.
 
-| Report Block | Mandatory Deliverable Requirements |
-| :--- | :--- |
-| **01 · Incident Question & Scope** | What is broken, which users are impacted, and the precise timestamp when degradation began. |
-| **02 · Two Hypotheses, One Ruled Out** | Supporting evidence for each hypothesis and the **specific distinguishing query that ruled out the losing explanation**. |
-| **03 · Key Evidence Triplet** | Every claim backed by: **Source — Scope — Time**, tagged with `[verified]` or `[blocked]`. |
-| **04 · Causal Mechanism** | Causal graph connecting trigger to customer impact, explicitly noting any unproven links (*unproven edges*). |
-| **05 · Root Cause vs. Contributing Factor** | Specifically identified resource configuration divergence with **verifiable timestamps (dated)**, strictly differentiated from undated background conditions. |
+---
+
+#### 5.1. Executive Summary
+
+* **Verdict**: The incident is ongoing.
+* **Verified root cause**: The `search` service retries each request against a `rate` service capped at **20 backend QPS**; at the observed **7.60 search RPS** and **2.87 attempts per request**, demand reaches **21.81 backend attempts/s**, **9.1% above the configured limit**. The 256-entry queue averaged **88.5% full** and reached **100%**, producing `ResourceExhausted` and then `DeadlineExceeded` responses.
+* **Customer outcome**: Customers received **no successful hotel-search outcomes (Success Rate: 0.000)** even though Kubernetes showed healthy pods and nodes.
+* **Scope**: `hotel-prod-apse1`, namespaces `hotel-reservation` and `synthetics`, customer path `GET /hotels`, live read-only evidence. No configuration or workload was changed.
+
+| Key Metric | Observed Value | Scope / Window | Operational Meaning |
+| :--- | :---: | :--- | :--- |
+| **Customer search success** | **0.000 (0.0%)** | 30-minute average (Synthetic user journey) | Customers experienced total search unavailability |
+| **Search p95 latency** | **6.05 s (6,050.8 ms)** | Observed range 5.41 – 6.33 s on customer path | Latency severely degraded across all queries |
+| **Rate queue utilization** | **88.5% average** | 226.6 of 256 entries average; maximum 256 | Queue fully saturated causing cascading timeouts |
+
+> [!IMPORTANT]
+> **Bottom line**: Treat customer outcome success as authoritative. Kubernetes readiness and completed RPS are **false-green signals** for this failure mode.
+
+---
+
+#### 5.2. Customers Lost Successful Hotel Searches
+
+During the bounded 30-minute window (`2026-09-12 02:49:49` – `03:19:34 UTC`), the synthetic user journey continuously exercised the same hotel-search URL at 8 configured RPS. The traffic process completed **7.35 RPS** on average (91.9% of configured traffic), but the result success rate remained **0.000** and p95 latency averaged **6,050.8 ms**.
+
+| Metric | Observed Value | Window / Scope | Status |
+| :--- | :---: | :--- | :---: |
+| **Configured traffic** | `8.00 RPS` | 2026-09-12 02:49:49 – 03:19:34 UTC | `[Verified]` |
+| **Completed traffic** | `7.35 RPS` average | 103 samples; same window | `[Verified]` |
+| **Successful outcomes** | **`0.000`** average | 103 traffic samples and 176 observer samples | `[Verified]` |
+| **p95 latency** | `6,050.8 ms` average | Range 5,414.9 – 6,332.4 ms | `[Verified]` |
+| **Search throughput** | `7.60 RPS` average | 2026-09-12 02:49:57 – 03:19:43 UTC | `[Verified]` |
+
+The earliest retained post-recovery traffic record is `2026-09-11 14:55:02 UTC`. All **2,559 retained samples** through `2026-09-12 03:19:34 UTC` reported zero success, a continuous observed duration of **12h 24m 32s**.
+
+---
+
+#### 5.3. Retry Amplification Saturated the Rate-Service Boundary
+
+* **Fault origin**: The capacity contract between `search` and `rate`, specifically `RATE_RPC_MAX_ATTEMPTS=3` at the caller and `RATE_BACKEND_QPS_LIMIT=20` with `RATE_QUEUE_CAPACITY=256` at the callee.
+
+| Stage | Observed Value | Technical Mechanism | Status |
+| :--- | :---: | :--- | :---: |
+| **Traffic recovery** | `8 configured RPS` | Resumed by 2026-09-11 14:55:02 UTC | `[Verified]` |
+| **Retry amplification** | `2.87 attempts / request` | Average attempts per search request | `[Verified]` |
+| **Attempted rate** | **`21.81 attempts/s`** | `7.60 RPS × 2.87 = 21.81` (9.1% above cap) | `[Derived]` |
+| **Configured rate boundary** | `20 backend QPS; Queue 256` | Maximum backend capacity limit | `[Verified]` |
+| **Queue pressure** | `226.6 avg; 256 max` | Queue depth saturation | `[Verified]` |
+| **Dependency failures** | `ResourceExhausted, DeadlineExceeded, Canceled` | gRPC application-level errors from search to rate | `[Verified]` |
+| **Customer symptom** | **`0.000 successful outcomes; 6.05s p95`** | Complete client-side search failure | `[Verified]` |
+
+* **Causal chain**: Queue saturation converts the initial capacity rejection into long waits and deadline exhaustion, so retries intensify rather than absorb the overload (Retry Storm).
+* **Observed failure volume**: Within one observed 30-minute search-log slice, the dependency emitted **10,850 `DeadlineExceeded`**, **1,476 `Canceled`**, and **1,055 `ResourceExhausted`** records. Observer timeout deltas summed to 34,529 and failure deltas to 13,334.
+
+---
+
+#### 5.4. Competing Hypotheses — Evidence Disposition
+
+| Hypothesis | Evidence | Disposition |
+| :--- | :--- | :---: |
+| **Node saturation** | 4/4 nodes Ready; no pressure; node CPU 0%; maximum node memory 6% | **`REJECTED`** |
+| **Missing backend endpoints** | Frontend, search, and rate each had one ready endpoint (1/1 ready) | **`REJECTED`** |
+| **Active crash loop** | No Pending or Failed pods; all inspected deployments Ready | **`REJECTED`** |
+| **Search cannot reach rate** | Search receives application-level gRPC `ResourceExhausted` and `DeadlineExceeded` from dependency=rate | **`REJECTED`** |
+| **Rate capacity plus retries** | Observed attempt rate (21.81) exceeds cap (20) while queue reaches 256 and customer success is zero | **`CONFIRMED`** |
+
+---
+
+#### 5.5. Why the Dashboards Disagreed With Users (False-Green Dashboards)
+
+The Kubernetes control plane reports availability, not useful outcomes:
+1. `frontend`, `search`, and `rate` each reported `1/1` ready and available replicas.
+2. All three services had ready endpoints.
+3. `frontend`, `search`, and `rate` define no readiness or liveness probe, so pod readiness cannot detect a saturated queue or a dependency deadline spiral.
+4. Node CPU and memory were far below capacity.
+5. The traffic generator completed 91.9% of configured RPS, but every completed customer outcome was unsuccessful.
+
+$\rightarrow$ **A dashboard centered on pod state, node utilization, or completed RPS therefore stays green while the customer journey is fully unavailable.**
+
+---
+
+#### 5.6. Recommended Response Matrix
+
+| Action ID | Recommended Action | Owner | Priority |
+| :---: | :--- | :---: | :---: |
+| **R1** | **Workaround**: Reduce search-to-rate retry amplification, starting with a canary of `RATE_RPC_MAX_ATTEMPTS=1` | Search owner | **P0** |
+| **R2** | **Fix**: Validate sustainable rate-backend throughput, then align `RATE_BACKEND_QPS_LIMIT` and replica capacity above peak attempted load | Rate owner | **P0** |
+| **R3** | **Guardrail**: Reject or shed load before the queue approaches 256; keep retry budget within the original request deadline | Search + rate owners | **P1** |
+| **O1** | **Detection**: Page on customer outcome success and queue depth, not completed RPS or pod readiness alone | SRE | **P1** |
+| **O2** | **Health**: Add functional readiness that fails when the search dependency path cannot serve within its SLO | Service owners | **P1** |
+
+* **Fix verification gate**: Customer-path success becomes non-zero and stable; p95 latency returns within SLO; `rate` queue remains below capacity during sustained 8 RPS; dependency `ResourceExhausted` and `DeadlineExceeded` stop increasing.
+
+---
+
+#### 5.7. Evidence Ledger and Limitations
+
+* **Verified live checks**:
+  * `discover.sh --max-items 20`: Context `hotel-prod-apse1`; 4 nodes, all Ready; metrics available.
+  * `workload_health.sh --namespace hotel-reservation --max-items 40`: No degraded deployments; no warning events.
+  * `node_pressure.sh --max-items 20`: No node pressure; low current node utilization.
+  * Bounded `kubectl get` queries: Service routing, ready EndpointSlices, deployment env, resources, probes.
+  * Bounded logs: `search-slo-observer`, `search-traffic`, `search`, and `rate` with 30-min aggregation.
+* **Access limitations**:
+  * Direct `pods/exec` was denied by RBAC for `system:serviceaccount:platform:cloudthinkerreadonly`.
+  * Kubernetes `services/proxy` access was also denied (no ad hoc HTTP GET or direct metrics scrape).
+  * No write, rollout, scale, restart, or configuration change was attempted.
 
 ---
 
