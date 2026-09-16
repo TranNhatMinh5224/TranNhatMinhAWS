@@ -84,15 +84,16 @@ The system operates a specialized 3-stage intelligence pipeline:
 *   **Vector Ingestion**: Chunks are embedded via `BAAI/bge-m3` into Qdrant alongside rich metadata (`source`, `page`, `chuong`, `dieu`, `user_id`).
 
 #### Stage 2: Retrieval Pipeline (Agentic-Grade Context Gathering)
+*   **Tier 1 Guardrail (Pre-flight Fast Check)**: Intercepts raw user inputs via input validation rules and regex/keyword filters, neutralizing Prompt Injections, Jailbreaks (DAN, System Overrides), and domain-divergent queries before consuming retrieval resources.
 *   **Self-Query Retriever**: Distills user intent and attributes (document category, effective year) into hard filters executed directly against Qdrant payloads.
 *   **Hybrid Search**: Merges dense semantic vector similarity and sparse keyword search (BM25) over candidate pools, discarding boilerplate table of contents.
 *   **Cross-Encoder Re-ranking**: `BAAI/bge-reranker-v2-m3` re-scores candidate pairs to isolate the top 3 most relevant segments.
 *   **Cross-Reference Agent (Second-Hop Search)**: Detects statutory citations (*"Pursuant to Article 12..."*). If absent from the initial context, it executes a second-hop search to append the referenced clause into context.
 
-#### Stage 3: Generation Pipeline (Synthesis & Citation Grounding)
-*   **Hierarchical Breadcrumb Injection**: Prepends document structure to every chunk fed to the LLM.
-*   **Anti-Hallucination Guardrails**: Mandates that the LLM return "Information not found in the documents" when ungrounded, and requires verified in-line citations.
-*   **LLM Synthesis**: Dispatches payload to Gemini 2.5 Flash or Amazon Bedrock for high-speed, grounded response generation.
+#### Stage 3: Generation Pipeline (Synthesis with Tier 2 Guardrail)
+*   **Tier 2 Guardrail (Deep Grounding & Prompt Hardening)**: Hardens system prompts to strictly eliminate hallucination; mandates factual answers grounded exclusively in retrieved evidence, disallows speculative extrapolations, and neutralizes indirect injection attacks.
+*   **Hierarchical Breadcrumb Injection & Citations**: Prepends document structure to every chunk and mandates verified in-line citations with exact source filenames and page numbers (`[Source: ... - Page ...]`).
+*   **LLM Synthesis**: Dispatches payload to Google Gemini 2.5 Flash for high-speed streaming via SSE.
 
 ---
 

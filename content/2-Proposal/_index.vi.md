@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Bản đề xuất"
 date: 2026-08-25
 weight: 2
@@ -84,15 +84,16 @@ Hệ thống triển khai quy trình xử lý dữ liệu chặt chẽ gồm 3 g
 *   **Đánh chỉ mục Vector**: Mã hóa các chunk qua mô hình `BAAI/bge-m3` và lưu vào Qdrant cùng metadata (`source`, `page`, `chuong`, `dieu`, `user_id`).
 
 #### Giai đoạn 2: Retrieval Pipeline (Truy xuất Cấp độ Agentic)
+*   **Tier 1 Guardrail (Pre-flight Fast Check)**: Quét kiểm duyệt bảo mật ngay tại cửa ngõ người dùng nhập câu hỏi (Input Validation, Regex/Keyword), phát hiện và chặn đứng tức thì Prompt Injection, Jailbreak kịch bản (DAN, System Override) và câu hỏi lệch miền nghiệp vụ trước khi tốn tài nguyên truy xuất.
 *   **Self-Query Retriever**: Dùng Pydantic bắt LLM phân tích câu hỏi, vừa chuẩn hóa câu hỏi độc lập, vừa bóc tách metadata (năm ban hành, loại văn bản) thành **Hard-Filters** ép trực tiếp xuống Qdrant.
 *   **Hybrid Search**: Kết hợp tìm kiếm ngữ nghĩa (Dense Vector) và từ khóa (BM25) quét Top 25 kết quả thô, lọc bỏ các trang mục lục rác.
 *   **Re-ranking (Cross-Encoder)**: Sử dụng `BAAI/bge-reranker-v2-m3` để lọc ra Top 3 kết quả sát với câu hỏi nhất.
 *   **Cross-Reference Agent (Truy xuất đệ quy)**: Tự động kiểm tra Top 3 kết quả xem có chứa tham chiếu chéo (Ví dụ: *"Theo quy định tại Điều 12..."*). Nếu thiếu, hệ thống tự động kích hoạt truy xuất lần 2 (second-hop) để bổ sung văn bản Điều 12 vào ngữ cảnh.
 
-#### Giai đoạn 3: Generation Pipeline (Sinh câu trả lời)
-*   **Format Context**: Tiêm cấu trúc cây phân cấp vào ngữ cảnh.
-*   **Prompt Engineering chống ảo giác**: Bắt buộc AI trả lời "Không tìm thấy trong tài liệu" nếu dữ liệu không có căn cứ, và bắt buộc đính kèm trích dẫn nguồn, số trang, số điều luật ở cuối câu trả lời.
-*   **LLM Call**: Sinh câu trả lời hoàn thiện hoặc truyền luồng (Streaming) theo thời gian thực.
+#### Giai đoạn 3: Generation Pipeline (Sinh câu trả lời với Tier 2 Guardrail)
+*   **Tier 2 Guardrail (Deep Grounding & Prompt Hardening)**: Ép chặt System Prompt triệt tiêu ảo giác (*Anti-Hallucination*), quy định chặt chẽ: chỉ trả lời dựa trên bằng chứng trực tiếp trong ngữ cảnh tìm được, từ chối phỏng đoán nếu tài liệu không đề cập và vô hiệu hóa mọi lệnh Indirect Injection ẩn trong tài liệu.
+*   **Format Context & Citations**: Tiêm cấu trúc cây phân cấp vào ngữ cảnh và bắt buộc AI đính kèm trích dẫn số trang, tên tài liệu gốc minh bạch (`[Nguồn: ... - Trang ...]`).
+*   **LLM Call**: Sinh câu trả lời hoàn thiện hoặc truyền luồng (Streaming qua SSE) theo thời gian thực.
 
 ---
 
