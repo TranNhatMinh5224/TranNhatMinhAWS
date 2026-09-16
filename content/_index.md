@@ -34,6 +34,8 @@ chapter: false
 
 &emsp; **Supervisor (Host Org):** Nguyễn Gia Hưng
 
+&emsp; **Technical Mentor (CBHD):** Phạm Văn Phóng
+
 &emsp; **Phone Number:** +841277870645
 
 &emsp; **Email:** hunggia@amazon.com.vn

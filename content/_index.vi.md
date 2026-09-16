@@ -31,6 +31,8 @@ chapter: false
 
 &emsp; **Người phụ trách (ĐVHD):** Nguyễn Gia Hưng
 
+&emsp; **Cán bộ hướng dẫn (CBHD):** Phạm Văn Phóng
+
 &emsp; **Số điện thoại:** +841277870645
 
 &emsp; **Email:** hunggia@amazon.com.vn
