@@ -45,4 +45,4 @@ Tinh thần đồng đội và văn hóa chia sẻ (knowledge sharing) tại AWS
 ### Nguyện vọng & Định hướng Phát triển
 
 * **Đồng hành cùng cộng đồng**: Mong muốn tiếp tục gắn bó, tham gia và đóng góp tích cực vào các hoạt động học thuật, sự kiện công nghệ và chia sẻ kiến thức của cộng đồng AWS Study Group / First Cloud AI Journey trong tương lai.
-* **Ứng dụng vào thực tiễn**: Ứng dụng các kiến thức và kỹ năng xuất sắc đã rèn luyện trong kỳ thực tập vào việc hoàn thiện đồ án tốt nghiệp cử nhân, đồng thời phát triển bản thân trở thành một kỹ sư Điện toán đám mây (Cloud / DevOps Engineer) chuyên nghiệp.
+* **Ứng dụng vào thực tiễn**: Ứng dụng các kiến thức và kỹ năng thực tế đã rèn luyện trong kỳ thực tập tại AWS vào công việc chuyên môn, đồng thời phát triển bản thân trở thành một kỹ sư Điện toán đám mây (Cloud / DevOps / AI Engineer) chuyên nghiệp.

@@ -45,4 +45,4 @@ The team spirit and knowledge-sharing culture within the AWS Study Group communi
 ### Future Aspirations & Career Development
 
 * **Continued Community Engagement**: I look forward to remaining actively engaged in the academic events, workshops, and knowledge-sharing initiatives of the AWS Study Group / First Cloud AI Journey community in the future.
-* **Practical Application**: Applying the outstanding knowledge and skills honed during this internship toward completing my bachelor's graduation capstone project and pursuing a successful career as a professional Cloud / DevOps Engineer.
+* **Practical Application**: Applying the practical knowledge and skills honed during this AWS internship toward professional cloud engineering projects and pursuing a successful career as a professional Cloud / DevOps / AI Engineer.
