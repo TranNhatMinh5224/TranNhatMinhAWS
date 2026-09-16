@@ -17,8 +17,8 @@ Trải qua kỳ thực tập **First Cloud AI Journey** đầy ý nghĩa và b�
 **1. Môi trường học tập và rèn luyện chuyên nghiệp**  
 Chương trình được tổ chức rất bài bản, khoa học và chỉn chu. Hệ thống tài liệu hướng dẫn học tập phong phú, sơ đồ lộ trình (roadmap) chi tiết và trực quan giúp thực tập sinh nắm bắt rõ từng cột mốc phát triển. Sự kết hợp hài hòa giữa tự học nghiên cứu và các buổi workshop thực chiến giúp sinh viên vừa rèn luyện tính chủ động cao, vừa được cọ xát với thực tế doanh nghiệp.
 
-**2. Sự đồng hành tận tâm từ Đội ngũ Mentor & Ban Quản trị**  
-Đội ngũ Mentor sở hữu kiến thức chuyên sâu, giàu kinh nghiệm thực chiến và luôn nhiệt huyết hỗ trợ. Khi thực tập sinh gặp các thách thức kỹ thuật về cấu hình mạng bảo mật, điều tra lỗi hay tối ưu hóa hệ thống, các Mentor luôn tận tình hướng dẫn phương pháp luận và cách phân tích log để giải quyết tận gốc vấn đề. Ban Admin cũng hỗ trợ kỹ thuật cực kỳ nhanh chóng, cấp phát tài khoản thực hành AWS chu đáo và kịp thời.
+**2. Sự đồng hành tận tâm từ Cán bộ Hướng dẫn & Đội ngũ Mentor**  
+Đội ngũ hướng dẫn tại AWS Việt Nam, đặc biệt là anh **Nguyễn Gia Hưng** (Người phụ trách ĐVHD) và anh **Phạm Văn Phóng** (Cán bộ hướng dẫn kỹ thuật - CBHD), sở hữu kiến thức chuyên sâu, giàu kinh nghiệm thực chiến và luôn nhiệt huyết hỗ trợ. Khi thực tập sinh gặp các thách thức kỹ thuật về cấu hình mạng bảo mật VPC, tối ưu hóa cơ sở dữ liệu hay điều tra sự cố hệ thống phân tán, các anh luôn tận tình hướng dẫn phương pháp luận và cách phân tích log để giải quyết tận gốc vấn đề. Ban Quản trị chương trình cũng hỗ trợ kỹ thuật cực kỳ nhanh chóng, cấp phát tài khoản thực hành AWS chu đáo và kịp thời.
 
 **3. Tính ứng dụng cao và bám sát chuyên ngành**  
 Là sinh viên chuyên ngành **Khoa học máy tính** của Trường Đại học Xây dựng Hà Nội (HUCE), tôi nhận thấy nội dung chương trình bám rất sát thực tế ngành công nghệ. Việc được tự tay triển khai hạ tầng mạng VPC bảo mật nhiều tầng, quản lý container trên ECS Fargate, tối ưu cơ sở dữ liệu RDS PostgreSQL và ứng dụng AI/RAG đã giúp tôi chuyển hóa trọn vẹn lý thuyết học đường thành năng lực thực chiến vững vàng.
