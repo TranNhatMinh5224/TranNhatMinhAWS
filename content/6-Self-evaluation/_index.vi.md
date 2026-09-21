@@ -5,12 +5,8 @@ weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 aliases:
-  - /6-self-evaluation/
-  - /6-Self-evaluation/
   - /7-self-evaluation/
-  - /7-Self-evaluation/
 ---
-
 Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam (AWS Việt Nam)** từ ngày **03/08/2026** đến ngày **27/09/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng các kiến thức chuyên ngành Khoa học máy tính từ Trường Đại học Xây dựng Hà Nội (HUCE) vào môi trường thực tế.
 
 Trong đợt thực tập này, tôi đã tham gia chương trình **Workforce Bootcamp - First Cloud AI Journey**, hoàn thành chuỗi bài học và thực hành lab về hạ tầng đám mây AWS (như EC2, S3, IAM, VPC, RDS, Lambda, CloudWatch, Auto Scaling, CloudFormation, Docker/ECS, và CI/CD). Thông qua đó, tôi đã củng cố đáng kể năng lực cấu hình an toàn hệ thống, quản lý tài nguyên đám mây và nâng cao kỹ năng làm việc nhóm cũng như viết báo cáo kỹ thuật.

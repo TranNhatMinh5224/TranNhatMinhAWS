@@ -5,9 +5,7 @@ weight: 1
 chapter: false
 ---
 
-    
 # Internship Report
-
 
 ### Student Information:
 &emsp; **Full Name:** Trần Nhật Minh
@@ -45,6 +43,12 @@ chapter: false
 &emsp; **Internship Duration:** From 03-08-2026 to 27-09-2026 (8 weeks)
 
 <img src="/images/avarta.jpg" alt="Your profile picture" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
+
+{{% notice tip %}}
+**Internship Project / Live Demo (Application Load Balancer):**  
+🔗 **Live Application URL:** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
+*Enterprise Knowledge AI RAG Assistant deployed live across AWS ECS Fargate containers and Multi-AZ Application Load Balancer.*
+{{% /notice %}}
 
 ### Report Content
 

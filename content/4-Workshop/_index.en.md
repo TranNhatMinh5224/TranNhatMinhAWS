@@ -4,13 +4,7 @@ date: 2026-08-25
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
-aliases:
-  - /4-workshop/
-  - /4-Workshop/
-  - /5-workshop/
-  - /5-Workshop/
 ---
-
 # Hands-on Guide: Building & Deploying Enterprise Knowledge AI RAG on AWS
 
 #### Workshop Overview

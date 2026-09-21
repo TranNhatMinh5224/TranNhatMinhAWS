@@ -4,13 +4,7 @@ date: 2026-09-08
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
-aliases:
-  - /5-competitions/
-  - /5-Competitions/
-  - /6-competitions/
-  - /6-Competitions/
 ---
-
 # Competition Participation Report: FCAJ BUILDRATHON 2026 — Season 01
 
 In addition to standard coursework and hands-on lab requirements of the internship program, I proactively registered and participated in the long-term tech competition **FCAJ BUILDRATHON 2026 — Season 01**, jointly organized by the First Cloud Journey (FCAJ) community and AWS Vietnam.

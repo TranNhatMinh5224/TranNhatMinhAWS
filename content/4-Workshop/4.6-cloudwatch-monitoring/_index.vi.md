@@ -1,12 +1,9 @@
-﻿---
+---
 title: "Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch"
 date: 2026-08-25
 weight: 6
 chapter: false
 pre: " <b> 4.6. </b> "
-aliases:
-  - /4-workshop/4.6-cloudwatch-monitoring/
-  - /4-Workshop/4.6-cloudwatch-monitoring/
 ---
 
 # 4.6. Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch

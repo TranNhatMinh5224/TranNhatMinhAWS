@@ -1,14 +1,9 @@
-﻿---
+---
 title: "Kiểm thử Toàn trình Pipeline RAG & Security Guardrails"
 date: 2026-08-25
 weight: 5
 chapter: false
 pre: " <b> 4.5. </b> "
-aliases:
-  - /4-workshop/4.5-testing-rag/
-  - /4-Workshop/4.5-testing-rag/
-  - /4-workshop/4.5-testing-cloudwatch/
-  - /4-Workshop/4.5-testing-cloudwatch/
 ---
 
 # 4.5. Kiểm thử Toàn trình Pipeline RAG & Security Guardrails

@@ -1,12 +1,9 @@
-﻿---
+---
 title: "Chuẩn bị Môi trường & Hạ tầng Mạng VPC Zero-Trust"
 date: 2026-08-25
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
-aliases:
-  - /4-workshop/4.1-vpc-network/
-  - /4-Workshop/4.1-vpc-network/
 ---
 
 # 4.1. Chuẩn bị Môi trường & Hạ tầng Mạng VPC Zero-Trust

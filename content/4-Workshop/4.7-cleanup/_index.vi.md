@@ -1,14 +1,9 @@
-﻿---
+---
 title: "Dọn dẹp Tài nguyên (Resource Cleanup)"
 date: 2026-08-25
 weight: 7
 chapter: false
 pre: " <b> 4.7. </b> "
-aliases:
-  - /4-workshop/4.7-cleanup/
-  - /4-Workshop/4.7-cleanup/
-  - /4-workshop/4.6-cleanup/
-  - /4-Workshop/4.6-cleanup/
 ---
 
 # 4.7. Dọn dẹp Tài nguyên (Resource Cleanup & Cost Optimization)

@@ -43,7 +43,11 @@ chapter: false
 
 <img src="/images/avarta.jpg" alt="Ảnh đại diện của bạn" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
 
-
+{{% notice tip %}}
+**Sản phẩm thực tập / Live Demo (Application Load Balancer):**  
+🔗 **Địa chỉ truy cập ứng dụng (Live Product):** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
+*Hệ thống trợ lý AI Enterprise Knowledge RAG tra cứu tài liệu nội bộ, triển khai thực tế trên AWS ECS Fargate và cụm phân phối Multi-AZ Application Load Balancer.*
+{{% /notice %}}
 
 ### Nội dung báo cáo
 

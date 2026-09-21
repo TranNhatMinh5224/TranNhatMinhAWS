@@ -1,12 +1,9 @@
-﻿---
+---
 title: "Data Layer & Vector Database Deployment"
 date: 2026-08-25
 weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
-aliases:
-  - /4-workshop/4.2-database-vector/
-  - /4-Workshop/4.2-database-vector/
 ---
 
 # 4.2. Data Layer & Vector Database Deployment

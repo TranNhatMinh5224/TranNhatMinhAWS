@@ -4,11 +4,7 @@ date: 2026-08-25
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
-aliases:
-  - /2-proposal/
-  - /2-Proposal/
 ---
-
 # Enterprise Knowledge AI RAG — Autonomous Knowledge Assistant for Enterprise Internal Documents
 ## Enterprise Cloud Architecture on AWS: Multi-AZ Resiliency, Zero-Trust Security, Serverless Containers & Cost Optimization
 
@@ -37,6 +33,7 @@ This proposal focuses on **modernizing and transitioning** the containerized app
 The application follows Clean Architecture principles, packaged as modular microservices:
 
 *   **Project Source Code (GitHub Repository)**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
+*   **Live Deployment / Product URL (ALB)**: [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)
 *   **Frontend UI**: React 18 / Next.js — Modern, responsive interface delivering an interactive *"NotebookLM-style"* multi-document analysis experience.
 *   **Backend API**: FastAPI (Python 3.10+) — High-concurrency asynchronous RESTful API with OAuth2 / JWT authentication (30-minute Access Token, 7-day Refresh Token) and Clean Architecture repository patterns.
 *   **Relational Database**: PostgreSQL — Stores user credentials, session threads, chat histories, and document chunk metadata.

@@ -45,7 +45,7 @@
               {{ if eq .Page.Lang "vi" }}Ngôn ngữ{{ else }}Language{{ end }}
             </span>
             <div class="select-style">
-              <select id="select-language" aria-label="Select language" onchange="location = this.value;">
+              <select id="select-language" aria-label="Select language" onchange="window.location.href = this.value;">
                 {{ $pageLang := .Page.Lang }}
                 {{ $translations := .Page.AllTranslations }}
                 {{ range .Site.Languages }}

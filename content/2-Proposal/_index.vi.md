@@ -4,11 +4,7 @@ date: 2026-08-25
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
-aliases:
-  - /2-proposal/
-  - /2-Proposal/
 ---
-
 # Enterprise Knowledge AI RAG — Trợ Lý AI Tra Cứu & Quản Trị Văn Bản Nội Bộ Doanh Nghiệp
 ## Thiết Kế Kiến Trúc Đám Mây Chuẩn Doanh Nghiệp Trên AWS: Multi-AZ, Zero-Trust, Serverless Containers & Tối Ưu Hóa Chi Phí
 
@@ -37,6 +33,7 @@ aliases:
 Dự án ứng dụng được xây dựng theo mô hình Clean Architecture, đóng gói vi dịch vụ hoàn chỉnh:
 
 *   **Kho mã nguồn dự án (GitHub Repository)**: [https://github.com/TranNhatMinh5224/RAG](https://github.com/TranNhatMinh5224/RAG)
+*   **Địa chỉ triển khai thực tế (Live Product / ALB URL)**: [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)
 *   **Frontend**: React 18 / Next.js — Giao diện hiện đại, trực quan, hỗ trợ tương tác đa tài liệu theo phong cách *"Google NotebookLM"*.
 *   **Backend API**: FastAPI (Python 3.10+) — Xử lý API bất đồng bộ tốc độ cao, quản lý xác thực OAuth2 / JWT (Access Token 30 phút, Refresh Token 7 ngày), Clean Architecture Repository Pattern.
 *   **Cơ sở dữ liệu quan hệ**: PostgreSQL — Quản lý thông tin người dùng, danh mục tài liệu, lịch sử chat và metadata văn bản.

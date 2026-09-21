@@ -1,14 +1,11 @@
-﻿---
+---
 title: "Thông tin cuộc thi"
 date: 2026-09-08
 weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 aliases:
-  - /5-competitions/5.1-competition-info/
   - /6-competitions/6.1-competition-info/
-  - /5-Competitions/5.1-competition-info/
-  - /6-Competitions/6.1-competition-info/
 ---
 
 # 5.1. Thông tin Cuộc thi & Đội thi (Team Formation)

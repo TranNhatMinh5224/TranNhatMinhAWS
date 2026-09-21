@@ -4,13 +4,7 @@ date: 2026-09-19
 weight: 4
 chapter: false
 pre: " <b> 5.4. </b> "
-aliases:
-  - /5-competitions/5.4-day3/
-  - /5-Competitions/5.4-Day3/
-  - /6-competitions/6.4-day3/
-  - /6-Competitions/6.4-Day3/
 ---
-
 # 5.4. Day 3: Prove It Arena (Đấu Trường Chung Kết Cloud & AI)
 
 Ngày thi đấu thứ ba (**Day 03 · Prove It Arena**) là vòng chung kết khép lại chuỗi sự kiện chuyên sâu [Prove It: Agentic Cloud Investigation Series](https://docs.cloudthinker.io/learn/workshops/prove-it/overview) do CloudThinker phối hợp cùng cộng đồng First Cloud Journey (FCAJ) và AWS Vietnam tổ chức.

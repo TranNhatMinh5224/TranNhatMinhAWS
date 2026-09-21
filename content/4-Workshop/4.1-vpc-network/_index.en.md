@@ -1,12 +1,9 @@
-﻿---
+---
 title: "Environment Preparation & Zero-Trust VPC Infrastructure"
 date: 2026-08-25
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
-aliases:
-  - /4-workshop/4.1-vpc-network/
-  - /4-Workshop/4.1-vpc-network/
 ---
 
 # 4.1. Environment Preparation & Zero-Trust VPC Infrastructure

@@ -5,12 +5,8 @@ weight: 4
 chapter: false
 pre: " <b> 4. </b> "
 aliases:
-  - /4-workshop/
-  - /4-Workshop/
   - /5-workshop/
-  - /5-Workshop/
 ---
-
 # Hướng Dẫn Thực Hành Xây Dựng & Triển Khai Enterprise Knowledge AI RAG Trên AWS
 
 #### Tổng quan bài Thực hành (Hands-on Workshop)

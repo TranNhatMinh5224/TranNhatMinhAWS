@@ -1,14 +1,9 @@
-﻿---
+---
 title: "Day 1 - Govern"
 date: 2026-09-08
 weight: 2
 chapter: false
 pre: " <b> 5.2. </b> "
-aliases:
-  - /5-competitions/5.2-day1/
-  - /6-competitions/6.2-day1/
-  - /5-Competitions/5.2-Day1/
-  - /6-Competitions/6.2-Day1/
 ---
 
 # 5.2. Day 1: Govern (Agentic Cloud Investigation)

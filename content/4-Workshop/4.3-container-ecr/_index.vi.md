@@ -1,12 +1,9 @@
-﻿---
+---
 title: "Đóng gói Container & Đẩy Image lên Amazon ECR"
 date: 2026-08-25
 weight: 3
 chapter: false
 pre: " <b> 4.3. </b> "
-aliases:
-  - /4-workshop/4.3-container-ecr/
-  - /4-Workshop/4.3-container-ecr/
 ---
 
 # 4.3. Đóng gói Container & Đẩy Image lên Amazon ECR

@@ -4,17 +4,7 @@ date: 2026-07-25
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
-aliases:
-  - /3-eventparticipated/3.1-Event1/
-  - /3-eventparticipated/3.1-event1/
-  - /3-EventParticipated/3.1-Event1/
-  - /3-EventParticipated/3.1-event1/
-  - /4-eventparticipated/4.1-Event1/
-  - /4-eventparticipated/4.1-event1/
-  - /4-EventParticipated/4.1-Event1/
-  - /4-EventParticipated/4.1-event1/
 ---
-
 # Event Harvest Report: “[HANOI] AWS VIETNAM COMMUNITY MEETUP”
 
 ### Event Overview

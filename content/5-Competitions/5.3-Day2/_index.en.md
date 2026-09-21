@@ -1,14 +1,9 @@
-﻿---
+---
 title: "Day 2 - Investigate"
 date: 2026-09-12
 weight: 3
 chapter: false
 pre: " <b> 5.3. </b> "
-aliases:
-  - /5-competitions/5.3-day2/
-  - /6-competitions/6.3-day2/
-  - /5-Competitions/5.3-Day2/
-  - /6-Competitions/6.3-Day2/
 ---
 
 # 5.3. Day 2: Investigate (Agentic Cloud Investigation)

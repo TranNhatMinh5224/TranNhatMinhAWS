@@ -5,12 +5,8 @@ weight: 7
 chapter: false
 pre: " <b> 7. </b> "
 aliases:
-  - /7-feedback/
-  - /7-Feedback/
   - /8-feedback/
-  - /8-Feedback/
 ---
-
 # 7. Chia sẻ & Cảm nhận về Chương trình
 
 Trải qua kỳ thực tập **First Cloud AI Journey** đầy ý nghĩa và bổ ích, tôi xin gửi lời cảm ơn chân thành đến Ban tổ chức, các Mentor cùng toàn thể các anh chị trong chương trình, đồng thời xin chia sẻ những cảm nhận và đánh giá tích cực dưới đây:
