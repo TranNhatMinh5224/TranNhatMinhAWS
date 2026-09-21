@@ -44,18 +44,15 @@ chapter: false
 
 <img src="/images/avarta.jpg" alt="Your profile picture" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
 
-{{% notice tip %}}
-**Internship Project / Live Demo (Application Load Balancer):**  
-🔗 **Live Application URL:** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
-*Enterprise Knowledge AI RAG Assistant deployed live across AWS ECS Fargate containers and Multi-AZ Application Load Balancer.*
-{{% /notice %}}
-
 ### Report Content
 
 1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
+2.  [Proposal & Live Product Demo](2-Proposal/)
 3.  [Events Participated](3-eventparticipated/)
-4.  [Workshop](4-Workshop/)
-5.  [Competitions & Extended Activities](5-Competitions/)
+4.  [Workshop Labs](4-Workshop/)
+5.  [Competitions & Extended Activities (Prove It Series)](5-Competitions/)
 6.  [Self-Assessment](6-Self-evaluation/)
-7.  [Sharing and Feedback](7-Feedback/)
+7.  [Feedback & Contributions](7-Feedback/)
+
+---
+💡 *Live Capstone Product deployed on AWS: [NexusDoc AI (Live Demo via ALB)](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)*

@@ -43,18 +43,15 @@ chapter: false
 
 <img src="/images/avarta.jpg" alt="Ảnh đại diện của bạn" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
 
-{{% notice tip %}}
-**Sản phẩm thực tập / Live Demo (Application Load Balancer):**  
-🔗 **Địa chỉ truy cập ứng dụng (Live Product):** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
-*Hệ thống trợ lý AI Enterprise Knowledge RAG tra cứu tài liệu nội bộ, triển khai thực tế trên AWS ECS Fargate và cụm phân phối Multi-AZ Application Load Balancer.*
-{{% /notice %}}
-
 ### Nội dung báo cáo
 
-1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
-3.  [Các events đã tham gia](3-eventparticipated/)
-4.  [Workshop](4-Workshop/)
-5.  [Cuộc thi & Hoạt động mở rộng](5-Competitions/)
-6.  [Tự đánh giá](6-Self-evaluation/)
-7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)
+1.  [Nhật ký công việc (Worklog)](1-Worklog/)
+2.  [Bản đề xuất giải pháp & Sản phẩm thực tế (Proposal & Live Demo)](2-Proposal/)
+3.  [Các sự kiện đã tham gia](3-eventparticipated/)
+4.  [Thực hành chuỗi bài Lab (Workshop)](4-Workshop/)
+5.  [Đấu trường thi đấu & Hoạt động mở rộng (Prove It Series)](5-Competitions/)
+6.  [Tự đánh giá kết quả](6-Self-evaluation/)
+7.  [Chia sẻ & Đóng góp ý kiến](7-Feedback/)
+
+---
+💡 *Sản phẩm Capstone thực tế đang vận hành trên AWS: [NexusDoc AI (Live Demo qua ALB)](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)*

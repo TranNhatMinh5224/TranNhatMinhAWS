@@ -96,20 +96,23 @@ Hệ thống triển khai quy trình xử lý dữ liệu chặt chẽ gồm 3 g
 
 ### 5. Hình Ảnh Giao Diện Thực Tế Của Dự Án
 
-Dưới đây là hình ảnh chụp thực tế giao diện ứng dụng trợ lý tra cứu văn bản nội bộ đang vận hành:
+{{% notice tip %}}
+**Trải nghiệm Trực tiếp Hệ thống (Live Demo qua AWS ALB):**  
+🔗 **Địa chỉ truy cập ứng dụng (Live Product):** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
+*Hệ thống trợ lý AI NexusDoc AI (Enterprise Legal & Knowledge RAG) đang vận hành trực tiếp trên hạ tầng AWS đám mây qua cụm phân phối Layer 7 Application Load Balancer.*
+{{% /notice %}}
+
+Dưới đây là hình ảnh chụp thực tế giao diện ứng dụng trợ lý tra cứu văn bản nội bộ **NexusDoc AI (Deep Research Pro)** đang vận hành trên môi trường AWS:
 
 <div style="text-align: center; margin: 25px 0;">
-  <img src="/images/2-Proposal/1.png" alt="Giao diện Chatbot Tra cứu Văn bản Nội bộ" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 1: Giao diện Chatbot trả lời câu hỏi nghiệp vụ và dẫn chứng trích dẫn điều khoản cụ thể</p>
+  <img src="/images/2-Proposal/nexusdoc_chat_citation.png" alt="Giao diện NexusDoc AI Assistant trích xuất thông tin kèm trích dẫn nguồn chính xác" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 1: Giao diện NexusDoc AI trích xuất chính xác thông tin thực thể (Địa chỉ thực tập Tầng 36 Bitexco) và gắn kèm trích dẫn minh chứng nguồn tài liệu (TTTN-01.docx - Trang 1)</p>
 
-  <img src="/images/2-Proposal/2.png" alt="Giao diện Tra cứu và Đối soát Nguồn" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 2: Trải nghiệm hỏi đáp thông minh kết hợp đối soát số trang và tên file tài liệu gốc</p>
+  <img src="/images/2-Proposal/nexusdoc_chat_product.png" alt="Giao diện NexusDoc AI tổng hợp tri thức và mục tiêu sản phẩm Capstone" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 2: Trải nghiệm hỏi đáp thông minh kết hợp phân tích ngữ cảnh thời gian thực, liên kết mô hình nhúng BAAI/bge-m3 và Re-ranker</p>
 
-  <img src="/images/2-Proposal/3.png" alt="Giao diện Quản trị Tài liệu Nội bộ" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 3: Kho quản lý danh mục tài liệu nội bộ và lựa chọn Vùng tri thức (Knowledge Scope)</p>
-
-  <img src="/images/2-Proposal/4.png" alt="Giao diện Quản lý Phiên Hội thoại" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto;" />
-  <p style="font-style: italic; color: #666; margin-top: 10px;">Hình 4: Quản lý các phiên hội thoại độc lập theo từng dự án hoặc từng chuyên đề nội bộ</p>
+  <img src="/images/2-Proposal/nexusdoc_guardrail_demo.png" alt="Kiểm thử cơ chế phòng vệ 2 lớp Security Guardrails và Anti-Hallucination" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px;">Hình 3: Cơ chế bảo mật 2 lớp (Security Guardrails) từ chối an toàn các câu hỏi ngoài phạm vi tài liệu doanh nghiệp, triệt tiêu hoàn toàn ảo giác AI (Zero-Hallucination)</p>
 </div>
 
 ---

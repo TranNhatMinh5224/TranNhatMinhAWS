@@ -96,20 +96,23 @@ The system operates a specialized 3-stage intelligence pipeline:
 
 ### 5. Production Application Screenshots
 
-Below are actual production screenshots from the operational internal document assistant:
+{{% notice tip %}}
+**Live Application Experience (AWS Application Load Balancer):**  
+🔗 **Live Product Endpoint:** [http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)  
+*The NexusDoc AI (Enterprise Legal & Knowledge RAG) system is actively operational in production on AWS, distributed via Layer 7 Application Load Balancer.*
+{{% /notice %}}
+
+Below are actual production screenshots from the operational **NexusDoc AI (Deep Research Pro)** document assistant on AWS:
 
 <div style="text-align: center; margin: 25px 0;">
-  <img src="/images/2-Proposal/1.png" alt="Internal Knowledge Chatbot Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 1: Internal Knowledge Chatbot answering operational queries with precise clause citations</p>
+  <img src="/images/2-Proposal/nexusdoc_chat_citation.png" alt="NexusDoc AI Assistant Interface with Exact Source Citation" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 1: NexusDoc AI extracting exact entity data (Bitexco Floor 36) paired with verifiable source citations (TTTN-01.docx - Page 1)</p>
 
-  <img src="/images/2-Proposal/2.png" alt="Verification and Citation Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 2: Grounded Q&A experience pairing answers with source filenames and page numbers</p>
+  <img src="/images/2-Proposal/nexusdoc_chat_product.png" alt="NexusDoc AI Knowledge Synthesis and Capstone Objectives" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 2: Grounded Q&A experience pairing answers with real-time reasoning status, BAAI/bge-m3 embeddings, and Re-ranking</p>
 
-  <img src="/images/2-Proposal/3.png" alt="Internal Document Workspace" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 3: Document management repository and Knowledge Scope selector</p>
-
-  <img src="/images/2-Proposal/4.png" alt="Conversation Management Interface" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto;" />
-  <p style="font-style: italic; color: #666; margin-top: 10px;">Figure 4: Threaded multi-session management inspired by NotebookLM</p>
+  <img src="/images/2-Proposal/nexusdoc_guardrail_demo.png" alt="2-Tier Security Guardrails and Zero-Hallucination Testing" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px;">Figure 3: 2-Tier Security Guardrails gracefully refusing out-of-scope enterprise queries (Amazon stock forecasts), eliminating hallucination</p>
 </div>
 
 ---
