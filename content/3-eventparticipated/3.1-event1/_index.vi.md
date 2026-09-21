@@ -1,0 +1,101 @@
+---
+title: "Event 1"
+date: 2026-07-25
+weight: 1
+chapter: false
+pre: " <b> 3.1. </b> "
+aliases:
+  - /3-eventparticipated/3.1-Event1/
+  - /3-eventparticipated/3.1-event1/
+  - /3-EventParticipated/3.1-Event1/
+  - /3-EventParticipated/3.1-event1/
+  - /4-eventparticipated/4.1-Event1/
+  - /4-eventparticipated/4.1-event1/
+  - /4-EventParticipated/4.1-Event1/
+  - /4-EventParticipated/4.1-event1/
+---
+
+# Bài thu hoạch “[HÀ NỘI] AWS VIETNAM COMMUNITY MEETUP”
+
+### Thông tin chung về sự kiện
+*   **Tên Sự Kiện**: [HÀ NỘI] AWS VIETNAM COMMUNITY MEETUP
+*   **Thời gian tổ chức**: 08:30 – 12:00 | Thứ Bảy, ngày 25/07/2026 (Check-in: 08:30 | Bắt đầu: 09:00)
+*   **Địa điểm tổ chức**: Văn phòng AWS Hà Nội – Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội
+*   **Đơn vị tổ chức**: AWS Vietnam Community phối hợp cùng AWS Vietnam
+*   **Vai trò tham gia**: Người tham dự
+
+---
+
+### Mục đích & Ý nghĩa sự kiện
+*   Khám phá các xu hướng Trí tuệ nhân tạo (AI) và AI Agent mới nhất, cùng phương pháp hiện thực hóa các giải pháp này trên nền tảng đám mây AWS.
+*   Gặp gỡ, lắng nghe chia sẻ từ các chuyên gia hàng đầu gồm các AWS Community Hero, AWS Community Builder và các kỹ sư đang trực tiếp triển khai AI giải quyết bài toán thực tế cho doanh nghiệp.
+*   Học hỏi các mô hình kiến trúc AI Agent (Agent Patterns), cách chuyển đổi xu hướng công nghệ thành giá trị kinh doanh và kỹ thuật tăng tốc phát triển sản phẩm với AI.
+*   Mở rộng mạng lưới kết nối (Networking) với cộng đồng kỹ sư Cloud & AI tại Hà Nội.
+
+---
+
+### Danh Sách Diễn Giả & Khách Mời
+*   **Hồ Việt Anh & Phong Phạm**: Đại diện điều phối Cộng đồng AWS Việt Nam.
+*   **Tuấn Vũ**: Kỹ sư phần mềm & Chuyên gia AI Agent mã nguồn mở.
+*   **Nguyễn Thu & Nam La**: Chuyên gia tư vấn giải pháp Chuyển đổi số & AI Doanh nghiệp.
+*   **Henry (Đức) Bùi**: Chuyên gia công nghệ cao cấp, chuyên sâu về phương pháp phát triển sản phẩm tinh gọn.
+
+---
+
+### Nội Dung Nổi Bật
+
+#### 1. Community Update
+*   **Diễn giả**: Hồ Việt Anh & Phong Phạm.
+*   **Nội dung**: Tổng kết các hoạt động nổi bật của cộng đồng AWS Việt Nam trong thời gian qua; giới thiệu các sáng kiến, chuỗi hội thảo kỹ thuật sắp tới và các chương trình hỗ trợ sinh viên, nhà phát triển tiếp cận công nghệ điện toán đám mây tiên tiến.
+
+#### 2. OpenClaw – The Rise and Practice of Open-Source AI Agents
+*   **Diễn giả**: Tuấn Vũ.
+*   **Nội dung**: 
+    *   Giới thiệu dự án mã nguồn mở **OpenClaw** và sự tiến hóa từ các mô hình ngôn ngữ lớn (LLM) đơn thuần sang thế hệ **AI Agents** có khả năng tự chủ: tự lập kế hoạch (Planning), ghi nhớ ngữ cảnh (Memory), và gọi công cụ bên ngoài (Tool Use / Function Calling).
+    *   Chia sẻ kinh nghiệm thực tế về việc triển khai, tối ưu chi phí và mở rộng quy mô các Open-source AI Agent trên nền tảng hạ tầng AWS.
+
+#### 3. From AI Trends to Business Value
+*   **Diễn giả**: Nguyễn Thu & Nam La.
+*   **Nội dung**:
+    *   Phân tích bài toán kết nối giữa "Làn sóng công nghệ AI" và "Giá trị kinh doanh thực tế".
+    *   Cách nhận diện các bài toán phù hợp để ứng dụng AI (tự động hóa luồng nghiệp vụ, chăm sóc khách hàng thông minh, phân tích dữ liệu dự đoán) nhằm mang lại chỉ số hoàn vốn đầu tư (ROI) rõ ràng thay vì triển khai theo trào lưu.
+
+#### 4. Ship Fast with AI, Not by
+*   **Diễn giả**: Henry (Đức) Bùi.
+*   **Nội dung**:
+    *   Phương pháp tư duy "Đồng hành cùng AI" (With AI, not By AI): AI đóng vai trò như một đòn bẩy gia tốc (accelerator) giúp kỹ sư viết mã, kiểm thử, refactor và triển khai sản phẩm thần tốc.
+    *   Nhấn mạnh tầm quan trọng của người kỹ sư trong việc làm chủ kiến trúc, kiểm soát rủi ro bảo mật và thẩm định chất lượng thay vì phó mặc hoàn toàn cho công cụ sinh mã.
+
+#### 5. Tea Break & Networking
+*   Khoảng thời gian giao lưu trực tiếp tại văn phòng AWS Hà Nội, trao đổi với các diễn giả và các thành viên cộng đồng AWS về cơ hội thực tập, định hướng nghề nghiệp Cloud/DevOps/AI và giải đáp các thắc mắc chuyên sâu.
+
+---
+
+### Những Gì Học Được
+
+#### 1. Tư duy công nghệ (Tech Mindset)
+*   **Agentic Era**: Kỷ nguyên AI không dừng lại ở việc hỏi đáp văn bản (Prompt & Completion), mà là xây dựng các tác nhân có khả năng tương tác trực tiếp với API, hệ thống cơ sở dữ liệu và thực hiện hành động cụ thể.
+*   **With AI, Not By AI**: Luôn giữ vững tư duy nền tảng vững chắc về hệ thống máy tính, mạng và bảo mật để kiểm soát, thẩm định những gì AI hỗ trợ xây dựng.
+
+#### 2. Kiến thức kỹ thuật thực tiễn
+*   Hiểu rõ các kiến trúc AI Agent phổ biến và cách ánh xạ (mapping) chúng vào các dịch vụ đám mây AWS cụ thể.
+*   Nắm bắt quy trình xây dựng công cụ (Tool calling) cho Agent bằng AWS Lambda Serverless và API Gateway.
+*   Tầm quan trọng của việc quản lý State (trạng thái hội thoại, lịch sử thực thi) thông qua các giải pháp NoSQL như DynamoDB.
+
+#### 3. Best Practices khi vận hành
+*   Thiết lập ranh giới bảo mật nghiêm ngặt (Guardrails) cho AI để tránh tình trạng Prompt Injection hoặc AI đưa ra hành động phá hủy tài nguyên.
+*   Kiểm thử liên tục (Continuous Evaluation) chất lượng câu trả lời và độ chính xác khi Agent gọi công cụ.
+
+---
+
+### Ứng Dụng Vào Đợt Thực Tập & Dự Án
+
+*   **Ứng dụng vào Capstone Project**: Vận dụng kiến thức về kiến trúc AI Agent và các mô hình tích hợp đám mây đã học tại meetup vào dự án xây dựng hệ thống **AI Chatbot RAG** — giải quyết bài toán tra cứu văn bản thông minh, hạn chế ảo giác (hallucination) và trích xuất thông tin có trích dẫn nguồn chuẩn xác.
+*   **Định hướng mở rộng trên AWS**: Nghiên cứu đưa các thành phần của hệ thống Chatbot RAG lên hạ tầng đám mây AWS (sử dụng container trên ECS/App Runner, lưu trữ tài liệu với Amazon S3, và kết nối CSDL Vector Database hiệu năng cao).
+*   **Tối ưu năng suất kỹ thuật**: Tận dụng AI như một công cụ hỗ trợ tăng tốc quá trình viết mã, tìm hiểu tài liệu và kiểm thử giải pháp, đồng thời luôn chủ động kiểm soát chặt chẽ kiến trúc và chất lượng phần mềm.
+
+---
+
+### Trải Nghiệm & Cảm Nhận
+*   Buổi meetup tại Văn phòng AWS Hà Nội (Tầng 7, Grand Terra) mang lại không khí học thuật và công nghệ vô cùng sôi nổi, chuyên nghiệp.
+*   Được lắng nghe trực tiếp từ những chuyên gia đang giải quyết bài toán AI hàng ngày giúp em có cái nhìn thực tế hơn rất nhiều so với việc chỉ học lý thuyết qua tài liệu.
