@@ -52,13 +52,13 @@
                   {{ $lang := . }}
                   {{ $targetUrl := "" }}
                   {{ if eq $lang.Lang "en" }}
-                    {{ $targetUrl = "/en/" | relURL }}
+                    {{ $targetUrl = "en/" | absURL }}
                   {{ else }}
-                    {{ $targetUrl = "/" | relURL }}
+                    {{ $targetUrl = "" | absURL }}
                   {{ end }}
                   {{ range $translations }}
                     {{ if eq .Lang $lang.Lang }}
-                      {{ $targetUrl = .RelPermalink }}
+                      {{ $targetUrl = .Permalink }}
                     {{ end }}
                   {{ end }}
                   <option id="{{ $lang.Lang }}" value="{{ $targetUrl }}" {{ if eq $pageLang $lang.Lang }}selected{{ end }}>
