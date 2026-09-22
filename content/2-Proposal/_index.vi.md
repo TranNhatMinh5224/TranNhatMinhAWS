@@ -273,24 +273,57 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
 | **Cơ sở dữ liệu (PostgreSQL)** | **Amazon RDS PostgreSQL** | Instance `db.t4g.medium` Multi-AZ, tự động sao lưu Snapshot 7 ngày, mã hóa KMS at-rest. |
 | **CSDL Vector (Qdrant)** | **Qdrant trên EC2 Graviton (ARM64)** | Instance `c7g.xlarge` chạy trên chip AWS Graviton3, ổ cứng `gp3` cấu hình 3000 IOPS & 125 MB/s throughput. |
 | **Kho lưu trữ tệp gốc (Data Lake)** | **Amazon S3 (Standard + Glacier)** | Phân tầng dữ liệu tự động với S3 Lifecycle: sau 90 ngày chuyển sang Glacier Instant Retrieval; mã hóa SSE-KMS. |
-| **Mô hình Ngôn ngữ (LLM)** | **Amazon Bedrock / Google Gemini** | Kết nối Bedrock qua VPC Interface Endpoint; Gemini 2.5 Flash qua NAT Gateway. |
-| **Bảo mật bí mật & Giám sát** | **AWS Secrets Manager & CloudWatch** | Quản lý credentials với tính năng xoay vòng khóa tự động; CloudWatch thu thập logs và kích hoạt cảnh báo qua SNS. |
+| **Mô hình Ngôn ngữ (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Cổng giao tiếp AI thế hệ mới Bedrock Mantle (`us-east-1`) định tuyến qua VPC Interface Endpoint; Gemini 2.5 Flash qua NAT Gateway. |
+| **Bảo mật bí mật & Giám sát** | **AWS Secrets Manager & CloudWatch** | Quản lý credentials tập trung tại `rag/production/credentials`; CloudWatch thu thập logs và kích hoạt cảnh báo qua SNS. |
 
 ---
 
-#### 7.5. Quản Trị Định Danh IAM & Cơ Chế Bảo Mật Zero-Trust
+#### 7.5. Quản Trị Định Danh IAM, Khóa Bí Mật & Cơ Chế Bảo Mật Zero-Trust
 
-1.  **ECS Task Execution Role (`ecsTaskExecutionRole`)**:
-    *   Cấp quyền cho ECS Agent kéo container image từ **Amazon ECR**.
-    *   Cấp quyền ghi log vào **Amazon CloudWatch Logs**.
-    *   Cấp quyền đọc các biến môi trường nhạy cảm từ **AWS Secrets Manager** (`secretsmanager:GetSecretValue`).
-2.  **ECS Task Role (`ecsLegalRAGTaskRole`)**:
-    *   Cấp quyền đọc/ghi tệp lên **Amazon S3 Document Lake** (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`).
-    *   Cấp quyền sử dụng khóa mã hóa **AWS KMS Customer Managed Key** (`kms:Decrypt`, `kms:GenerateDataKey`).
-    *   Cấp quyền gọi mô hình suy luận trên **Amazon Bedrock** (`bedrock:InvokeModel`).
-3.  **Mã hóa dữ liệu toàn diện (End-to-End Encryption)**:
-    *   *Dữ liệu đang truyền (In-Transit)*: Bắt buộc TLS 1.3 từ người dùng đến CloudFront, ALB và từ ALB vào container ECS Fargate.
-    *   *Dữ liệu tĩnh (At-Rest)*: Toàn bộ S3 Buckets, RDS PostgreSQL Storage, và EBS Volumes của Qdrant đều được mã hóa bằng khóa AWS KMS.
+1.  **Quản trị Bí mật Tập trung (AWS Secrets Manager)**:
+    *   Toàn bộ các khóa nhạy cảm và thông số cấu hình Production được lưu trữ bảo mật tại Secret `rag/production/credentials`, tuyệt đối không hard-code trong mã nguồn GitHub.
+    *   Hệ thống Backend (FastAPI) và Worker (Celery) tự động lấy chứng thư khi khởi động thông qua IAM Role của EC2/ECS Fargate mà không cần lưu file `.env` trên môi trường Production.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="Cấu hình AWS Secrets Manager rag/production/credentials" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5a: Danh mục Toàn bộ 16 Khóa & Giá trị Chứng thư Sản xuất tại AWS Secrets Manager (rag/production/credentials)</p>
+</div>
+
+*Bảng đối chiếu 16 biến môi trường thực tế tại AWS Secrets Manager:*
+| Nhóm chức năng | Khóa cấu hình (Secret Key) | Vai trò kỹ thuật & Cơ chế bảo mật thực thi |
+| :--- | :--- | :--- |
+| **Cơ sở dữ liệu** | `DATABASE_URL`, `DB_SSL_MODE` | Kết nối bất đồng bộ (`asyncpg`) tới Amazon RDS PostgreSQL (`rag-db...ap-southeast-1.rds.amazonaws.com:5432/rag_db`); bắt buộc mã hóa SSL (`require`). |
+| **Bảo mật ứng dụng** | `SECRET_KEY`, `ALLOWED_ORIGINS` | Khóa băm token JWT bảo mật phiên đăng nhập và chính sách CORS cho phép client truy cập API an toàn. |
+| **Kho tài liệu S3** | `AWS_REGION`, `S3_BUCKET_NAME`, `DOCUMENTS_DRAFT_PREFIX`, `DOCUMENTS_REAL_PREFIX` | Quản trị kết nối S3 Document Lake (`enterprise-rag-storage-0117967`), phân vùng ranh giới giữa tài liệu nháp và tài liệu chính thức đã kiểm duyệt. |
+| **Dịch vụ nền & Vector** | `QDRANT_URL`, `REDIS_URL` | Định tuyến nội bộ trong VPC tới cụm CSDL Vector Qdrant (`http://rag_qdrant:6333`) và bộ nhớ đệm/hàng đợi Celery Redis (`redis://rag_redis:6379/0`). |
+| **Tích hợp Cloud AI Bedrock** | `BEDROCK_API_KEY`, `BEDROCK_BASE_URL`, `BEDROCK_MODEL`, `USE_BEDROCK` | Cấp quyền kết nối tới AWS Bedrock Mantle (`https://bedrock-mantle.us-east-1.api.aws/v1`), kích hoạt mô hình `mistral.ministral-3-14b-instruct` và cờ kích hoạt `USE_BEDROCK=true`. |
+| **Mô hình Fallback / Local** | `GEMINI_API_KEY`, `USE_LOCAL_LLM` | Cung cấp phương án dự phòng với Google Gemini 2.5 Flash và cờ vô hiệu hóa chạy mô hình cục bộ nặng (`USE_LOCAL_LLM=False`) để tiết kiệm RAM máy chủ. |
+
+2.  **Tích hợp Nền tảng Amazon Bedrock Mantle Endpoint**:
+    *   Sử dụng cổng giao tiếp thế hệ mới **Amazon Bedrock-Mantle Endpoint** tại khu vực `us-east-1` (N. Virginia), cung cấp các mô hình Foundation Models cấp doanh nghiệp (`mistral.ministral-3-14b-instruct`, `amazon.nova-micro-v1:0`, `qwen`, `glm`).
+    *   Hỗ trợ chế độ Multi-Provider: Khi cờ cấu hình `USE_BEDROCK=true`, hệ thống tự động định tuyến toàn bộ yêu cầu suy luận sang Bedrock Mantle với cơ chế streaming thời gian thực (`astream`) qua giao thức bảo mật TLS 1.3.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_mantle_console.png" alt="Giao diện Tổng quan Amazon Bedrock Mantle Endpoint Console" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5b: Giao diện Quản trị Cổng Dịch vụ Amazon Bedrock-Mantle Endpoint (Khu vực us-east-1)</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_model_catalog.png" alt="Danh mục Foundation Models trên Amazon Bedrock Mantle" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5c: Danh mục Mô hình Nền tảng (Model Catalog) được cấp quyền trên Amazon Bedrock Mantle</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_workbench_test.png" alt="Kiểm thử Suy luận Trực tiếp trên Amazon Bedrock Workbench" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5d: Kiểm thử Khả năng Suy luận Trực tiếp trên Amazon Bedrock Workbench</p>
+</div>
+
+3.  **ECS Task Execution Role & Task Role**:
+    *   `ecsTaskExecutionRole`: Cho phép kéo image từ ECR, ghi log vào CloudWatch và giải mã secrets từ Secrets Manager (`secretsmanager:GetSecretValue`).
+    *   `ecsLegalRAGTaskRole`: Cấp quyền truy xuất S3 Document Lake (`s3:GetObject`, `s3:PutObject`), giải mã KMS Key và gọi API Bedrock (`bedrock:InvokeModel`).
+4.  **Mã hóa dữ liệu toàn diện (End-to-End Encryption)**:
+    *   *Dữ liệu đang truyền (In-Transit)*: Bắt buộc TLS 1.3 từ người dùng đến CloudFront, ALB và từ ALB vào container ECS Fargate/EC2.
+    *   *Dữ liệu tĩnh (At-Rest)*: Toàn bộ S3 Buckets, RDS PostgreSQL Storage, và EBS Volumes của Qdrant đều được mã hóa bằng khóa AWS KMS Customer Managed Key.
 
 ---
 
@@ -386,3 +419,78 @@ Kết quả đo kiểm tự động ghi nhận từ bộ đánh giá chất lư�
 | **Thời gian tự phục hồi sự cố (MTTR)** | **65 giây** (ECS Container Self-healing) | $\le 180$ giây | **Đạt xuất sắc** |
 | **Mức tiết kiệm chi phí vận hành (TCO)** | **Tiết kiệm 68%** so với máy chủ GPU | $\ge 50%$ | **Vượt chỉ tiêu** |
 | **Độ sẵn sàng hệ sinh thái (System Uptime)** | **99.95%** (Kiến trúc Multi-AZ) | $\ge 99.9%$ | **Đạt tiêu chuẩn AWS** |
+
+---
+
+#### 10.4. Kiểm Chứng Thực Nghiệm Trực Quan Trên Nền Tảng NexusDoc AI & Amazon Bedrock (Live Demonstration)
+
+Nhằm chứng minh tính khả thi, độ tin cậy và khả năng đáp ứng thực tế của hệ thống, toàn bộ bộ câu hỏi kiểm định chuyên sâu trên tài liệu thực tế *Quy chế Quản trị Hạ tầng AWS và Vận hành Amazon Bedrock 2026* đã được thực thi trực tiếp trên giao diện người dùng **NexusDoc AI Web Application** kết nối với **Amazon Bedrock**:
+
+##### 1. Truy xuất Sự thật & Danh mục Mô hình (Factual Retrieval & Model Governance)
+Hệ thống trích xuất chính xác 100% các mô hình Foundation Models được cấp phép tại Bedrock Mantle Console (`mistral.ministral-3-14b-instruct`, `amazon.nova-micro-v1:0`, `Google Gemini 2.5 Flash`) kèm trích dẫn nguồn số trang và điều khoản cụ thể (*Trang 1, Điều 5, Khoản 1*).
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_factual_models.png" alt="Kiểm thử Truy xuất Sự thật Danh mục Mô hình Bedrock" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7a: Kiểm thử Thực nghiệm Truy xuất Sự thật & Danh mục Mô hình Bedrock (Gắn kèm trích dẫn nguồn)</p>
+</div>
+
+##### 2. Khảo sát Cấu trúc Hạ tầng Mạng Zero-Trust & Phân vùng Subnet
+Khi hỏi về quy hoạch hạ tầng VPC và vị trí đặt các cơ sở dữ liệu, NexusDoc AI trích dẫn chuẩn xác Điều 3 Khoản 1 & Khoản 2: dải mạng `10.0.0.0/16`, 3 phân vùng Subnet (Public, Private, Isolated) và nhấn mạnh nguyên tắc Zero-Trust: cơ sở dữ liệu PostgreSQL và Qdrant tuyệt đối không gắn Internet Gateway, chỉ quản trị qua AWS Systems Manager Session Manager hoặc VPN nội bộ.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_vpc_zero_trust.png" alt="Kiểm thử Khảo sát Quy hoạch Mạng Zero-Trust trên AWS" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7b: Kiểm thử Khảo sát Quy hoạch Mạng Zero-Trust và Cách ly Cơ sở dữ liệu (Điều 3)</p>
+</div>
+
+##### 3. Cơ chế Bảo vệ An toàn & Lập tức Ngăn chặn Yêu cầu Vi phạm (Security Guardrail)
+Khi người dùng thử nghiệm câu hỏi có chứa từ khóa nhạy cảm liên quan đến việc làm lộ hoặc trích xuất mã bí mật API Key, bộ lọc **Security Guardrail** của hệ thống đã lập tức phát hiện và chủ động từ chối an toàn: *"Yêu cầu của bạn đã bị từ chối do vi phạm chính sách bảo mật (Trích xuất thông tin bí mật hệ thống bị chặn)"*. Điều này minh chứng hệ thống có khả năng phòng vệ chủ động, ngăn ngừa rủi ro rò rỉ dữ liệu nhạy cảm.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_security_guardrail.png" alt="Kiểm thử Kích hoạt Bộ lọc Security Guardrail Từ chối An toàn" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7c: Kiểm thử Bộ lọc An toàn Security Guardrail lập tức ngăn chặn yêu cầu khai thác bí mật hệ thống</p>
+</div>
+
+##### 4. Tóm tắt Đa Khía Cạnh Toàn Diện Phong Cách NotebookLM (Multi-Aspect Synthesis)
+Với yêu cầu tổng quan *"Hãy tóm tắt ngắn gọn 4 nội dung quan trọng nhất trong Quy chế..."*, hệ thống tự động kích hoạt chế độ **Multi-Aspect Retrieval** gom các khía cạnh khác nhau từ Qdrant Hybrid Search và chuyển cho Amazon Bedrock tổng hợp thành một báo cáo điều hành toàn diện gồm 3 phần:
+*   **Phần 1**: Bối cảnh, Động lực & Mục tiêu cốt lõi (Context, Zero-Trust Architecture & Target SLAs).
+*   **Phần 2**: Kết quả Thực nghiệm SLA, Cơ chế Re-ranking & Phát hiện nổi bật.
+*   **Phần 3**: Lộ trình triển khai thực tế, Giám sát CloudWatch & Ý nghĩa chiến lược với doanh nghiệp.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_1.png" alt="Kiểm thử Tóm tắt Đa Khía cạnh NotebookLM Phần 1" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7d: Tóm tắt Đa Khía Cạnh Kiểu NotebookLM - Phần 1: Bối cảnh, Mục tiêu & Kiến trúc đề xuất</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_2.png" alt="Kiểm thử Tóm tắt Đa Khía cạnh NotebookLM Phần 2" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7e: Tóm tắt Đa Khía Cạnh Kiểu NotebookLM - Phần 2: Kết quả thực nghiệm SLA & Phát hiện nổi bật</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_3.png" alt="Kiểm thử Tóm tắt Đa Khía cạnh NotebookLM Phần 3" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7f: Tóm tắt Đa Khía Cạnh Kiểu NotebookLM - Phần 3: Lộ trình triển khai & Ý nghĩa thực tiễn đối với doanh nghiệp</p>
+</div>
+
+##### 5. Thực thi Chính sách Tuân thủ An toàn Cổng Mạng (Security Policy & Systems Manager)
+Khi nhận câu hỏi giả định của kỹ sư muốn mở cổng 5432 ra Internet để kết nối DBeaver từ xa, AI kiên quyết bác bỏ theo đúng Điều 3 Khoản 2, phân tích hậu quả kỷ luật theo Điều 10 Khoản 2 (Mức 2 đình chỉ 30 ngày) và đưa ra giải pháp tuân thủ chuẩn AWS: sử dụng DBeaver kết nối thông qua **AWS Systems Manager Session Manager** mà không cần mở cổng công cộng.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_security_policy_port.png" alt="Kiểm thử Thực thi Chính sách An toàn Mạng AWS" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7g: Kiểm thử Thực thi Chính sách Tuân thủ Cổng Mạng và Khuyến nghị giải pháp AWS Systems Manager</p>
+</div>
+
+##### 6. Kiểm Định Chống Ảo Giác Số Liệu Cam Kết Dịch Vụ (Anti-Hallucination on SLA Metrics)
+Khi được hỏi về số liệu đo lường độ trễ toàn trình ALB (Latency p95) và truy vấn Qdrant (p99) theo SLA 2026, NexusDoc AI đã thể hiện năng lực chống ảo giác xuất sắc: AI trích xuất Điều 7 khẳng định quy chế yêu cầu tuân thủ nghiêm ngặt các ngưỡng đo lường trên CloudWatch và ALB, nhưng tuyên bố rõ ràng trong tài liệu không có số liệu định lượng chi tiết, đồng thời nhấn mạnh: *"Lưu ý: Tôi chỉ trả lời dựa trên nội dung trong [NGỮ CẢNH TÌM ĐƯỢC]"*. Điều này ngăn chặn triệt để nguy cơ LLM tự suy đoán bừa bãi các con số kỹ thuật.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_sla_antihallucination.png" alt="Kiểm thử Chống Ảo giác Số liệu SLA 2026" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7h: Kiểm thử Chống Ảo giác (Anti-Hallucination) - Từ chối suy đoán số liệu SLA nằm ngoài ngữ cảnh tài liệu</p>
+</div>
+
+##### 7. Kiểm Định Giới Hạn Ngữ Cảnh Đối Với Bảng Phân Cấp Sự Cố (Strict Context Bounding - Incident P1/P2)
+Khi người dùng truy vấn thời gian phản hồi mục tiêu cho sự cố cấp độ P1 (Khẩn cấp) và P2 (Nghiêm trọng), NexusDoc AI nhận diện chính xác Điều 8 có viện dẫn đến "Bảng 2", nhưng AI chỉ rõ nội dung chi tiết của Bảng 2 không có trong ngữ cảnh tìm được, kiên quyết không tự bịa đặt mốc thời gian và hướng dẫn liên hệ trực tiếp bộ phận vận hành On-call.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_incident_severity.png" alt="Kiểm thử Giới hạn Ngữ cảnh Sự cố P1 và P2" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7i: Kiểm thử Giới hạn Ngữ cảnh Chặt chẽ (Strict Context Bounding) - Nhận diện tài liệu tham chiếu nhưng từ chối an toàn khi thiếu dữ liệu</p>
+</div>

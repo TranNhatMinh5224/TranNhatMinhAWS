@@ -103,6 +103,16 @@ aws ecs update-service \
 | **Thời gian khôi phục sự cố (MTTR - High Availability)** | **65 giây** (Auto heal / replace) | $\le 180$ giây | **Đạt xuất sắc** |
 | **Tối ưu chi phí hạ tầng (TCO Savings)** | **Tiết kiệm 68%** ($135/tháng vs $420/tháng GPU) | $\ge 50%$ | **Vượt chỉ tiêu** |
 
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="Cấu hình AWS Secrets Manager thực tế" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 8a: Cấu hình Toàn bộ 16 Chứng thư Sản xuất tại AWS Secrets Manager phục vụ Vận hành Tuần 8</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_factual_models.png" alt="Kiểm thử Nghiệm thu RAG trên Giao diện Thực tế" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 8b: Nghiệm thu Thực nghiệm Trực quan trên Giao diện NexusDoc AI kết nối Amazon Bedrock</p>
+</div>
+
 ---
 
 ### 5. Vấn đề kỹ thuật (Troubleshooting & Root Cause Analysis)

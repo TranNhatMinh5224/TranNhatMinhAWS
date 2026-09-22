@@ -271,22 +271,55 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
 | **Relational Database (PostgreSQL)** | **Amazon RDS PostgreSQL** | `db.t4g.medium` Multi-AZ with daily automated backups and KMS encryption at rest. |
 | **Vector Database (Qdrant)** | **Qdrant on EC2 Graviton (ARM64)** | `c7g.xlarge` powered by AWS Graviton3, equipped with `gp3` storage (3000 IOPS, 125 MB/s throughput). |
 | **Raw Storage (Document Lake)** | **Amazon S3 (Standard + Glacier)** | Automated S3 Lifecycle transitioning documents older than 90 days to Glacier Instant Retrieval; SSE-KMS encrypted. |
-| **Foundation Models (LLM)** | **Amazon Bedrock / Google Gemini** | Connects to Bedrock via VPC Interface Endpoint; Gemini 2.5 Flash via NAT Gateway. |
-| **Secrets & Observability** | **AWS Secrets Manager & CloudWatch** | Centralizes secrets management with rotation; CloudWatch collects logs and triggers SNS alerts. |
+| **Foundation Models (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Next-generation serverless Bedrock Mantle endpoint (`us-east-1`) routed via VPC Interface Endpoint; Gemini 2.5 Flash via NAT Gateway. |
+| **Secrets & Observability** | **AWS Secrets Manager & CloudWatch** | Centralizes secrets management in `rag/production/credentials`; CloudWatch collects logs and triggers SNS alerts. |
 
 ---
 
-#### 7.5. IAM Governance & Zero-Trust Security Framework
+#### 7.5. IAM Governance, Secrets Management & Zero-Trust Security Framework
 
-1.  **ECS Task Execution Role (`ecsTaskExecutionRole`)**:
-    *   Grants ECS Agent permissions to pull container images from **Amazon ECR**.
-    *   Grants rights to write logs into **Amazon CloudWatch Logs**.
-    *   Grants permission to decrypt sensitive environment variables from **AWS Secrets Manager** (`secretsmanager:GetSecretValue`).
-2.  **ECS Task Role (`ecsLegalRAGTaskRole`)**:
-    *   Grants FastAPI runtime permissions to read/write objects in **Amazon S3 Document Lake** (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`).
-    *   Grants cryptographic access to **AWS KMS Customer Managed Keys** (`kms:Decrypt`, `kms:GenerateDataKey`).
-    *   Grants model invocation privileges on **Amazon Bedrock** (`bedrock:InvokeModel`).
-3.  **End-to-End Cryptography**:
+1.  **Centralized Secrets Management (AWS Secrets Manager)**:
+    *   All sensitive environment parameters and production configuration keys are securely maintained in secret `rag/production/credentials`, completely eliminating plain-text secrets from Git.
+    *   Production Backend (FastAPI) and Celery Worker containers dynamically fetch secrets at startup via EC2/ECS IAM Task Roles, avoiding plain text `.env` storage on production disks.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="AWS Secrets Manager Configuration rag/production/credentials" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5a: Complete Inventory of 16 Production Secret Keys and Values in AWS Secrets Manager (rag/production/credentials)</p>
+</div>
+
+*Reference Matrix of 16 Production Environment Variables in AWS Secrets Manager:*
+| Functional Category | Configuration Key | Engineering Role & Zero-Trust Security Mechanism |
+| :--- | :--- | :--- |
+| **Relational Database** | `DATABASE_URL`, `DB_SSL_MODE` | Asynchronous (`asyncpg`) connection string to Amazon RDS PostgreSQL (`rag-db...ap-southeast-1.rds.amazonaws.com:5432/rag_db`); enforces encrypted transport (`require`). |
+| **App Security & Auth** | `SECRET_KEY`, `ALLOWED_ORIGINS` | Cryptographic secret for signing HMAC-SHA256 JWT tokens, paired with CORS origin whitelist. |
+| **S3 Document Lake** | `AWS_REGION`, `S3_BUCKET_NAME`, `DOCUMENTS_DRAFT_PREFIX`, `DOCUMENTS_REAL_PREFIX` | S3 Document Lake endpoints (`enterprise-rag-storage-0117967`), partitioning raw draft uploads from verified enterprise assets. |
+| **Asynchronous & Vector** | `QDRANT_URL`, `REDIS_URL` | Private VPC endpoints to Qdrant Vector Engine (`http://rag_qdrant:6333`) and ElastiCache/Redis broker (`redis://rag_redis:6379/0`). |
+| **Amazon Bedrock AI** | `BEDROCK_API_KEY`, `BEDROCK_BASE_URL`, `BEDROCK_MODEL`, `USE_BEDROCK` | Authorizes connectivity to AWS Bedrock Mantle (`https://bedrock-mantle.us-east-1.api.aws/v1`), setting default model `mistral.ministral-3-14b-instruct` and activation flag `USE_BEDROCK=true`. |
+| **Fallback & Model Flags** | `GEMINI_API_KEY`, `USE_LOCAL_LLM` | Backup provider configuration (Google Gemini 2.5 Flash) and disabling heavy local models (`USE_LOCAL_LLM=False`) to minimize host RAM footprint. |
+
+2.  **Amazon Bedrock Mantle Endpoint Integration**:
+    *   Integrates the next-generation **Amazon Bedrock-Mantle Endpoint** in region `us-east-1` (N. Virginia), providing enterprise-grade Foundation Models (`mistral.ministral-3-14b-instruct`, `amazon.nova-micro-v1:0`, `qwen`, `glm`).
+    *   Supports a dynamic Multi-Provider Strategy: When `USE_BEDROCK=true`, the system routes 100% of reasoning queries to Bedrock Mantle with real-time streaming tokens (`astream`) over TLS 1.3 encryption.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_mantle_console.png" alt="Amazon Bedrock Mantle Endpoint Console Overview" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5b: Amazon Bedrock-Mantle Endpoint Administration Console (Region us-east-1)</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_model_catalog.png" alt="Amazon Bedrock Mantle Model Catalog" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5c: Enterprise Foundation Model Catalog Provisioned on Amazon Bedrock Mantle</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_workbench_test.png" alt="Direct Inference Validation on Amazon Bedrock Workbench" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5d: Live Inference and Reasoning Validation on Amazon Bedrock Workbench</p>
+</div>
+
+3.  **ECS Task Execution Role & Task Role**:
+    *   `ecsTaskExecutionRole`: Pulls images from ECR, ships logs to CloudWatch, and decrypts secrets from Secrets Manager (`secretsmanager:GetSecretValue`).
+    *   `ecsLegalRAGTaskRole`: Accesses S3 Document Lake (`s3:GetObject`, `s3:PutObject`), decrypts KMS keys, and invokes Bedrock models (`bedrock:InvokeModel`).
+4.  **End-to-End Cryptography**:
     *   *In-Transit*: Enforces TLS 1.3 encryption across all client, CDN, ALB, and container hops.
     *   *At-Rest*: All S3 Buckets, RDS PostgreSQL data volumes, and Qdrant EBS drives are encrypted using AWS KMS Customer Managed Keys.
 
@@ -384,3 +417,78 @@ Empirical operational metrics gathered via Amazon CloudWatch, AWS ALB logs, and 
 | **Mean Time to Recover (MTTR - HA)** | **65 seconds** (ECS Container Self-healing) | $\le 180$ seconds | **Excellent** |
 | **TCO Cost Optimization** | **68% Cost Reduction** vs GPU servers | $\ge 50%$ | **Surpassed** |
 | **Ecosystem Availability (Uptime SLA)**| **99.95%** (Multi-AZ Architecture) | $\ge 99.9%$ | **Meets AWS SLA** |
+
+---
+
+#### 10.4. Live Verification & Demonstration on NexusDoc AI & Amazon Bedrock
+
+To demonstrate operational feasibility, reliability, and real-world responsiveness, a rigorous test suite based on the corporate policy *Quy chế Quản trị Hạ tầng AWS và Vận hành Amazon Bedrock 2026* was executed directly on the live **NexusDoc AI Web Application** connected to **Amazon Bedrock**:
+
+##### 1. Factual Retrieval & Model Governance
+The system achieved 100% precision in retrieving authorized Foundation Models from Bedrock Mantle Console (`mistral.ministral-3-14b-instruct`, `amazon.nova-micro-v1:0`, `Google Gemini 2.5 Flash`) complete with exact statutory source citations (*Page 1, Article 5, Clause 1*).
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_factual_models.png" alt="Live Factual Verification of Bedrock Model Catalog" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7a: Live Empirical Verification of Factual Retrieval & Model Catalog Governance (Grounded Citations)</p>
+</div>
+
+##### 2. Zero-Trust Network & Subnet Topology Inspection
+When queried on the VPC architecture and database isolation policies, NexusDoc AI correctly cited Article 3 Clauses 1 & 2: CIDR block `10.0.0.0/16`, 3-tier subnets (Public, Private, Isolated), and reinforced the Zero-Trust principle: PostgreSQL and Qdrant have zero Internet Gateway attachments, accessible only via AWS Systems Manager Session Manager or internal VPN.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_vpc_zero_trust.png" alt="Live Verification of Zero-Trust Network Planning on AWS" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7b: Live Verification of Zero-Trust VPC Topology & Database Isolation (Article 3)</p>
+</div>
+
+##### 3. Active Security Guardrail & Threat Prevention
+When an adversarial prompt containing sensitive attempts to extract or expose secret API keys was submitted, the system's **Security Guardrail** immediately intervened with safe refusal: *"Your request was rejected due to security policy violation (Extraction of system credentials is prohibited)"*. This confirms proactive threat defense against credential exfiltration.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_security_guardrail.png" alt="Security Guardrail Triggered on Secret Key Exposure Prompt" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7c: Live Security Guardrail Demonstration Proactively Blocking Credential Exfiltration Attempts</p>
+</div>
+
+##### 4. NotebookLM-Style Multi-Aspect Executive Synthesis
+When asked to summarize the top 4 critical contents of the regulation, the system automatically engaged **Multi-Aspect Retrieval** to gather comprehensive viewpoints via Qdrant Hybrid Search and streamed an executive synthesis via Amazon Bedrock across 3 comprehensive parts:
+*   **Part 1**: Context, Motivation & Core Objectives (Zero-Trust Architecture & Target SLAs).
+*   **Part 2**: Empirical SLA Benchmarks, Hybrid Re-ranking & Key Technical Findings.
+*   **Part 3**: Concrete Implementation Roadmap, CloudWatch Telemetry & Strategic Enterprise Value.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_1.png" alt="NotebookLM-Style Multi-Aspect Synthesis Part 1" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7d: Comprehensive Multi-Aspect Synthesis NotebookLM Style - Part 1: Context, Objectives & Architecture</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_2.png" alt="NotebookLM-Style Multi-Aspect Synthesis Part 2" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7e: Comprehensive Multi-Aspect Synthesis NotebookLM Style - Part 2: SLA Results & Key Findings</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_notebooklm_summary_3.png" alt="NotebookLM-Style Multi-Aspect Synthesis Part 3" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7f: Comprehensive Multi-Aspect Synthesis NotebookLM Style - Part 3: Operational Roadmap & Enterprise Value</p>
+</div>
+
+##### 5. Network Compliance Enforcement & AWS Systems Manager
+When presented with a hypothetical scenario of opening database port 5432 to the Internet for remote DBeaver connections, the AI strictly rejected the proposal citing Article 3 Clause 2, highlighted the Level 2 disciplinary penalty in Article 10 Clause 2 (30-day suspension), and recommended the AWS-compliant solution: connecting DBeaver via **AWS Systems Manager Session Manager** without exposing any public port.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_security_policy_port.png" alt="Network Policy Enforcement & AWS Systems Manager Recommendation" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7g: Live Network Security Policy Enforcement and AWS Systems Manager Recommendation</p>
+</div>
+
+##### 6. Anti-Hallucination Guardrail on Undefined SLA Metrics
+When queried regarding specific measured latency values for ALB (Latency p95) and Qdrant vector retrieval (p99) under SLA 2026, NexusDoc AI demonstrated robust anti-hallucination guardrails: the AI cited Article 7 affirming that operational metrics must strictly adhere to CloudWatch and ALB thresholds, but explicitly clarified that specific numeric targets were not detailed in the document, concluding with: *"Note: I only answer based on contents within the [FOUND CONTEXT]"*. This strictly prevents the LLM from fabricating speculative numbers.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_sla_antihallucination.png" alt="Anti-Hallucination Verification on SLA 2026 Metrics" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7h: Anti-Hallucination Verification - Safely declining to invent ungrounded numerical SLA parameters</p>
+</div>
+
+##### 7. Strict Context Bounding on Incident Severity Escalation
+When queried on the target response time and reporting protocols for Level P1 (Emergency) and P2 (Severe) incidents, NexusDoc AI accurately detected that Article 8 references "Table 2" for incident escalation tiers, but clarified that Table 2 was not contained in the retrieved context, refusing to invent artificial turnaround times and directing the user to the on-call team.
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_incident_severity.png" alt="Strict Context Bounding on Incident Severity P1 and P2" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 7i: Strict Context Bounding Verification - Detecting document citations while refusing ungrounded fabrication</p>
+</div>

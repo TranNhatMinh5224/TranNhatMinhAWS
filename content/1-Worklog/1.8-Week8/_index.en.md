@@ -89,6 +89,16 @@ docker compose up -d
 | **Mean Time to Recover (MTTR - HA)** | **65 seconds** (Automated health recovery) | $\le 180$ seconds | **Excellent** |
 | **Cost Optimization (TCO Savings)** | **68% Cost Reduction** ($135/mo vs $420/mo GPU) | $\ge 50%$ | **Surpassed** |
 
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="Production AWS Secrets Manager Configuration" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 8a: Complete Production Credentials Inventory in AWS Secrets Manager Configured in Week 8</p>
+</div>
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/2-Proposal/chat_test_factual_models.png" alt="Live RAG Verification on NexusDoc Web UI" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 8b: Live Empirical Acceptance Testing on NexusDoc AI Interface Connected to Amazon Bedrock</p>
+</div>
+
 ---
 
 ### 5. Technical Troubleshooting & Root Cause Analysis
