@@ -91,3 +91,16 @@ aliases:
 ### Trải Nghiệm & Cảm Nhận
 *   Buổi meetup tại Văn phòng AWS Hà Nội (Tầng 7, Grand Terra) mang lại không khí học thuật và công nghệ vô cùng sôi nổi, chuyên nghiệp.
 *   Được lắng nghe trực tiếp từ những chuyên gia đang giải quyết bài toán AI hàng ngày giúp em có cái nhìn thực tế hơn rất nhiều so với việc chỉ học lý thuyết qua tài liệu.
+
+---
+
+### Hình Ảnh Hoạt Động & Kỷ Niệm Sự Kiện
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/3-eventparticipated/event2/group_photo_fcaj.png" alt="Ảnh chụp lưu niệm toàn thể cộng đồng AWS Vietnam Community Meetup tại Grand Terra Hà Nội" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 1: Ảnh chụp lưu niệm toàn thể cộng đồng AWS Vietnam Community và các chuyên gia tại Văn phòng AWS Hà Nội (Tầng 7, Grand Terra Tower)</p>
+
+  <img src="/images/3-eventparticipated/event2/event_hall_presentation.jpg" alt="Không gian hội trường chia sẻ chuyên đề AI Agent và Cloud Solutions" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 95%; height: auto; margin-bottom: 25px;" />
+  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Hình 2: Không gian hội trường chia sẻ các chủ đề chuyên sâu về Open-source AI Agents và Chuyển đổi số</p>
+</div>
+
