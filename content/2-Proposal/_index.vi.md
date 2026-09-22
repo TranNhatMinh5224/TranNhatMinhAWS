@@ -494,3 +494,18 @@ Khi người dùng truy vấn thời gian phản hồi mục tiêu cho sự cố
   <img src="/images/2-Proposal/chat_test_incident_severity.png" alt="Kiểm thử Giới hạn Ngữ cảnh Sự cố P1 và P2" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 7i: Kiểm thử Giới hạn Ngữ cảnh Chặt chẽ (Strict Context Bounding) - Nhận diện tài liệu tham chiếu nhưng từ chối an toàn khi thiếu dữ liệu</p>
 </div>
+
+---
+
+### 11. Tài Liệu Tham Khảo (Academic References - IEEE Format)
+
+*   [1] P. Lewis, E. Perez, A. Piktus, F. Petroni, V. Karpukhin, N. Goyal, H. Küttler, M. Lewis, W. Yih, T. Rocktäschel, S. Riedel, and D. Kiela, "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," in *Advances in Neural Information Processing Systems (NeurIPS)*, vol. 33, pp. 9459–9474, 2020.
+*   [2] S. Xiao, Z. Liu, P. Zhang, and N. Muennighoff, "C-Pack: Packaged Resources to Advance General Chinese and Multilingual Embedding," *Beijing Academy of Artificial Intelligence (BAAI) Technical Report*, arXiv:2309.07597, 2023.
+*   [3] V. Karpukhin, B. Oğuz, S. Min, P. Lewis, L. Wu, S. Edunov, D. Chen, and W. Yih, "Dense Passage Retrieval for Open-Domain Question Answering," in *Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)*, pp. 6769–6781, 2020.
+*   [4] Y. Gao, Y. Xiong, X. Wang, K. Wang, and H. Chen, "Retrieval-Augmented Generation for Large Language Models: A Survey," *arXiv preprint arXiv:2312.10997*, 2023.
+*   [5] Amazon Web Services, "AWS Well-Architected Framework: Reliability, Security, and Operational Excellence Pillars," *AWS Technical Whitepapers*, 2024. [Online]. Available: `https://aws.amazon.com/architecture/well-architected/`
+*   [6] Amazon Web Services, "Generative AI Application Architecture with Amazon Bedrock and Knowledge Bases," *AWS Architecture Center Best Practices*, 2024. [Online]. Available: `https://aws.amazon.com/bedrock/`
+*   [7] Qdrant Team, "Qdrant: Vector Similarity Search Engine Architecture and Performance Benchmarks," *Qdrant Documentation*, 2024. [Online]. Available: `https://qdrant.tech/documentation/`
+*   [8] National Institute of Standards and Technology (NIST), "Zero Trust Architecture," *NIST Special Publication 800-207*, Gaithersburg, MD, Aug. 2020. DOI: `10.6028/NIST.SP.800-207`.
+*   [9] E. Nijkamp, B. Pang, H. Hayashi, et al., "CodeGen: An Open Large Language Model for Code with Multi-Turn Program Synthesis," in *Proc. of ICLR*, 2023.
+*   [10] B. Ding, C. Qin, L. Liu, et al., "A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions," *ACM Computing Surveys*, vol. 56, no. 10, pp. 1–39, 2024.

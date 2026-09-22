@@ -5,52 +5,31 @@ weight: 1
 chapter: false
 ---
 
-# Internship Report
+# Graduation Internship Report
 
-### Student Information:
-&emsp; **Full Name:** Trần Nhật Minh
+<div style="display: flex; gap: 25px; align-items: flex-start; margin-bottom: 25px; flex-wrap: wrap;">
+  <div style="flex: 0 0 220px;">
+    <img src="/images/avarta.jpg" alt="Student Portrait" style="width: 220px; border-radius: 10px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block;" />
+  </div>
+  
+  <div style="flex: 1; min-width: 320px;">
 
-&emsp; **Student ID:** 0117967
+| Academic & Administrative Record | Verification Details |
+| :--- | :--- |
+| **Student Name** | **Trần Nhật Minh** (Student ID: `0117967`) |
+| **Major & Class** | Computer Science — Class 67CS (Cohort 67) |
+| **Faculty & University** | Faculty of IT — Hanoi University of Civil Engineering (HUCE) |
+| **Academic Advisor (GVHD)** | MSc. Lê Văn Minh |
+| **Host Organization** | **AMAZON WEB SERVICES VIETNAM COMPANY LIMITED** |
+| **Legal Headquarters** | 36th Floor, Bitexco Financial Tower, 2 Hai Trieu St, District 1, HCMC |
+| **On-site Office Location** | AWS Hanoi Office — 7th Floor, Grand Terra, 36 Cat Linh, Hanoi |
+| **Internship Role** | Solutions Architecture & Cloud Engineering Intern (FCAJ) |
+| **Technical Mentor (CBHD)** | Phạm Văn Phóng (Supervisor: Nguyễn Gia Hưng — `hunggia@amazon.com.vn`) |
+| **Internship Duration** | 03/08/2026 – 27/09/2026 (8-Week Intensive On-Site in Hanoi) |
+| **Extended Achievements** | • Global **Prove It Series** (Team WAR - Team 06)<br>• Product Hackathon **FCAJ BUILDRATHON 2026 Season 01** |
 
-&emsp; **Phone Number:** 0862359426
-
-&emsp; **Email:** nhatminh5224.forwork@gmail.com
-
-&emsp; **University:** Hanoi University of Civil Engineering (HUCE)
-
-&emsp; **Faculty:** Information Technology
-
-&emsp; **Major:** Computer Science
-
-&emsp; **Class:** 67CS - **Cohort:** 67
-
-&emsp; **Instructor / Advisor:** ThS. Lê Văn Minh
-
-&emsp; **Host Organization:** AMAZON WEB SERVICES VIETNAM COMPANY LIMITED IN HANOI CITY
-
-&emsp; **Host Organization Address (Legal HQ):** 36th Floor, Bitexco Financial Tower, No. 2 Hai Trieu Street, Saigon Ward, Ho Chi Minh City, Vietnam
-
-&emsp; **On-site Working Location:** AWS Hanoi Office — 7th Floor, Grand Terra Building, 36 Cat Linh, Dong Da, Hanoi (2-Month Intensive On-Site: 03/08/2026 – 27/09/2026)
-
-&emsp; **Training Program:** First Cloud AI Journey (FCAJ)
-
-&emsp; **Competitions & Extended Activities:**  
-&emsp; • Participated in the **Prove It: Agentic Cloud Investigation Series** (Team WAR - Team 06).  
-&emsp; • Newly registered and participating in the **FCAJ BUILDRATHON 2026 — Season 01** hackathon.
-
-&emsp; **Supervisor (Host Org):** Nguyễn Gia Hưng
-
-&emsp; **Technical Mentor (CBHD):** Phạm Văn Phóng
-
-&emsp; **Phone Number:** +841277870645
-
-&emsp; **Email:** hunggia@amazon.com.vn
-
-&emsp; **Internship Position:** Solutions Architecture & Cloud Engineering Intern (FCAJ)
-
-&emsp; **Internship Duration:** From 03-08-2026 to 27-09-2026 (8 weeks / 2 months in Hanoi)
-
-<img src="/images/avarta.jpg" alt="Your profile picture" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
+  </div>
+</div>
 
 {{% notice info %}}
 **Internship Summary & Extended Activities:**  
