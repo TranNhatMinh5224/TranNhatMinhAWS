@@ -8,31 +8,31 @@ chapter: false
 # Báo cáo thực tập tốt nghiệp
 
 ### Thông tin sinh viên & Cơ sở đào tạo:
-&emsp; **Họ và tên:** Trần Nhật Minh  
-&emsp; **Mã số sinh viên (MSV):** 0117967  
-&emsp; **Số điện thoại:** 0862359426  
-&emsp; **Email:** nhatminh5224.forwork@gmail.com  
-&emsp; **Trường:** Trường Đại học Xây dựng Hà Nội (HUCE)  
-&emsp; **Khoa:** Công nghệ thông tin  
-&emsp; **Ngành:** Khoa học máy tính  
-&emsp; **Lớp:** 67CS — **Khóa:** 67  
-&emsp; **Giảng viên hướng dẫn (GVHD):** ThS. Lê Văn Minh  
+* **Họ và tên:** Trần Nhật Minh  
+* **Mã số sinh viên (MSV):** 0117967  
+* **Số điện thoại:** 0862359426  
+* **Email:** nhatminh5224.forwork@gmail.com  
+* **Trường:** Trường Đại học Xây dựng Hà Nội (HUCE)  
+* **Khoa:** Công nghệ thông tin  
+* **Ngành:** Khoa học máy tính  
+* **Lớp:** 67CS — **Khóa:** 67  
+* **Giảng viên hướng dẫn (GVHD):** ThS. Lê Văn Minh  
 
 ### Đơn vị hướng dẫn & Cơ sở thực tập:
-&emsp; **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM  
-&emsp; **Địa chỉ ĐVHD (Pháp lý):** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam  
-&emsp; **Địa điểm làm việc & sinh hoạt thực tế:** Văn phòng AWS Hà Nội — Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội (2 tháng thực tập tập trung: 03/08/2026 – 27/09/2026)  
-&emsp; **Vị trí thực tập:** Solutions Architecture & Cloud Engineering Intern (FCAJ)  
-&emsp; **Chương trình đào tạo:** First Cloud AI Journey (FCAJ)  
-&emsp; **Người phụ trách (ĐVHD):** Nguyễn Gia Hưng  
-&emsp; **Cán bộ hướng dẫn (CBHD):** Phạm Văn Phóng  
-&emsp; **Số điện thoại liên hệ:** +841277870645  
-&emsp; **Email liên hệ:** hunggia@amazon.com.vn  
-&emsp; **Thời gian thực tập:** Từ ngày 03-08-2026 đến ngày 27-09-2026 (8 tuần / 2 tháng tại Hà Nội)  
+* **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM  
+* **Địa chỉ ĐVHD (Pháp lý):** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam  
+* **Địa điểm làm việc & sinh hoạt thực tế:** Văn phòng AWS Hà Nội — Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội (2 tháng thực tập tập trung: 03/08/2026 – 27/09/2026)  
+* **Vị trí thực tập:** Solutions Architecture & Cloud Engineering Intern (FCAJ)  
+* **Chương trình đào tạo:** First Cloud AI Journey (FCAJ)  
+* **Người phụ trách (ĐVHD):** Nguyễn Gia Hưng  
+* **Cán bộ hướng dẫn (CBHD):** Phạm Văn Phóng  
+* **Số điện thoại liên hệ:** +841277870645  
+* **Email liên hệ:** hunggia@amazon.com.vn  
+* **Thời gian thực tập:** Từ ngày 03-08-2026 đến ngày 27-09-2026 (8 tuần / 2 tháng tại Hà Nội)  
 
 ### Hoạt động thi đấu & Mở rộng:
-&emsp; • Tham gia chuỗi đấu trường công nghệ **Prove It: Agentic Cloud Investigation Series** (Đội thi WAR - Team 06).  
-&emsp; • Mới đăng ký tham gia cuộc thi Hackathon phát triển sản phẩm **FCAJ BUILDRATHON 2026 — Season 01**.  
+* Tham gia chuỗi đấu trường công nghệ **Prove It: Agentic Cloud Investigation Series** (Đội thi WAR - Team 06).  
+* Mới đăng ký tham gia cuộc thi Hackathon phát triển sản phẩm **FCAJ BUILDRATHON 2026 — Season 01**.  
 
 <img src="/images/avarta.jpg" alt="Ảnh chân dung sinh viên" width="220" style="border-radius: 10px; border: 1px solid #E2E8F0; margin-top: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" />
 
