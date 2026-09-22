@@ -25,7 +25,7 @@ This workshop provides a comprehensive step-by-step hands-on guide to architecti
    * 4.1.2. Security Groups & IAM Role Configuration (`EC2-S3-RAG`)
    * 4.1.3. Amazon S3 Document Lake Provisioning, Block Public Access & Folder Prefixes
 2. [**4.2. Data Layer & Vector Database Deployment**](4.2-database-vector/)
-   * 4.2.1. Centralized Secret Management with AWS Secrets Manager (`DATABASE_URL`, `S3_BUCKET_NAME`...)
+   * 4.2.1. Centralized Secret Management with AWS Secrets Manager (16 Parameters: DB, S3, Bedrock Mantle...)
    * 4.2.2. Amazon RDS PostgreSQL Deployment in Isolated Subnet (AWS Graviton `db.t4g.micro`, KMS Encryption)
    * 4.2.3. Qdrant Vector Store Container Deployment (HNSW Graph, Cosine Metric, `BAAI/bge-m3`)
 3. [**4.3. Containerizing Applications & Pushing Images to Amazon ECR**](4.3-container-ecr/)
@@ -38,8 +38,9 @@ This workshop provides a comprehensive step-by-step hands-on guide to architecti
    * 4.4.3. Path-Based Routing Implementation (`/api/*`, `/docs*`, `/*`)
    * 4.4.4. End-to-End Verification via ALB Public DNS Endpoint
 5. [**4.5. End-to-End RAG Pipeline Testing & Security Guardrails**](4.5-testing-rag/)
-   * 4.5.1. End-to-End Ingestion & Factual Knowledge Retrieval (NexusDoc AI, Grounded Citations)
-   * 4.5.2. 2-Tier Enterprise Security Guardrail Testing (Zero-Hallucination Policy)
+   * 4.5.1. Amazon Bedrock Mantle Endpoint, Model Catalog & Workbench Playground Validation
+   * 4.5.2. End-to-End RAG Pipeline Testing via ALB DNS on Real Enterprise Documents (9 Evaluation Scenarios)
+   * 4.5.3. 2-Tier Enterprise Security Guardrails & Zero-Hallucination Testing
 6. [**4.6. Operational Monitoring & Incident Alerting with Amazon CloudWatch**](4.6-cloudwatch-monitoring/)
    * 4.6.1. Application Load Balancer Network Telemetry (`RequestCount`, `2XX`, `ResponseTime`)
    * 4.6.2. Centralized Observability Dashboard (`Dashboard-RAG`)

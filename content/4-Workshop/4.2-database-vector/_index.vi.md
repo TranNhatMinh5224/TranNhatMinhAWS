@@ -36,19 +36,26 @@ Bài lab 4.2 hướng dẫn chi tiết quy trình thiết lập tầng dữ li�
 
 ---
 
-### 2. Danh mục các khóa cấu hình bảo mật (Secret Key/Value Matrix)
+### 2. Danh mục Toàn bộ 16 Khóa & Giá trị Cấu hình Thực tế (Secret Key/Value Matrix)
 
-| Tên khóa (Key) | Giá trị cấu hình thực tế | Mục đích kỹ thuật trong hệ thống |
-| :--- | :--- | :--- |
-| **`DATABASE_URL`** | `postgresql+asyncpg://postgres:******@rag-db...:5432/rag_db` | Chuỗi kết nối bất đồng bộ AsyncPG đến Amazon RDS PostgreSQL |
-| **`USE_LOCAL_LLM`** | `False` | Chế độ tích hợp LLM đám mây (Gemini 2.5 / Bedrock) |
-| **`AWS_REGION`** | `ap-southeast-1` | Khu vực Singapore xử lý các API AWS S3, Secrets Manager |
-| **`S3_BUCKET_NAME`** | `enterprise-rag-storage-0117967` | Tên Document Lake S3 lưu trữ file văn bản |
-| **`DOCUMENTS_DRAFT_PREFIX`** | `documents/draft/` | Đường dẫn tiền tố S3 chứa văn bản tải lên tạm thời |
-| **`DOCUMENTS_REAL_PREFIX`** | `documents/real/` | Đường dẫn tiền tố S3 chứa văn bản đã hoàn tất Ingestion |
-| **`QDRANT_URL`** | `http://rag_qdrant:6333` | Endpoint mạng nội bộ kết nối đến dịch vụ Vector Search |
-| **`REDIS_URL`** | `redis://rag_redis:6379/0` | Hàng đợi tác vụ bất đồng bộ (Celery Broker / Result Backend) |
-| **`ALLOWED_ORIGINS`** | `*` (hoặc domain ALB) | Cấu hình CORS cho phép Next.js Frontend gọi API |
+| Nhóm chức năng | Khóa cấu hình (Secret Key) | Giá trị thực tế trên Production | Mục đích kỹ thuật trong hệ sinh thái RAG |
+| :--- | :--- | :--- | :--- |
+| **Cơ sở dữ liệu** | **`DATABASE_URL`** | `postgresql+asyncpg://postgres:******@rag-db...:5432/rag_db` | Chuỗi kết nối bất đồng bộ AsyncPG đến Amazon RDS PostgreSQL |
+| | **`DB_SSL_MODE`** | `require` | Bắt buộc mã hóa đường truyền SSL/TLS tới cơ sở dữ liệu |
+| **Bảo mật ứng dụng** | **`SECRET_KEY`** | `enterprise_rag_jwt_secret_key_production_2026_super_secure!` | Khóa băm token JWT bảo vệ phiên xác thực người dùng |
+| | **`ALLOWED_ORIGINS`** | `*` (hoặc domain ALB DNS) | Cấu hình CORS cho phép Next.js Frontend gọi API trơn tru |
+| **Kho tài liệu S3** | **`AWS_REGION`** | `ap-southeast-1` | Khu vực Singapore xử lý các API AWS S3, RDS, Secrets Manager |
+| | **`S3_BUCKET_NAME`** | `enterprise-rag-storage-0117967` | Tên Document Lake S3 lưu trữ tệp tài liệu gốc |
+| | **`DOCUMENTS_DRAFT_PREFIX`** | `documents/draft/` | Đường dẫn tiền tố S3 chứa văn bản tải lên tạm thời |
+| | **`DOCUMENTS_REAL_PREFIX`** | `documents/real/` | Đường dẫn tiền tố S3 chứa văn bản đã hoàn tất Ingestion |
+| **Dịch vụ nền & Vector** | **`QDRANT_URL`** | `http://rag_qdrant:6333` | Endpoint mạng nội bộ kết nối đến dịch vụ Vector Search |
+| | **`REDIS_URL`** | `redis://rag_redis:6379/0` | Hàng đợi tác vụ bất đồng bộ (Celery Broker / Result Backend) |
+| **Tích hợp Cloud AI Bedrock** | **`BEDROCK_API_KEY`** | `ABSKTWFudGxlQXBpS2V5LW1vZ...` | Khóa API cấp quyền truy xuất Amazon Bedrock-Mantle Endpoint |
+| | **`BEDROCK_BASE_URL`** | `https://bedrock-mantle.us-east-1.api.aws/v1` | Cổng dịch vụ Bedrock Mantle tại khu vực `us-east-1` (N. Virginia) |
+| | **`BEDROCK_MODEL`** | `mistral.ministral-3-14b-instruct` | Foundation Model mặc định phục vụ suy luận RAG |
+| | **`USE_BEDROCK`** | `true` | Cờ kích hoạt định tuyến toàn bộ yêu cầu sang Amazon Bedrock |
+| **Mô hình Fallback / Local** | **`GEMINI_API_KEY`** | `AQ.Ab8RN6L9DpixC1vvwFjgXxB...` | Khóa API dự phòng gọi Google Gemini 2.5 Flash |
+| | **`USE_LOCAL_LLM`** | `False` | Tắt mô hình cục bộ để tối ưu bộ nhớ RAM máy chủ |
 
 ---
 
@@ -57,17 +64,12 @@ Bài lab 4.2 hướng dẫn chi tiết quy trình thiết lập tầng dữ li�
 #### Bước 1: Khởi tạo Secret trên AWS Secrets Manager
 1. Truy cập **AWS Secrets Manager Console** → bấm **Store a new secret**.
 2. Chọn **Secret type**: **Other type of secret**.
-3. Tại phần **Key/value pairs**, nhập các cặp tham số cấu hình cơ sở dữ liệu và hệ sinh thái RAG.
+3. Tại phần **Key/value pairs**, nhập đầy đủ 16 cặp tham số cấu hình cơ sở dữ liệu, kho tài liệu S3 và cổng AI Bedrock Mantle.
 4. Đặt tên Secret: `rag/production/credentials`.
 
 <div align="center">
-  <img src="/images/4-Workshop/4.2/4.2.1-secrets-manager-database-url.png" alt="Cấu hình chuỗi kết nối DATABASE_URL trong Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 4.2.1.1: Cấu hình an toàn chuỗi kết nối DATABASE_URL trỏ tới RDS Endpoint trên AWS Secrets Manager</em></p>
-</div>
-
-<div align="center">
-  <img src="/images/4-Workshop/4.2/4.2.1-secrets-manager-config-keys.png" alt="Danh mục các khóa cấu hình hệ thống RAG trong Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Hình 4.2.1.2: Danh sách các tham số vận hành S3, Qdrant, Redis và AWS Region được lưu trữ bảo mật tập trung</em></p>
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="Cấu hình đầy đủ 16 khóa và giá trị trong AWS Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Hình 4.2.1.1: Danh mục toàn bộ 16 Khóa & Giá trị Chứng thư Sản xuất thực tế tại AWS Secrets Manager (rag/production/credentials)</em></p>
 </div>
 
 ---

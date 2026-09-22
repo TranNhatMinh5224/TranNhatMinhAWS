@@ -27,7 +27,7 @@ Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, c
    * 4.1.2. Cấu hình Security Groups & Phân quyền IAM Role (`EC2-S3-RAG`)
    * 4.1.3. Khởi tạo Amazon S3 Document Lake & Cấu hình Block Public Access / Thư mục tiền tố
 2. [**4.2. Triển khai Tầng Dữ liệu & Vector Database**](4.2-database-vector/)
-   * 4.2.1. Cấu hình AWS Secrets Manager lưu trữ thông tin mật (`DATABASE_URL`, `S3_BUCKET_NAME`...)
+   * 4.2.1. Cấu hình AWS Secrets Manager lưu trữ 16 tham số môi trường bí mật (Database, S3, Bedrock Mantle...)
    * 4.2.2. Khởi tạo Amazon RDS PostgreSQL trong Isolated Subnet (AWS Graviton `db.t4g.micro`, KMS Encryption)
    * 4.2.3. Triển khai Qdrant Vector Store trên Container Runtime (HNSW, Cosine Metric, `BAAI/bge-m3`)
 3. [**4.3. Đóng gói Container & Đẩy Image lên Amazon ECR**](4.3-container-ecr/)
@@ -40,8 +40,9 @@ Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, c
    * 4.4.3. Cấu hình Định tuyến Thông minh dựa trên đường dẫn (Path-Based Routing: `/api/*`, `/docs*`, `/*`)
    * 4.4.4. Kiểm chứng Vận hành Toàn diện qua ALB DNS công khai
 5. [**4.5. Kiểm thử Toàn trình Pipeline RAG & Security Guardrails**](4.5-testing-rag/)
-   * 4.5.1. Kiểm thử End-to-End Ingestion & Tra cứu Tri thức (NexusDoc AI, Grounded Citations)
-   * 4.5.2. Kiểm thử 2 Tầng Phòng vệ Bảo mật (Security Guardrails & Chống ảo giác Zero-Hallucination)
+   * 4.5.1. Kiểm định Nền tảng Amazon Bedrock Mantle Endpoint, Model Catalog & Workbench Playground
+   * 4.5.2. Kiểm thử Toàn trình End-to-End Pipeline RAG trên Web UI qua ALB DNS (9 Kịch bản Thực nghiệm Quy chế 2026)
+   * 4.5.3. Kiểm thử 2 Tầng Phòng vệ Bảo mật (Security Guardrails & Chống Ảo giác Zero-Hallucination)
 6. [**4.6. Giám sát Vận hành & Cảnh báo Sự cố với Amazon CloudWatch**](4.6-cloudwatch-monitoring/)
    * 4.6.1. Giám sát Chỉ số Mạng Application Load Balancer (`RequestCount`, `2XX`, `ResponseTime`)
    * 4.6.2. Thiết lập Bảng điều khiển Giám sát Tập trung (`Dashboard-RAG`)

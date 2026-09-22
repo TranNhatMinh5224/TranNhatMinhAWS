@@ -36,19 +36,26 @@ Lab 4.2 details the end-to-end setup of a hardened data tier:
 
 ---
 
-### 2. Secret Key/Value Configuration Matrix
+### 2. Complete Inventory of 16 Production Secret Keys & Values (Configuration Matrix)
 
-| Key Name | Configured Value | Architectural Purpose |
-| :--- | :--- | :--- |
-| **`DATABASE_URL`** | `postgresql+asyncpg://postgres:******@rag-db...:5432/rag_db` | AsyncPG asynchronous connection string to Amazon RDS PostgreSQL |
-| **`USE_LOCAL_LLM`** | `False` | Cloud LLM integration mode (Gemini 2.5 / Bedrock) |
-| **`AWS_REGION`** | `ap-southeast-1` | Singapore region handling S3 and Secrets Manager APIs |
-| **`S3_BUCKET_NAME`** | `enterprise-rag-storage-0117967` | Document Lake S3 bucket storing knowledge files |
-| **`DOCUMENTS_DRAFT_PREFIX`** | `documents/draft/` | Prefix path for staging uploaded files |
-| **`DOCUMENTS_REAL_PREFIX`** | `documents/real/` | Prefix path for fully processed and indexed documents |
-| **`QDRANT_URL`** | `http://rag_qdrant:6333` | Internal private endpoint connecting to Vector Search engine |
-| **`REDIS_URL`** | `redis://rag_redis:6379/0` | Asynchronous task queue broker (Celery Broker / Result Backend) |
-| **`ALLOWED_ORIGINS`** | `*` (or ALB domain) | CORS policy allowing Next.js Frontend requests |
+| Functional Category | Secret Key Name | Actual Production Value | Architectural Role in the RAG Ecosystem |
+| :--- | :--- | :--- | :--- |
+| **Relational Database** | **`DATABASE_URL`** | `postgresql+asyncpg://postgres:******@rag-db...:5432/rag_db` | AsyncPG asynchronous connection string to Amazon RDS PostgreSQL |
+| | **`DB_SSL_MODE`** | `require` | Enforces SSL/TLS encrypted transport to the database instance |
+| **App Security & Auth** | **`SECRET_KEY`** | `enterprise_rag_jwt_secret_key_production_2026_super_secure!` | Cryptographic key for signing HMAC-SHA256 JWT user sessions |
+| | **`ALLOWED_ORIGINS`** | `*` (or ALB DNS domain) | CORS policy allowing Next.js Frontend requests |
+| **S3 Document Lake** | **`AWS_REGION`** | `ap-southeast-1` | Singapore region handling S3, RDS, and Secrets Manager APIs |
+| | **`S3_BUCKET_NAME`** | `enterprise-rag-storage-0117967` | Document Lake S3 bucket storing knowledge files |
+| | **`DOCUMENTS_DRAFT_PREFIX`** | `documents/draft/` | Prefix path for staging uploaded files |
+| | **`DOCUMENTS_REAL_PREFIX`** | `documents/real/` | Prefix path for fully processed and indexed documents |
+| **Asynchronous & Vector** | **`QDRANT_URL`** | `http://rag_qdrant:6333` | Internal private endpoint connecting to Vector Search engine |
+| | **`REDIS_URL`** | `redis://rag_redis:6379/0` | Asynchronous task queue broker (Celery Broker / Result Backend) |
+| **Amazon Bedrock AI** | **`BEDROCK_API_KEY`** | `ABSKTWFudGxlQXBpS2V5LW1vZ...` | API credential authorizing access to Amazon Bedrock-Mantle Endpoint |
+| | **`BEDROCK_BASE_URL`** | `https://bedrock-mantle.us-east-1.api.aws/v1` | Bedrock Mantle service endpoint in `us-east-1` (N. Virginia) |
+| | **`BEDROCK_MODEL`** | `mistral.ministral-3-14b-instruct` | Default Foundation Model provisioned for RAG reasoning |
+| | **`USE_BEDROCK`** | `true` | Activation flag routing 100% of LLM queries to Amazon Bedrock |
+| **Fallback & Model Flags** | **`GEMINI_API_KEY`** | `AQ.Ab8RN6L9DpixC1vvwFjgXxB...` | Backup credential for Google Gemini 2.5 Flash API |
+| | **`USE_LOCAL_LLM`** | `False` | Disables heavy local models to minimize host RAM footprint |
 
 ---
 
@@ -57,17 +64,12 @@ Lab 4.2 details the end-to-end setup of a hardened data tier:
 #### Step 1: Store New Secret in AWS Secrets Manager
 1. Navigate to **AWS Secrets Manager Console** → Click **Store a new secret**.
 2. Select **Secret type**: **Other type of secret**.
-3. Under **Key/value pairs**, add the database connection parameters and RAG system flags.
+3. Under **Key/value pairs**, add the 16 database connection parameters, S3 prefixes, and Bedrock Mantle keys.
 4. Set Secret name: `rag/production/credentials`.
 
 <div align="center">
-  <img src="/images/4-Workshop/4.2/4.2.1-secrets-manager-database-url.png" alt="Configure DATABASE_URL in Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 4.2.1.1: Secure configuration of DATABASE_URL pointing to the RDS endpoint within Secrets Manager</em></p>
-</div>
-
-<div align="center">
-  <img src="/images/4-Workshop/4.2/4.2.1-secrets-manager-config-keys.png" alt="RAG System Configuration Keys in Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
-  <p><em>Figure 4.2.1.2: Centralized secure storage of S3, Qdrant, Redis, and AWS region runtime variables</em></p>
+  <img src="/images/2-Proposal/bedrock_secrets_manager.png" alt="Complete 16 Keys and Values in AWS Secrets Manager" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 95%; height: auto; margin-bottom: 20px;" />
+  <p><em>Figure 4.2.1.1: Complete inventory of all 16 production secret keys and values configured in AWS Secrets Manager (rag/production/credentials)</em></p>
 </div>
 
 ---
