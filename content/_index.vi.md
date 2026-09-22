@@ -27,7 +27,15 @@ chapter: false
 
 &emsp; **Tên ĐVHD:** CÔNG TY TNHH AMAZON WEB SERVICES VIỆT NAM
 
-&emsp; **Địa chỉ ĐVHD:** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam
+&emsp; **Địa chỉ ĐVHD (Pháp lý):** Tầng 36 Tòa nhà Bitexco Financial Tower, Số 2 đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam
+
+&emsp; **Địa điểm làm việc & sinh hoạt thực tế:** Văn phòng AWS Hà Nội — Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội (2 tháng thực tập tập trung: 03/08/2026 – 27/09/2026)
+
+&emsp; **Chương trình đào tạo:** First Cloud AI Journey (FCAJ)
+
+&emsp; **Hoạt động thi đấu & Mở rộng:**  
+&emsp; • Tham gia chuỗi đấu trường công nghệ **Prove It: Agentic Cloud Investigation Series** (Đội thi WAR - Team 06).  
+&emsp; • Mới đăng ký tham gia cuộc thi Hackathon phát triển sản phẩm **FCAJ BUILDRATHON 2026 — Season 01**.
 
 &emsp; **Người phụ trách (ĐVHD):** Nguyễn Gia Hưng
 
@@ -37,11 +45,20 @@ chapter: false
 
 &emsp; **Email:** hunggia@amazon.com.vn
 
-&emsp; **Vị trí thực tập:** First Cloud AI Journey
+&emsp; **Vị trí thực tập:** Solutions Architecture & Cloud Engineering Intern (FCAJ)
 
-&emsp; **Thời gian thực tập:** Từ ngày 03-08-2026 đến ngày 27-09-2026 (8 tuần)
+&emsp; **Thời gian thực tập:** Từ ngày 03-08-2026 đến ngày 27-09-2026 (8 tuần / 2 tháng tại Hà Nội)
 
 <img src="/images/avarta.jpg" alt="Ảnh đại diện của bạn" width="250" style="border-radius: 10px; margin-bottom: 20px;" />
+
+{{% notice info %}}
+**Tóm tắt quá trình thực tập & Hoạt động mở rộng:**  
+* **Sinh hoạt & Đào tạo chuyên môn:** Hoàn thành 2 tháng thực tập tập trung tại Văn phòng AWS Hà Nội (Tòa nhà Grand Terra, 36 Cát Linh), làm chủ các trụ cột AWS Well-Architected Framework, hạ tầng Multi-AZ, Serverless Containerization và hoàn thiện giải pháp Capstone **NexusDoc AI**.
+* **Đấu trường Prove It Series:** Cùng Đội thi **WAR (Team 06)** hoàn thành chuỗi thử thách điều tra sự cố đám mây quốc tế *Prove It: Agentic Cloud Investigation Series* (Day 1: Govern, Day 2: Investigate, Day 3: Prove It Arena).
+* **Đăng ký hoạt động mới:** Tiếp tục phát triển chuyên môn thông qua việc đăng ký tham gia chương trình Hackathon **FCAJ BUILDRATHON 2026 — Season 01**.
+{{% /notice %}}
+
+
 
 ### Nội dung báo cáo
 
