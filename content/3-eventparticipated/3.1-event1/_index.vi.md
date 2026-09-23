@@ -11,10 +11,16 @@ aliases:
 
 ### Thông tin chung về sự kiện
 *   **Tên Sự Kiện**: [HÀ NỘI] AWS VIETNAM COMMUNITY MEETUP
+*   **Chủ đề**: AI REVOLUTION & OPEN CLAW
 *   **Thời gian tổ chức**: 08:30 – 12:00 | Thứ Bảy, ngày 25/07/2026 (Check-in: 08:30 | Bắt đầu: 09:00)
 *   **Địa điểm tổ chức**: Văn phòng AWS Hà Nội – Tầng 7, Tòa nhà Grand Terra, 36 Cát Linh, Ô Chợ Dừa, Đống Đa, Hà Nội
-*   **Đơn vị tổ chức**: AWS Vietnam Community phối hợp cùng AWS Vietnam
+*   **Đơn vị tổ chức**: AWS Vietnam User Group, AWS First Cloud Journey AI & AWS Student Builder Group at UTC phối hợp cùng AWS Vietnam
 *   **Vai trò tham gia**: Người tham dự
+
+<div style="text-align: center; margin: 25px 0;">
+  <img src="/images/3-eventparticipated/event1/aws_community_meetup_poster.jpg" alt="Poster chính thức sự kiện AWS Vietnam Community Meetup - AI Revolution & Open Claw tại Văn phòng AWS Hà Nội" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); max-width: 85%; height: auto; border: 1px solid #E2E8F0;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px;">Hình 3.1.1: Poster chính thức sự kiện AWS Vietnam Community Meetup: "AI Revolution & Open Claw" tại Văn phòng AWS Hà Nội</p>
+</div>
 
 ---
 
@@ -92,13 +98,5 @@ aliases:
 *   Buổi meetup tại Văn phòng AWS Hà Nội (Tầng 7, Grand Terra) mang lại không khí học thuật và công nghệ vô cùng sôi nổi, chuyên nghiệp.
 *   Được lắng nghe trực tiếp từ những chuyên gia đang giải quyết bài toán AI hàng ngày giúp em có cái nhìn thực tế hơn rất nhiều so với việc chỉ học lý thuyết qua tài liệu.
 
----
-
-### Poster & Hình Ảnh Sự Kiện
-
-<div style="text-align: center; margin: 25px 0;">
-  <img src="/images/3-eventparticipated/event1/aws_community_meetup_poster.jpg" alt="Poster sự kiện AWS Vietnam Community Meetup - AI Revolution & Open Claw tại Văn phòng AWS Hà Nội" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); max-width: 90%; height: auto; border: 1px solid #E2E8F0;" />
-  <p style="font-style: italic; color: #666; margin-top: 10px;">Hình 1: Poster chính thức sự kiện AWS Vietnam Community Meetup: "AI Revolution & Open Claw" tại Văn phòng AWS Hà Nội (Tầng 7, Grand Terra Tower)</p>
-</div>
 
 
