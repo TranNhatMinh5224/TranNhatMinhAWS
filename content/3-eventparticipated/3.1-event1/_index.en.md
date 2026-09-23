@@ -84,15 +84,3 @@ pre: " <b> 3.1. </b> "
 *   **AWS Cloud Expansion**: Researched deploying Chatbot RAG components onto AWS cloud infrastructure (containerized backend on ECS/App Runner, document storage on Amazon S3, and high-performance vector database integration).
 *   **Engineering Productivity**: Leveraged AI tools as assistive accelerators for code generation, technical research, and system testing, while actively maintaining strict oversight over architecture design and code quality.
 
----
-
-### Event Activities & Commemorative Gallery
-
-<div style="text-align: center; margin: 25px 0;">
-  <img src="/images/3-eventparticipated/event2/group_photo_fcaj.png" alt="Group commemorative photo of the AWS Vietnam Community Meetup at Grand Terra Hanoi" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 1: Commemorative group photo with the AWS Vietnam Community and invited industry speakers at the AWS Hanoi Office (7th Floor, Grand Terra Tower)</p>
-
-  <img src="/images/3-eventparticipated/event2/event_hall_presentation.jpg" alt="Conference presentation hall sharing insights on AI Agents and Cloud Solutions" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 95%; height: auto; margin-bottom: 25px;" />
-  <p style="font-style: italic; color: #666; margin-top: -15px; margin-bottom: 30px;">Figure 2: In-depth technical keynote and panel sessions exploring Open-source AI Agents and Digital Transformation</p>
-</div>
-
