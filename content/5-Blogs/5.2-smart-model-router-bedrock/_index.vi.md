@@ -23,11 +23,6 @@ pre: " <b> 5.2. </b> "
   <p><em>Hình 5.2.1: Sơ đồ Cơ chế Smart Multi-Model AI Router trên Amazon Bedrock (Phân luồng Intent & Complexity: Nova Micro vs Claude 3.5 Sonnet)</em></p>
 </div>
 
-<div align="center" style="margin: 25px 0;">
-  <img src="/images/enterprise_rag_full_architecture.png" alt="Sơ đồ Kiến trúc Toàn diện Hệ thống Enterprise RAG" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0;" />
-  <p><em>Hình 5.2.2: Sơ đồ Hạ tầng Đám mây AWS Toàn diện tích hợp Mantle Gateway & Amazon Bedrock (EC2, RDS Graviton, Qdrant, S3)</em></p>
-</div>
-
 ---
 
 ### Toàn Văn Nội Dung Bài Đăng Thực Tế:
