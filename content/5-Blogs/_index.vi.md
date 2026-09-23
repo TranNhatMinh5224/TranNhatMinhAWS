@@ -20,3 +20,9 @@ Mục này lưu trữ các bài viết kỹ thuật chuyên sâu được tác g
 * **Nền tảng công bố:** Cộng đồng [AWS Study Group (FCJ) — Facebook Group](https://web.facebook.com/groups/awsstudygroupfcj/?multi_permalinks=2284725838959042&notif_id=1790147738731057&notif_t=feedback_reaction_generic&ref=notif)
 * **Chủ đề chính:** Kiến trúc Zero-Trust RAG, Phân vùng mạng Multi-AZ, 2-Tier Security Guardrails chống ảo giác và Tối ưu 68% chi phí vận hành với AWS Graviton3 & Amazon Bedrock.
 * **Thời gian đăng:** Tháng 09/2026
+
+#### [5.2. Đừng "All-in" vào một Model AI: Thiết kế Smart Model Router trên Amazon Bedrock để tối ưu 60% độ trễ & 50% chi phí](5.2-smart-model-router-bedrock/)
+* **Nền tảng công bố:** Cộng đồng [AWS Study Group (FCJ) — Facebook Group](https://web.facebook.com/groups/awsstudygroupfcj/)
+* **Chủ đề chính:** Thiết kế Smart Multi-Model Router, Dynamic Routing & Model Cascading giữa Amazon Nova Micro / Mistral 7B và Claude 3.5 Sonnet, giảm 60% TTFT và tiết kiệm 50% chi phí gọi LLM.
+* **Thời gian đăng:** Tháng 09/2026
+
