@@ -33,6 +33,7 @@ chapter: false
 ### Competitions & Extended Activities:
 * Participated in the **Prove It: Agentic Cloud Investigation Series** (Team WAR - Team 06).  
 * Registered and participating in the product hackathon **FCAJ BUILDRATHON 2026 — Season 01**.  
+* Published community technical article: [**Building an Enterprise RAG Pipeline: From Web Client to Amazon Bedrock & 68% Cost Optimization on AWS**](5-Blogs/5.1-rag-enterprise-pipeline/) on AWS Study Group (FCJ) Facebook.  
 
 <img src="/images/avarta.jpg" alt="Student Portrait" width="220" style="border-radius: 10px; border: 1px solid #E2E8F0; margin-top: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" />
 
@@ -41,6 +42,7 @@ chapter: false
 * **On-site Professional Training:** Successfully completed 2 months of on-site internship at the AWS Hanoi Office (Grand Terra Tower, 36 Cat Linh), mastering the AWS Well-Architected Framework, Multi-AZ architectures, Serverless Containerization, and engineering the **NexusDoc AI** Capstone platform.
 * **Prove It Cloud Challenge:** Successfully competed with **Team WAR (Team 06)** in the global cloud incident investigation challenge *Prove It: Agentic Cloud Investigation Series* (Day 1: Govern, Day 2: Investigate, Day 3: Prove It Arena).
 * **Extended Activity Enrollment:** Continuing professional development through newly registering for the **FCAJ BUILDRATHON 2026 — Season 01** hackathon.
+* **Community Sharing:** Published architectural guide on Enterprise RAG and 68% cost optimization on AWS Study Group FCJ.
 {{% /notice %}}
 
 
@@ -51,9 +53,10 @@ chapter: false
 2.  [Proposal & Live Product Demo](2-Proposal/)
 3.  [Events Participated](3-eventparticipated/)
 4.  [Workshop Labs](4-Workshop/)
-5.  [Competitions & Extended Activities (Prove It Series)](5-Competitions/)
-6.  [Self-Assessment](6-Self-evaluation/)
-7.  [Feedback & Contributions](7-Feedback/)
+5.  [Published Blogs](5-Blogs/)
+6.  [Competitions & Extended Activities (Prove It Series)](6-Competitions/)
+7.  [Self-Assessment](7-Self-evaluation/)
+8.  [Feedback & Contributions](8-Feedback/)
 
 ---
 💡 *Live Capstone Product deployed on AWS: [NexusDoc AI (Live Demo via ALB)](http://rag-lb-1113719893.ap-southeast-1.elb.amazonaws.com/)*

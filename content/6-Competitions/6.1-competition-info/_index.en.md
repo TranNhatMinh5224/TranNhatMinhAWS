@@ -3,10 +3,12 @@ title: "Competition Information"
 date: 2026-09-08
 weight: 1
 chapter: false
-pre: " <b> 5.1. </b> "
+pre: " <b> 6.1. </b> "
+aliases:
+  - /5-competitions/5.1-competition-info/
 ---
 
-# 5.1. Competition & Team Information
+# 6.1. Competition & Team Information
 
 ### 1. General Competition Overview
 

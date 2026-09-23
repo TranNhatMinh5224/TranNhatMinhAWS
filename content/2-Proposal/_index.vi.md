@@ -227,8 +227,13 @@ Dưới đây là hình ảnh chụp thực tế giao diện ứng dụng trợ 
 #### 7.1. Sơ đồ Kiến trúc Tổng thể trên AWS:
 
 <div style="text-align: center; margin: 30px 0;">
+  <img src="/images/2-Proposal/enterprise_rag_full_architecture.png" alt="Sơ đồ Luồng Tương tác Dịch vụ Đám mây & Kiến trúc RAG Chuẩn Doanh nghiệp" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 4: Sơ đồ Luồng Tương tác Dịch vụ Đám mây & Kiến trúc RAG Chuẩn Doanh nghiệp (Service Flow & Zero-Trust Architecture)</p>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
   <img src="/images/2-Proposal/enterprise_aws_architecture.png" alt="Sơ đồ Kiến trúc Đám mây Doanh nghiệp trên AWS" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
-  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5: Sơ đồ Kiến trúc Chi tiết Hệ thống NexusDoc AI trên AWS (Multi-AZ Resilient & Zero-Trust Security)</p>
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5: Sơ đồ Kiến trúc Mạng Phân tầng Chi tiết Hệ thống NexusDoc AI trên AWS (Multi-AZ Resilient & Zero-Trust Security)</p>
 </div>
 
 ---

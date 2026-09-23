@@ -3,10 +3,12 @@ title: "Day 2 - Investigate"
 date: 2026-09-12
 weight: 3
 chapter: false
-pre: " <b> 5.3. </b> "
+pre: " <b> 6.3. </b> "
+aliases:
+  - /5-competitions/5.3-day2/
 ---
 
-# 5.3. Day 2: Investigate (Agentic Cloud Investigation)
+# 6.3. Day 2: Investigate (Agentic Cloud Investigation)
 
 The training and live competition curriculum for Day 2 is structured according to professional standards from [Prove It: Agentic Cloud Investigation Series — Day 02 · Investigate](https://docs.cloudthinker.io/learn/workshops/prove-it/day-02-investigate), hosted by CloudThinker in partnership with FCAJ and AWS Vietnam.
 

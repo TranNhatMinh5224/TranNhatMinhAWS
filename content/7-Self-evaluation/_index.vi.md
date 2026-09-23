@@ -1,11 +1,11 @@
 ---
 title: "Tự đánh giá"
 date: 2026-09-25
-weight: 6
+weight: 7
 chapter: false
-pre: " <b> 6. </b> "
+pre: " <b> 7. </b> "
 aliases:
-  - /7-self-evaluation/
+  - /6-self-evaluation/
 ---
 Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam (AWS Việt Nam)** từ ngày **03/08/2026** đến ngày **27/09/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng các kiến thức chuyên ngành Khoa học máy tính từ Trường Đại học Xây dựng Hà Nội (HUCE) vào môi trường thực tế.
 

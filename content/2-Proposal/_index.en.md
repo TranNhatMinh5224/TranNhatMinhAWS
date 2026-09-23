@@ -225,6 +225,11 @@ Below are actual production screenshots from the operational **NexusDoc AI (Deep
 #### 7.1. High-Level AWS Architecture Diagram:
 
 <div style="text-align: center; margin: 30px 0;">
+  <img src="/images/2-Proposal/enterprise_rag_full_architecture.png" alt="End-to-End Enterprise RAG Cloud Service Interaction Architecture" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
+  <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 4: End-to-End Enterprise RAG Cloud Service Interaction Architecture (Service Flow & Zero-Trust Architecture)</p>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
   <img src="/images/2-Proposal/enterprise_aws_architecture.png" alt="Enterprise AWS Cloud Architecture Diagram" style="width: 100%; max-width: 1050px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0; margin: 0 auto; display: block;" />
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5: Detailed Production Architecture of NexusDoc AI on AWS (Multi-AZ Resilient & Zero-Trust Security)</p>
 </div>

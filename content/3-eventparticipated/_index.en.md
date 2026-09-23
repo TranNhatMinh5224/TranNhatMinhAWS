@@ -22,5 +22,5 @@ During my internship, I participated in events that provided valuable insights i
 ---
 
 > [!TIP]
-> For the long-term tech competition **FCAJ BUILDRATHON 2026 — Season 01**, full details regarding team formation, activity logs, and evaluation results are documented in depth in [5. Competitions & Extended Activities](../5-competitions/).
+> For the long-term tech competition **FCAJ BUILDRATHON 2026 — Season 01**, full details regarding team formation, activity logs, and evaluation results are documented in depth in [6. Competitions & Extended Activities](../6-competitions/).
 

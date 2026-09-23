@@ -1,11 +1,13 @@
 ---
 title: "Sharing and Reflections"
 date: 2026-09-26
-weight: 7
+weight: 8
 chapter: false
-pre: " <b> 7. </b> "
+pre: " <b> 8. </b> "
+aliases:
+  - /7-feedback/
 ---
-# 7. Sharing & Reflections on the Program
+# 8. Sharing & Reflections on the Program
 
 Having completed a deeply rewarding and valuable internship with **First Cloud AI Journey**, I would like to express my sincere gratitude to the organizers, mentors, and program administrators, as well as share my positive reflections and feedback below:
 

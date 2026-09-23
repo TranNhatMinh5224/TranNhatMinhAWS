@@ -22,5 +22,5 @@ Trong quá trình thực tập, em đã tham gia các sự kiện với mỗi s�
 ---
 
 > [!TIP]
-> Đối với cuộc thi phát triển sản phẩm công nghệ dài hạn **FCAJ BUILDRATHON 2026 — Season 01**, chi tiết về quá trình thành lập đội, nhật ký làm việc và kết quả đánh giá các vòng thi được trình bày chuyên sâu tại mục [5. Cuộc thi & Hoạt động mở rộng](../5-competitions/).
+> Đối với cuộc thi phát triển sản phẩm công nghệ dài hạn **FCAJ BUILDRATHON 2026 — Season 01**, chi tiết về quá trình thành lập đội, nhật ký làm việc và kết quả đánh giá các vòng thi được trình bày chuyên sâu tại mục [6. Cuộc thi & Hoạt động mở rộng](../6-competitions/).
 

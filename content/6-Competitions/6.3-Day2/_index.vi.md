@@ -3,12 +3,12 @@ title: "Day 2 - Investigate"
 date: 2026-09-12
 weight: 3
 chapter: false
-pre: " <b> 5.3. </b> "
+pre: " <b> 6.3. </b> "
 aliases:
-  - /6-competitions/6.3-day2/
+  - /5-competitions/5.3-day2/
 ---
 
-# 5.3. Day 2: Investigate (Agentic Cloud Investigation)
+# 6.3. Day 2: Investigate (Agentic Cloud Investigation)
 
 Nội dung đào tạo và thực chiến của ngày thứ hai (Day 2) được xây dựng theo chuẩn chuyên môn từ chương trình [Prove It: Agentic Cloud Investigation Series — Day 02 · Investigate](https://docs.cloudthinker.io/learn/workshops/prove-it/day-02-investigate) do CloudThinker phối hợp cùng FCAJ và AWS Vietnam tổ chức.
 

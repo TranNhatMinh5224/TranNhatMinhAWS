@@ -1,9 +1,11 @@
 ---
 title: "Self-Assessment"
 date: 2026-09-25
-weight: 6
+weight: 7
 chapter: false
-pre: " <b> 6. </b> "
+pre: " <b> 7. </b> "
+aliases:
+  - /6-self-evaluation/
 ---
 During my internship at **Amazon Web Services Viet Nam Company Limited (AWS Viet Nam)** from **03/08/2026** to **27/09/2026**, I had the opportunity to learn, practice, and apply my Computer Science academic knowledge from Hanoi University of Civil Engineering (HUCE) to a real-world cloud computing environment.
 

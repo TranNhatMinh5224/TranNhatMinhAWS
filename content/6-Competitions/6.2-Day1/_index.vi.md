@@ -3,12 +3,12 @@ title: "Day 1 - Govern"
 date: 2026-09-08
 weight: 2
 chapter: false
-pre: " <b> 5.2. </b> "
+pre: " <b> 6.2. </b> "
 aliases:
-  - /6-competitions/6.2-day1/
+  - /5-competitions/5.2-day1/
 ---
 
-# 5.2. Day 1: Govern (Agentic Cloud Investigation)
+# 6.2. Day 1: Govern (Agentic Cloud Investigation)
 
 Nội dung thi đấu và thực hành của ngày thi đầu tiên (Day 1) được xây dựng theo chuẩn chuyên môn từ chương trình [Prove It: Agentic Cloud Investigation Series — Day 01 · Govern](https://docs.cloudthinker.io/learn/workshops/prove-it/day-01-govern) do CloudThinker phối hợp cùng FCAJ và AWS Vietnam tổ chức.
 
