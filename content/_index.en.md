@@ -25,9 +25,9 @@ chapter: false
 * **Internship Position:** Solutions Architecture & Cloud Engineering Intern (FCAJ)  
 * **Training Program:** First Cloud AI Journey (FCAJ)  
 * **Supervisor (Host Org):** Nguyễn Gia Hưng  
-* **Technical Mentor (CBHD):** Phạm Văn Phóng  
 * **Contact Phone:** +841277870645  
 * **Contact Email:** hunggia@amazon.com.vn  
+* **Technical Mentor (CBHD):** Phạm Văn Phóng  
 * **Internship Duration:** From 03-08-2026 to 27-09-2026 (8 weeks / 2 months in Hanoi)  
 
 ### Competitions & Extended Activities:
