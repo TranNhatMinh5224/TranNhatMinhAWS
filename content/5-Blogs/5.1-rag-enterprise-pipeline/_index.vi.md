@@ -20,7 +20,7 @@ pre: " <b> 5.1. </b> "
 
 <div align="center" style="margin: 25px 0;">
   <img src="/images/enterprise_rag_full_architecture.png" alt="Sơ đồ Kiến trúc Đám mây AWS Toàn diện Enterprise RAG" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0;" />
-  <p><em>Hình 5.1.1: Sơ đồ Kiến trúc Toàn diện NexusDoc AI: Máy chủ Amazon EC2 (enterprise-rag-server) vận hành Docker Compose (Next.js, FastAPI, Qdrant, Redis), Amazon RDS PostgreSQL (AWS Graviton) trong Isolated Subnet, ALB Path Routing, S3, Secrets Manager (16 Keys) và Amazon Bedrock Mantle</em></p>
+  <p><em>Hình 5.1.1: Sơ đồ Kiến trúc Toàn diện NexusDoc AI: Mạng Amazon VPC phân tầng chuẩn xác, Máy chủ EC2 (enterprise-rag-server) vận hành Docker Compose (Next.js, FastAPI, Qdrant, Redis) trong Application Subnet, Amazon RDS PostgreSQL (AWS Graviton db.t4g.micro) trong Isolated Subnet, kết nối bảo mật tới các dịch vụ AWS Managed Services (S3, Secrets Manager, Bedrock Mantle)</em></p>
 </div>
 
 ---
@@ -34,7 +34,9 @@ pre: " <b> 5.1. </b> "
 > **Vì sao kiến trúc này phù hợp với Enterprise?**
 >
 > ✅ **Dữ liệu nhạy cảm không rời khỏi AWS Cloud:**  
-> Sử dụng kiến trúc Multi-AZ VPC với các phân vùng mạng cô lập. Amazon RDS PostgreSQL và Qdrant Vector DB được đặt hoàn toàn trong Isolated Database Subnet không gắn Internet Gateway, triệt tiêu nguy cơ lộ cổng DB ra Internet. Đội ngũ vận hành truy cập quản trị an toàn thông qua AWS Systems Manager (SSM) Session Manager thay vì mở port SSH truyền thống.
+> Sử dụng kiến trúc Amazon VPC phân tầng mạng cô lập chuẩn chỉnh:
+> * Toàn bộ cụm dịch vụ **Next.js Frontend, FastAPI RAG Backend, Redis và Qdrant Vector DB** được tối ưu hóa đóng gói gọn gàng qua **Docker Compose** trên một máy chủ **Amazon EC2** duy nhất nằm trong **Application Subnet**, giúp tối ưu hóa hiệu năng giao tiếp nội bộ qua loopback/bridge network và tiết kiệm chi phí tối đa.
+> * Riêng cơ sở dữ liệu quan hệ **Amazon RDS PostgreSQL** (chạy trên vi xử lý **AWS Graviton `db.t4g.micro`**, Port 5432) được đặt biệt lập hoàn toàn trong **Isolated Database Subnet** không gắn Internet Gateway, triệt tiêu triệt để nguy cơ lộ cổng DB ra Internet. Đội ngũ vận hành truy cập quản trị an toàn thông qua AWS Systems Manager (SSM) Session Manager thay vì mở port SSH truyền thống.
 >
 > ✅ **Hàng rào phòng thủ 2 lớp (2-Tier Security Guardrails):**  
 > Kiểm soát chặt chẽ an toàn dữ liệu và giảm thiểu tối đa hiện tượng ảo giác (Hallucination):

@@ -20,7 +20,7 @@ pre: " <b> 5.1. </b> "
 
 <div align="center" style="margin: 25px 0;">
   <img src="/images/enterprise_rag_full_architecture.png" alt="Full Enterprise RAG AWS Cloud Architecture Diagram" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0;" />
-  <p><em>Figure 5.1.1: End-to-End NexusDoc AI Architecture: Amazon EC2 Host (enterprise-rag-server) running Docker Compose (Next.js, FastAPI, Qdrant, Redis), Amazon RDS PostgreSQL (AWS Graviton) in Isolated Subnet, ALB Path Routing, S3, Secrets Manager (16 Keys), and Amazon Bedrock Mantle</em></p>
+  <p><em>Figure 5.1.1: End-to-End NexusDoc AI Architecture: Properly segmented Amazon VPC, Amazon EC2 Host (enterprise-rag-server) running Docker Compose (Next.js, FastAPI, Qdrant, Redis) in Application Subnet, Amazon RDS PostgreSQL (AWS Graviton db.t4g.micro) in Isolated Subnet, securely integrating with Outbound AWS Managed Services (S3, Secrets Manager, Bedrock Mantle)</em></p>
 </div>
 
 ---
@@ -34,7 +34,9 @@ pre: " <b> 5.1. </b> "
 > **Why is this architecture ideal for Enterprises?**
 >
 > ✅ **Sensitive Data Never Leaves AWS Cloud:**  
-> Engineered with a Multi-AZ VPC across isolated subnet tiers. Amazon RDS PostgreSQL and Qdrant Vector DB reside strictly within an Isolated Database Subnet without an Internet Gateway, eliminating public database exposure. Engineering teams administer databases securely via AWS Systems Manager (SSM) Session Manager rather than open SSH ports.
+> Engineered with a rigorously segmented Amazon VPC:
+> * The entire microservices stack — **Next.js Frontend, FastAPI RAG Backend, Redis, and Qdrant Vector DB** — is neatly packaged and optimized via **Docker Compose** on a single **Amazon EC2** host residing in the **Application Subnet**, maximizing local bridge network throughput while minimizing idle compute costs.
+> * The relational database **Amazon RDS PostgreSQL** (powered by **AWS Graviton `db.t4g.micro`**, Port 5432) is deployed strictly within an **Isolated Database Subnet** without an Internet Gateway, completely eliminating database public exposure. Engineering teams administer databases securely via AWS Systems Manager (SSM) Session Manager rather than open SSH ports.
 >
 > ✅ **2-Tier Security Guardrails:**  
 > Rigorous data protection and zero hallucination enforcement:
