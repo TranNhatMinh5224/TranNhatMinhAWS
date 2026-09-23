@@ -20,7 +20,7 @@ pre: " <b> 5.1. </b> "
 
 <div align="center" style="margin: 25px 0;">
   <img src="/images/enterprise_rag_full_architecture.png" alt="Sơ đồ Kiến trúc Đám mây AWS Toàn diện Enterprise RAG" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0;" />
-  <p><em>Hình 5.1.1: Sơ đồ Kiến trúc Toàn trình NexusDoc AI: Zero-Trust Multi-AZ VPC, 2-Tier Guardrails, Graviton3, Qdrant và Amazon Bedrock Mantle</em></p>
+  <p><em>Hình 5.1.1: Sơ đồ Kiến trúc Toàn diện NexusDoc AI: Máy chủ Amazon EC2 (enterprise-rag-server) vận hành Docker Compose (Next.js, FastAPI, Qdrant, Redis), Amazon RDS PostgreSQL (AWS Graviton) trong Isolated Subnet, ALB Path Routing, S3, Secrets Manager (16 Keys) và Amazon Bedrock Mantle</em></p>
 </div>
 
 ---
@@ -29,7 +29,7 @@ pre: " <b> 5.1. </b> "
 
 > **Xây dựng RAG Pipeline cho Enterprise: Từ Web Client đến Amazon Bedrock & Tối ưu 68% Chi phí trên AWS**
 >
-> Mình vừa hoàn thiện một kiến trúc Enterprise RAG (Retrieval-Augmented Generation) kết hợp giữa mô hình mạng Zero-Trust và hạ tầng Container hóa (ECS Fargate/Graviton), tối ưu hóa cả về độ an toàn dữ liệu lẫn bài toán chi phí vận hành cho doanh nghiệp.
+> Mình vừa hoàn thiện một kiến trúc Enterprise RAG (Retrieval-Augmented Generation) kết hợp giữa mô hình mạng Zero-Trust, hạ tầng Container hóa Docker trên máy chủ Amazon EC2 và Amazon RDS PostgreSQL chạy trên vi xử lý AWS Graviton, tối ưu hóa cả về độ an toàn dữ liệu lẫn bài toán chi phí vận hành cho doanh nghiệp.
 >
 > **Vì sao kiến trúc này phù hợp với Enterprise?**
 >
@@ -42,7 +42,7 @@ pre: " <b> 5.1. </b> "
 > * **Tier 2 (Context Grounding):** Ràng buộc mô hình suy luận nghiêm ngặt dựa trên ngữ cảnh được trích xuất (Retrieval Context), tự động dẫn nguồn trích dẫn (số trang/điều khoản) và dứt khoát từ chối khi thông tin nằm ngoài phạm vi tài liệu.
 >
 > ✅ **Tối ưu hóa 68% chi phí vận hành (TCO):**  
-> Thay vì duy trì các cụm máy chủ GPU đắt đỏ ($600 – $800/tháng chạy 24/7), hệ thống kết hợp vi xử lý AWS Graviton3 ARM64 cho backend & embedding search, kết hợp Foundation Models qua Amazon Bedrock theo cơ chế Pay-as-you-go, đưa chi phí toàn hệ thống xuống chỉ còn ~$270/tháng.
+> Thay vì duy trì các cụm máy chủ GPU đắt đỏ ($600 – $800/tháng chạy 24/7), hệ thống kết hợp vi xử lý AWS Graviton3 ARM64 (db.t4g.micro) cho cơ sở dữ liệu RDS, chạy Docker Compose tối ưu trên EC2 cho backend & Qdrant vector search, kết hợp Foundation Models qua Amazon Bedrock theo cơ chế Pay-as-you-go, đưa chi phí toàn hệ thống xuống chỉ còn ~$270/tháng.
 >
 > ✅ **Bảo mật tập trung với AWS Secrets Manager & KMS:**  
 > Loại bỏ hoàn toàn nguy cơ từ file .env tĩnh, toàn bộ tham số môi trường sản xuất được mã hóa với KMS và tự động nạp động (Runtime Injection) thông qua IAM Role.

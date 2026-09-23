@@ -20,7 +20,7 @@ pre: " <b> 5.1. </b> "
 
 <div align="center" style="margin: 25px 0;">
   <img src="/images/enterprise_rag_full_architecture.png" alt="Full Enterprise RAG AWS Cloud Architecture Diagram" style="width: 100%; max-width: 950px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid #E2E8F0;" />
-  <p><em>Figure 5.1.1: End-to-End NexusDoc AI Architecture: Zero-Trust Multi-AZ VPC, 2-Tier Guardrails, Graviton3, Qdrant, and Amazon Bedrock Mantle</em></p>
+  <p><em>Figure 5.1.1: End-to-End NexusDoc AI Architecture: Amazon EC2 Host (enterprise-rag-server) running Docker Compose (Next.js, FastAPI, Qdrant, Redis), Amazon RDS PostgreSQL (AWS Graviton) in Isolated Subnet, ALB Path Routing, S3, Secrets Manager (16 Keys), and Amazon Bedrock Mantle</em></p>
 </div>
 
 ---
@@ -29,7 +29,7 @@ pre: " <b> 5.1. </b> "
 
 > **Building an Enterprise RAG Pipeline: From Web Client to Amazon Bedrock & 68% Cost Optimization on AWS**
 >
-> I recently engineered an Enterprise RAG (Retrieval-Augmented Generation) architecture combining Zero-Trust network segmentation with containerized infrastructure (ECS Fargate / Graviton), optimizing both enterprise data security and cloud operating economics.
+> I recently engineered an Enterprise RAG (Retrieval-Augmented Generation) architecture combining Zero-Trust network segmentation, Docker containerized runtime on an Amazon EC2 compute instance, and Amazon RDS PostgreSQL running on AWS Graviton, optimizing both enterprise data security and cloud operating economics.
 >
 > **Why is this architecture ideal for Enterprises?**
 >
@@ -42,7 +42,7 @@ pre: " <b> 5.1. </b> "
 > * **Tier 2 (Context Grounding):** Strictly bounds LLM reasoning to the retrieved context, automatically appending exact page/article citations and politely declining when evidence is absent from internal documents.
 >
 > ✅ **68% TCO Cost Optimization:**  
-> Rather than provisioning dedicated GPU clusters ($600 – $800/month running 24/7), the platform pairs power-efficient AWS Graviton3 ARM64 compute for vector search with on-demand Foundation Models via Amazon Bedrock (Pay-as-you-go), reducing total cloud spend to ~$270/month.
+> Rather than provisioning expensive dedicated GPU clusters ($600 – $800/month running 24/7), the system combines power-efficient AWS Graviton ARM64 (db.t4g.micro) for the RDS database, lightweight Docker Compose on Amazon EC2 for the application backend and Qdrant vector search, and on-demand Foundation Models via Amazon Bedrock (Pay-as-you-go), reducing total infrastructure cost to ~$270/month.
 >
 > ✅ **Centralized Credential Security with AWS Secrets Manager & KMS:**  
 > Completely eliminates static `.env` file risks; all 16 production environment variables are KMS-encrypted and dynamically injected at runtime via IAM Roles.
