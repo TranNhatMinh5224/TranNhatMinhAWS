@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 # NexusDoc AI — Enterprise Legal & Knowledge RAG Platform trên AWS
-## Thiết Kế Kiến Trúc Đám Mây Doanh Nghiệp: Multi-AZ Resilient, Zero-Trust Security, Serverless Containers & Tối Ưu Hóa Chi Phí TCO
+## Thiết Kế Kiến Trúc Đám Mây Doanh Nghiệp: Multi-AZ Resilient, Zero-Trust Security, Containerized Architecture (Docker on EC2) & Tối Ưu Hóa Chi Phí TCO
 
 ---
 
@@ -23,8 +23,8 @@ pre: " <b> 2. </b> "
 Đề xuất này tập trung vào việc **hiện đại hóa và chuyển đổi** ứng dụng nguyên mẫu (Prototype RAG) từ môi trường chạy thử nghiệm cục bộ lên một **Kiến trúc Điện toán Đám mây Chuẩn Doanh nghiệp trên Amazon Web Services (AWS)** nhằm đạt được:
 1.  **Độ sẵn sàng cao (High Availability - Multi-AZ)**: Vận hành bền bỉ trên nhiều Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`), tự phục hồi khi có sự cố phần cứng mà không gián đoạn dịch vụ (Zero-Downtime).
 2.  **Bảo mật cấp Doanh nghiệp (Zero-Trust Security)**: Cô lập cơ sở dữ liệu trong Isolated Subnets, phân quyền tối thiểu với IAM Roles, quản lý bí mật qua AWS Secrets Manager và mã hóa toàn diện dữ liệu tĩnh (At-Rest) bằng AWS KMS.
-3.  **Tự động co giãn (Auto-Scaling Serverless Containers)**: Sử dụng Amazon ECS Fargate để tách biệt luồng API tốc độ cao và luồng xử lý nền (Celery Worker) bóc tách tài liệu nặng.
-4.  **Tối ưu hóa chi phí (Cost-Optimized TCO)**: Tận dụng vi xử lý **AWS Graviton3 (ARM64)** cho Vector Database và kiến trúc CPU-only nhúng vector kết hợp S3 Lifecycle giúp tiết kiệm **68%** chi phí vận hành hàng tháng so với mô hình thuê server GPU chuyên dụng truyền thống.
+3.  **Đóng gói Đa Dịch vụ (Containerized Microservices)**: Sử dụng Docker Compose trên máy chủ Amazon EC2 để vận hành đồng bộ cụm vi dịch vụ (Next.js, FastAPI, Qdrant, Redis), tách biệt rành mạch luồng API tốc độ cao và luồng Celery Worker xử lý bóc tách tài liệu nền.
+4.  **Tối ưu hóa chi phí (Cost-Optimized TCO)**: Tận dụng vi xử lý **AWS Graviton (ARM64 db.t4g.micro)** cho cơ sở dữ liệu quan hệ và kiến trúc CPU-only nhúng vector kết hợp S3 Lifecycle giúp tiết kiệm **hơn 80%** chi phí vận hành hàng tháng so với mô hình thuê server GPU chuyên dụng truyền thống.
 
 ---
 
@@ -141,12 +141,11 @@ graph LR
     *   **Kết quả**: Dung lượng Docker Image giảm ngoạn mục từ **4.8 GB xuống còn 1.1 GB** (giảm 77%), thời gian kéo image trên cụm đám mây giảm từ 15 phút xuống dưới 2 phút.
 
 #### Bước 7: Thiết Kế & Triển Khai Hạ Tầng Đám Mây Chuẩn Doanh Nghiệp Trên AWS
-*   **Mạng phân lớp Multi-AZ Zero-Trust**: Quy hoạch VPC `10.0.0.0/16` trải dài trên 2 Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`) với 6 subnets: Public Subnet (ALB), Private App Subnet (ECS/EC2), Isolated DB Subnet (RDS).
-*   **Application Load Balancer Layer 7**: Tiếp nhận traffic Internet, quản lý SSL/TLS và định tuyến thông minh: `/api/*` tới Target Group FastAPI (Port 8000), `/*` tới Target Group Next.js Frontend (Port 3000).
-*   **Amazon ECS Fargate Serverless**: Vận hành container mà không cần quản lý máy chủ vật lý, tự động co giãn theo ngưỡng CPU 70%, hỗ trợ Zero-Downtime Rolling Deployment.
-*   **Qdrant trên EC2 Graviton3 ARM64**: Tận dụng vi xử lý thế hệ mới Graviton3 với tập lệnh ma trận NEON, nâng cao tốc độ tính toán vector tương đồng lên 20% và tiết kiệm chi phí vượt trội so với máy chủ x86.
-*   **Amazon RDS PostgreSQL 15 Multi-AZ**: Lưu trữ cơ sở dữ liệu quan hệ trong Isolated Subnet, tự động sao lưu Snapshot định kỳ 7 ngày, mã hóa KMS at-rest.
-*   **AWS Secrets Manager & PrivateLink Endpoints**: Quản lý credentials tập trung và định tuyến lưu lượng nội bộ qua Gateway Endpoint (S3) và Interface Endpoints (ECR, Secrets Manager, Bedrock), không cho bất kỳ dữ liệu nhạy cảm nào đi qua Internet công cộng.
+*   **Mạng phân lớp Multi-AZ Zero-Trust**: Quy hoạch VPC `10.0.0.0/16` trải dài trên 2 Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`) với các phân vùng mạng cô lập: Public Subnet (ALB), Private Application Subnet (EC2), Isolated Database Subnet (RDS).
+*   **Application Load Balancer Layer 7**: Tiếp nhận traffic Internet, quản lý SSL/TLS và định tuyến thông minh: `/api/*` và `/docs*` tới Target Group FastAPI (Port 8000), `/*` tới Target Group Next.js Frontend (Port 3000).
+*   **Máy chủ Amazon EC2 (enterprise-rag-server) vận hành Docker Compose**: Đóng gói đồng bộ toàn bộ cụm vi dịch vụ (Next.js, FastAPI, Qdrant Vector DB, Redis) trên một máy chủ Ubuntu 24.04 LTS duy nhất, tối ưu hóa giao tiếp nội bộ qua loopback/bridge network với độ trễ cực thấp (< 0.5ms) và tiết kiệm chi phí tối đa.
+*   **Amazon RDS PostgreSQL trên AWS Graviton (`db.t4g.micro`)**: Lưu trữ cơ sở dữ liệu quan hệ hoàn toàn biệt lập trong Isolated Subnet không gắn Internet Gateway, tự động sao lưu Snapshot định kỳ, mã hóa AWS KMS.
+*   **AWS Secrets Manager & PrivateLink Endpoints**: Quản lý an toàn 16 tham số môi trường production, tự động nạp động (Runtime Injection) thông qua IAM Role `EC2-S3-RAG` mà không cần lưu file `.env` tĩnh.
 
 #### Bước 8: Kiểm Thử Tải, Đo Lường Benchmark & Tự Động Hóa Vận Hành (Observability)
 *   **Stress Testing**: Dùng Apache Bench (`ab -n 50000 -c 200`) và `stress-ng` kiểm thử khả năng chịu tải và năng lực co giãn của hệ thống.
@@ -244,12 +243,12 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
 
 | Vùng Mạng (Subnet Tier) | Phân bố Availability Zone | Dải IP CIDR | Mục đích kỹ thuật & Đối tượng lưu trữ |
 | :--- | :--- | :--- | :--- |
-| **Public Subnet 1** | `ap-southeast-1a` | `10.0.1.0/24` | Application Load Balancer Node 1, NAT Gateway 1, Internet Gateway kết nối ra ngoài. |
-| **Public Subnet 2** | `ap-southeast-1b` | `10.0.2.0/24` | Application Load Balancer Node 2, NAT Gateway 2 (Dự phòng Failover). |
-| **Private App Subnet 1** | `ap-southeast-1a` | `10.0.10.0/24` | Container ECS Fargate API, Celery Ingestion Worker Node 1, ElastiCache Redis Primary. |
-| **Private App Subnet 2** | `ap-southeast-1b` | `10.0.20.0/24` | Container ECS Fargate API Replica, ElastiCache Redis Read Replica (Auto-failover). |
-| **Isolated Data Subnet 1**| `ap-southeast-1a` | `10.0.100.0/24`| RDS PostgreSQL Primary Instance, Qdrant Vector Store trên EC2 Graviton (Không có Internet). |
-| **Isolated Data Subnet 2**| `ap-southeast-1b` | `10.0.200.0/24`| RDS PostgreSQL Standby Replica (Multi-AZ Synced), EBS Snapshot backup. |
+| **Public Subnet 1** | `ap-southeast-1a` | `10.0.1.0/24` | Application Load Balancer Node 1, Internet Gateway (`rag-lb`). |
+| **Public Subnet 2** | `ap-southeast-1b` | `10.0.2.0/24` | Application Load Balancer Node 2 (Cân bằng tải High Availability). |
+| **Private App Subnet 1** | `ap-southeast-1a` | `10.0.10.0/24` | Máy chủ Amazon EC2 (`enterprise-rag-server`, `t3.small`) vận hành Docker Compose (Next.js, FastAPI, Celery, Redis, Qdrant). |
+| **Private App Subnet 2** | `ap-southeast-1b` | `10.0.20.0/24` | Phân vùng dự phòng sẵn sàng mở rộng quy mô máy chủ ứng dụng Multi-AZ. |
+| **Isolated Data Subnet 1**| `ap-southeast-1a` | `10.0.100.0/24`| Amazon RDS PostgreSQL (`rag-db`, AWS Graviton `db.t4g.micro`, Port 5432) hoàn toàn cô lập (Air-gapped, không có Internet). |
+| **Isolated Data Subnet 2**| `ap-southeast-1b` | `10.0.200.0/24`| Amazon RDS DB Subnet Group (Multi-AZ failover target & automated KMS snapshots). |
 
 ---
 
@@ -257,12 +256,10 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
 
 | Security Group | Giao thức / Port | Nguồn cho phép (Inbound Source) | Mục đích kỹ thuật |
 | :--- | :--- | :--- | :--- |
-| **`sg-alb`** | TCP `443` (HTTPS)<br/>TCP `80` (HTTP) | `0.0.0.0/0` (Internet qua CloudFront) | Tiếp nhận lưu lượng từ người dùng, tự động chuyển hướng HTTP sang HTTPS. |
-| **`sg-ecs-api`** | TCP `8000` | Chỉ từ `sg-alb` | Chỉ cho phép ALB gửi request vào container FastAPI, từ chối mọi truy cập trực tiếp. |
-| **`sg-ecs-worker`** | Không có Inbound | Không mở port Inbound | Worker chỉ chủ động pull task từ Redis và gửi query tới DB/S3 (Outbound only). |
-| **`sg-elasticache`**| TCP `6379` | Chỉ từ `sg-ecs-api` & `sg-ecs-worker` | Ngăn chặn truy cập trái phép vào hàng đợi Celery và bộ nhớ đệm session. |
-| **`sg-rds`** | TCP `5432` | Chỉ từ `sg-ecs-api` & `sg-ecs-worker` | Khóa chặt cơ sở dữ liệu quan hệ, chỉ chấp nhận truy vấn từ các container được cấp phép. |
-| **`sg-qdrant`** | TCP `6333` | Chỉ từ `sg-ecs-api` & `sg-ecs-worker` | Bảo vệ kho dữ liệu vector, không để lộ endpoint Qdrant ra ngoài Internet. |
+| **`rag-alb-sg`** | TCP `80` (HTTP)<br/>TCP `443` (HTTPS) | `0.0.0.0/0` (Internet công cộng) | Tiếp nhận lưu lượng người dùng, thực hiện cân bằng tải và định tuyến theo đường dẫn (Path-based Routing). |
+| **`rag-ec2-sg`** | TCP `8000`<br/>TCP `3000` | Chỉ từ `rag-alb-sg` | Chỉ cho phép ALB gửi request vào container FastAPI (8000) và Next.js (3000) trên máy chủ EC2, chặn đứng truy cập trực tiếp từ Internet. |
+| **`rag-ec2-sg` (SSH)**| TCP `22` | IP quản trị nội bộ / SSM Session | Cho phép quản trị hệ điều hành an toàn qua khóa bảo mật SSH hoặc AWS Systems Manager. |
+| **`rag-rds-sg`** | TCP `5432` | Chỉ từ `rag-ec2-sg` | Khóa chặt cơ sở dữ liệu quan hệ, chỉ chấp nhận kết nối SQL từ máy chủ EC2 ứng dụng, triệt tiêu nguy cơ rò rỉ dữ liệu. |
 
 ---
 
@@ -270,16 +267,15 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
 
 | Thành phần trong Source Code RAG | Dịch vụ AWS tương ứng | Cấu hình & Vai trò kỹ thuật trong kiến trúc đám mây |
 | :--- | :--- | :--- |
-| **Giao diện Web (React / Next.js)** | **Amazon S3 + CloudFront** | S3 lưu trữ bản build tĩnh; CloudFront CDN phân phối toàn cầu với chứng chỉ SSL/TLS qua ACM. |
-| **Tường lửa biên & Cân bằng tải** | **AWS WAF + ALB** | WAF kích hoạt `AWSManagedRulesCommonRuleSet`; ALB cân bằng tải đa vùng (Multi-AZ). |
-| **Backend API (FastAPI)** | **Amazon ECS Fargate** | Chạy container không máy chủ (Serverless), cấu hình Target Tracking Auto-Scaling theo CPU (70%). |
-| **Xử lý nền (Celery Worker)** | **Amazon ECS Fargate Worker** | Container chuyên biệt xử lý bóc tách tài liệu, OCR và tạo vector embeddings bất đồng bộ. |
-| **Hàng đợi & Bộ nhớ đệm** | **Amazon ElastiCache Redis** | Cluster Redis Multi-AZ với tự động chuyển đổi dự phòng (Automatic Failover), độ trễ dưới 1 mili-giây. |
-| **Cơ sở dữ liệu (PostgreSQL)** | **Amazon RDS PostgreSQL** | Instance `db.t4g.medium` Multi-AZ, tự động sao lưu Snapshot 7 ngày, mã hóa KMS at-rest. |
-| **CSDL Vector (Qdrant)** | **Qdrant trên EC2 Graviton (ARM64)** | Instance `c7g.xlarge` chạy trên chip AWS Graviton3, ổ cứng `gp3` cấu hình 3000 IOPS & 125 MB/s throughput. |
-| **Kho lưu trữ tệp gốc (Data Lake)** | **Amazon S3 (Standard + Glacier)** | Phân tầng dữ liệu tự động với S3 Lifecycle: sau 90 ngày chuyển sang Glacier Instant Retrieval; mã hóa SSE-KMS. |
-| **Mô hình Ngôn ngữ (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Cổng giao tiếp AI thế hệ mới Bedrock Mantle (`us-east-1`) định tuyến qua VPC Interface Endpoint; Gemini 2.5 Flash qua NAT Gateway. |
-| **Bảo mật bí mật & Giám sát** | **AWS Secrets Manager & CloudWatch** | Quản lý credentials tập trung tại `rag/production/credentials`; CloudWatch thu thập logs và kích hoạt cảnh báo qua SNS. |
+| **Giao diện Web (React / Next.js)** | **Docker Container trên EC2** | Next.js 14 Standalone container (Port 3000) chạy trên EC2, tiếp nhận lưu lượng mặc định `/*` từ ALB. |
+| **Cân bằng tải & Định tuyến** | **Application Load Balancer (ALB)** | Cân bằng tải đa vùng (`rag-lb`), định tuyến thông minh: `/*` về Next.js và `/api/*`, `/docs*` về FastAPI. |
+| **Backend API (FastAPI)** | **Docker Container trên EC2** | FastAPI container (Port 8000) xử lý Clean Architecture, JWT authentication, SSE chat streaming. |
+| **Xử lý nền & Hàng đợi** | **Celery Worker + Redis trên EC2** | Cụm container Celery & Redis Alpine (Port 6379) xử lý OCR tiếng Việt, bóc tách cấu trúc và tạo vector embeddings ngầm. |
+| **Cơ sở dữ liệu Quan hệ** | **Amazon RDS PostgreSQL** | Instance `db.t4g.micro` trên vi xử lý AWS Graviton trong Isolated Subnet, mã hóa KMS at-rest. |
+| **Cơ sở dữ liệu Vector (Qdrant)** | **Docker Container trên EC2** | Qdrant Vector Engine container (Port 6333) lưu trữ vector 1024 chiều, gắn volume bền vững vào ổ đĩa EBS `gp3`. |
+| **Kho lưu trữ tệp gốc (Data Lake)** | **Amazon S3 Document Lake** | S3 Standard (`rag-document-lake-minh`), phân tầng S3 Lifecycle, mã hóa SSE-KMS, tích hợp S3 Gateway Endpoint. |
+| **Mô hình Ngôn ngữ (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Cổng giao tiếp AI thế hệ mới Bedrock Mantle (`us-east-1`) qua VPC Interface Endpoint; Gemini 2.5 Flash qua NAT Gateway. |
+| **Bảo mật bí mật & Giám sát** | **AWS Secrets Manager & CloudWatch** | Quản lý credentials tập trung tại `rag/production/credentials` (16 keys); CloudWatch thu thập logs và kích hoạt cảnh báo SNS. |
 
 ---
 
@@ -323,12 +319,11 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 5d: Kiểm thử Khả năng Suy luận Trực tiếp trên Amazon Bedrock Workbench</p>
 </div>
 
-3.  **ECS Task Execution Role & Task Role**:
-    *   `ecsTaskExecutionRole`: Cho phép kéo image từ ECR, ghi log vào CloudWatch và giải mã secrets từ Secrets Manager (`secretsmanager:GetSecretValue`).
-    *   `ecsLegalRAGTaskRole`: Cấp quyền truy xuất S3 Document Lake (`s3:GetObject`, `s3:PutObject`), giải mã KMS Key và gọi API Bedrock (`bedrock:InvokeModel`).
+3.  **IAM Role Gắn Máy Chủ (EC2-S3-RAG)**:
+    *   Cấp quyền tối thiểu (Least-Privilege) trực tiếp cho máy chủ EC2 mà không cần lưu khóa truy cập cục bộ: kéo image từ Amazon ECR, ghi log vào CloudWatch Logs, giải mã 16 tham số bí mật từ Secrets Manager (`secretsmanager:GetSecretValue`), đọc/ghi tệp trên S3 Document Lake (`s3:GetObject`, `s3:PutObject`) và gọi mô hình AI trên Amazon Bedrock (`bedrock:InvokeModel`).
 4.  **Mã hóa dữ liệu toàn diện (End-to-End Encryption)**:
-    *   *Dữ liệu đang truyền (In-Transit)*: Bắt buộc TLS 1.3 từ người dùng đến CloudFront, ALB và từ ALB vào container ECS Fargate/EC2.
-    *   *Dữ liệu tĩnh (At-Rest)*: Toàn bộ S3 Buckets, RDS PostgreSQL Storage, và EBS Volumes của Qdrant đều được mã hóa bằng khóa AWS KMS Customer Managed Key.
+    *   *Dữ liệu đang truyền (In-Transit)*: Bắt buộc TLS 1.3 từ người dùng đến ALB, và luồng mạng nội bộ an toàn từ ALB vào các container trên máy chủ EC2 qua Security Group `rag-ec2-sg`.
+    *   *Dữ liệu tĩnh (At-Rest)*: Toàn bộ S3 Document Lake, RDS PostgreSQL Storage, và EBS Volumes của EC2 đều được mã hóa bằng khóa bảo mật AWS KMS.
 
 ---
 
@@ -339,10 +334,10 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Hình 6: Sơ đồ Quy trình Tự động hóa CI/CD GitOps & Giám sát Vận hành (Telemetry & Observability) trên AWS</p>
 </div>
 
-*   **Zero-Downtime Deployment**: Khi cập nhật mã nguồn mới, ECS Fargate khởi tạo các container mới, chờ kiểm tra đường truyền (Health Check qua `/api/health`) thành công trên ALB rồi mới dừng các container cũ, đảm bảo người dùng không bao giờ bị ngắt quãng dịch vụ.
-*   **Giám sát vận hành chuyên sâu**:
-    *   **CloudWatch Container Insights**: Theo dõi chi tiết mức tiêu hao tài nguyên của từng microservice.
-    *   **AWS X-Ray**: Phân tích độ trễ phân tán (Distributed Tracing), bóc tách thời gian xử lý của từng bước (Embedding → Vector Search → LLM Generation) để kịp thời tối ưu điểm nghẽn.
+*   **Tự động hóa CI/CD GitOps**: Khi lập trình viên đẩy mã nguồn mới lên GitHub Repository, quy trình GitHub Actions tự động kích hoạt bộ kiểm thử tự động, quét lỗ hổng bảo mật container bằng Trivy Scanner, đóng gói Docker Image và đẩy lên Amazon ECR Registry. Máy chủ Amazon EC2 (`enterprise-rag-server`) kéo phiên bản image mới và thực hiện tái nạp các container dịch vụ qua Docker Compose không gây gián đoạn (Zero-Downtime Reload).
+*   **Giám sát vận hành chuyên sâu & Cảnh báo tức thời (Observability)**:
+    *   **Amazon CloudWatch Logs & Metrics**: Thu thập liên tục log hoạt động của các container và các chỉ số hiệu năng máy chủ EC2 (`CPUUtilization`, `Memory`), cùng thời gian phản hồi của cân bằng tải (`TargetResponseTime`).
+    *   **CloudWatch Alarms & Amazon SNS**: Cấu hình quy tắc cảnh báo (`RAG-Server-High-CPU-Alarm`) khi tải CPU vượt ngưỡng 80% hoặc tỷ lệ lỗi tăng cao, lập tức kích hoạt Amazon SNS Topic gửi thông báo khẩn cấp đến đội ngũ vận hành.
 
 ---
 
@@ -352,36 +347,35 @@ Hệ thống được triển khai trên dải mạng VPC `10.0.0.0/16` trải d
 
 | Dịch vụ AWS | Cấu hình kỹ thuật lựa chọn | Cách tính chi phí | Chi phí ước tính / tháng |
 | :--- | :--- | :--- | :--- |
-| **Amazon ECS Fargate (API)** | 2 Tasks thường trực (0.5 vCPU, 1 GB RAM) | ~$0.024/giờ x 730 giờ x 2 | ~$35.00 |
-| **Amazon ECS Fargate (Worker)**| 1 Task xử lý nền (1.0 vCPU, 2 GB RAM) | Chạy theo nhu cầu nạp tệp (~120 giờ/tháng) | ~$6.50 |
-| **EC2 Qdrant (Graviton3 ARM64)**| 1x `c7g.xlarge` (4 vCPU, 8 GB RAM) + 100GB gp3 | ~$0.145/giờ x 730 giờ + 100GB gp3 | ~$115.00 |
-| **Amazon RDS PostgreSQL** | `db.t4g.medium` (2 vCPU, 4 GB RAM) Multi-AZ | ~$0.068 x 2 x 730 giờ + 50GB storage | ~$58.00 |
-| **Amazon ElastiCache Redis** | `cache.t4g.micro` (0.5 GB RAM) Single-node | ~$0.016/giờ x 730 giờ | ~$11.50 |
-| **Amazon S3 Document Lake** | 200 GB S3 Standard + 500 GB S3 Glacier Tier | Storage + PUT/GET Requests | ~$12.00 |
-| **CloudFront & AWS WAF** | 1TB Egress Data Transfer + WAF Rule Group | 1TB Free Tier + WAF Web ACL ($5/tháng) | ~$6.00 |
-| **Networking & Monitoring** | 1x ALB + 1x NAT Gateway + CloudWatch Logs | ALB ($18) + NAT Gateway traffic ($15) | ~$35.00 |
-| **TỔNG CHI PHÍ ƯỚC TÍNH** | **Mô hình AWS Serverless & Graviton** | **Hệ thống vận hành đầy đủ, an toàn** | **~$270 – $280 / tháng** |
+| **Amazon EC2 (enterprise-rag-server)** | 1x `t3.small` (2 vCPU, 2 GB RAM) + 30GB gp3 SSD | ~$0.0208/giờ x 730 giờ + 30GB gp3 storage | ~$17.50 |
+| **Amazon RDS PostgreSQL** | `db.t4g.micro` (AWS Graviton ARM64, 1 GB RAM) + 20GB gp3 | ~$0.016/giờ x 730 giờ + 20GB storage | ~$13.50 |
+| **Application Load Balancer (`rag-lb`)** | 1x ALB Multi-AZ + LCU (Load Balancer Capacity Units) | Cố định ~$0.0225/giờ x 730 giờ + LCU traffic | ~$18.50 |
+| **Amazon S3 Document Lake** | 200 GB S3 Standard + 500 GB S3 Glacier Tier | Dung lượng lưu trữ + PUT/GET Requests | ~$8.50 |
+| **AWS Secrets Manager & KMS** | 1 Secret (16 production keys) + KMS Encryption | $0.40/secret/tháng + API request calls | ~$1.50 |
+| **Amazon Bedrock Mantle / GenAI API** | Pay-as-you-go theo lượng token suy luận thực tế | Claude 3.5 Sonnet / Mistral / Nova (~500k tokens/tháng) | ~$25.00 |
+| **Networking & CloudWatch Monitoring** | Data Transfer Egress + CloudWatch Logs/Metrics + SNS | Giám sát tập trung và truyền dữ liệu mạng | ~$15.00 |
+| **TỔNG CHI PHÍ THỰC TẾ** | **Mô hình Docker Compose trên EC2 & RDS Graviton** | **Hệ thống vận hành đầy đủ, chuẩn an toàn** | **~$95 – $105 / tháng** |
 
 #### 8.2. So sánh TCO: Máy chủ GPU truyền thống vs. Mô hình Đề xuất trên AWS:
 
-| Hạng mục so sánh | Mô hình Thuê Server GPU Riêng (`g5.xlarge` / `g4dn.xlarge`) | Mô hình Kiến trúc Đề xuất (CPU Graviton3 + ECS Fargate Serverless) | Tác động Tối ưu hóa |
+| Hạng mục so sánh | Mô hình Thuê Server GPU Riêng (`g5.xlarge` / `g4dn.xlarge`) | Mô hình Kiến trúc Đề xuất (Docker trên EC2 + RDS Graviton + Bedrock) | Tác động Tối ưu hóa |
 | :--- | :--- | :--- | :--- |
-| **Chi phí máy chủ Compute** | ~$420 – $550 / tháng (GPU chạy 24/7 lãng phí công suất) | ~$135 / tháng (Fargate co giãn + Graviton ARM64) | **Tiết kiệm 68% chi phí compute** |
-| **Chi phí Lưu trữ** | Ổ cứng EBS cố định dung lượng lớn ($0.10/GB/tháng) | S3 Standard kết hợp S3 Glacier Lifecycle ($0.004/GB) | **Tiết kiệm ~80% lưu trữ lâu dài** |
-| **Chi phí Vận hành Nhân sự** | Tốn 1 kỹ sư DevOps túc trực bảo trì driver NVIDIA, CUDA, vá lỗi OS | Dịch vụ AWS Managed (Fargate, RDS) tự động hóa hoàn toàn | **Tiết kiệm hàng chục triệu VNĐ lương DevOps/tháng** |
-| **Khả năng co giãn khi tải cao** | Cố định ở 1 GPU server, quá tải khi nhiều người dùng | ASG và Fargate tự động spawn thêm tasks trong 60 giây | **Khả năng phục vụ tăng gấp 5 lần** |
-| **TỔNG TCO VẬN HÀNH** | **~$600 – $800 / tháng** | **~$240 – $280 / tháng** | **Tổng mức tiết kiệm đạt 65% – 70%** |
+| **Chi phí máy chủ Compute** | ~$420 – $550 / tháng (GPU chạy 24/7 lãng phí công suất) | ~$17.50 / tháng (EC2 tối ưu vi dịch vụ qua Docker Compose) | **Tiết kiệm > 95% chi phí máy chủ** |
+| **Chi phí Cơ sở dữ liệu** | Tự dựng DB trên cùng GPU server hoặc thuê RDS lớn ($100+) | ~$13.50 / tháng (RDS Graviton `db.t4g.micro` tiết kiệm điện năng) | **Tiết kiệm > 85% chi phí Database** |
+| **Chi phí Mô hình AI** | Trả tiền toàn bộ cho máy chủ GPU dù không có truy vấn | Pay-as-you-go qua Bedrock: chỉ trả tiền theo lượng token dùng thật | **Triệt tiêu lãng phí tài nguyên nhàn rỗi** |
+| **Chi phí Vận hành Nhân sự** | Tốn 1 kỹ sư DevOps túc trực vá lỗi CUDA, driver NVIDIA | AWS quản lý RDS và hạ tầng tiêu chuẩn tự động hóa | **Tiết kiệm hàng chục triệu VNĐ lương DevOps/tháng** |
+| **TỔNG TCO VẬN HÀNH** | **~$600 – $800 / tháng** | **~$95 – $105 / tháng** | **Tổng mức tiết kiệm đạt 82% – 88%** |
 
 ---
 
 ### 9. Tuân Thủ Toàn Diện 6 Trụ Cột AWS Well-Architected Framework
 
-1.  **Vận hành xuất sắc (Operational Excellence)**: Toàn bộ cơ sở hạ tầng được mã hóa bằng Infrastructure as Code (IaC); tự động hóa kiểm thử và triển khai với GitHub Actions và Amazon ECR; tích hợp giám sát tập trung qua Amazon CloudWatch và AWS X-Ray.
-2.  **Bảo mật (Security - Zero Trust)**: Cô lập hoàn toàn cơ sở dữ liệu và vector store trong Isolated Subnets không có kết nối Internet; thực thi IAM Least-Privilege phân định rõ Task Role và Execution Role; mã hóa dữ liệu tĩnh và dữ liệu động bằng AWS KMS và TLS 1.3.
-3.  **Độ tin cậy (Reliability)**: Kiến trúc Multi-AZ phân bố trên 2 Availability Zones; tự động chuyển đổi dự phòng (Automated Failover) với Amazon RDS Multi-AZ và ElastiCache Redis; cơ chế tự phục hồi (Self-healing) của ECS Fargate khi một task gặp lỗi.
-4.  **Hiệu năng xuất sắc (Performance Efficiency)**: Tận dụng sức mạnh tính toán ma trận của vi xử lý **AWS Graviton3 ARM64** cho Qdrant Vector DB; lưu cache phản hồi bằng ElastiCache Redis và tăng tốc độ phân phối nội dung tĩnh qua Amazon CloudFront CDN.
-5.  **Tối ưu hóa chi phí (Cost Optimization)**: Ứng dụng mô hình Serverless Pay-as-you-go không lãng phí tài nguyên nhàn rỗi; chính sách vòng đời S3 Lifecycle tự động chuyển dữ liệu cũ sang kho lạnh S3 Glacier.
-6.  **Tính bền vững (Sustainability - Green Cloud)**: Sử dụng chip **AWS Graviton3** giúp giảm tiêu thụ điện năng tới **60%** so với chip x86 tương đương, đồng thời loại bỏ các máy chủ dư thừa chạy không tải ngoài giờ làm việc, góp phần giảm thiểu dấu chân carbon (Carbon Footprint) cho doanh nghiệp.
+1.  **Vận hành xuất sắc (Operational Excellence)**: Toàn bộ dịch vụ được đóng gói chuẩn hóa bằng Docker; quy trình tự động hóa kiểm thử và triển khai với GitHub Actions và Amazon ECR; tích hợp giám sát tập trung qua Amazon CloudWatch và thông báo sự cố tức thời qua Amazon SNS.
+2.  **Bảo mật (Security - Zero Trust)**: Cô lập hoàn toàn cơ sở dữ liệu quan hệ trong Isolated Subnets không có kết nối Internet; thực thi IAM Least-Privilege qua IAM Role `EC2-S3-RAG`; mã hóa dữ liệu tĩnh và dữ liệu động bằng AWS KMS và TLS.
+3.  **Độ tin cậy (Reliability)**: Kiến trúc Multi-AZ phân bố trên 2 Availability Zones; cân bằng tải Application Load Balancer tự động chuyển hướng lưu lượng; cơ chế tự phục hồi (Restart Policy) của Docker Compose khi một container gặp lỗi.
+4.  **Hiệu năng xuất sắc (Performance Efficiency)**: Tận dụng sức mạnh tính toán ma trận của vi xử lý **AWS Graviton** cho RDS PostgreSQL; bộ nhớ đệm Redis và cơ sở dữ liệu vector Qdrant tối ưu hóa bộ nhớ RAM trên máy chủ EC2.
+5.  **Tối ưu hóa chi phí (Cost Optimization)**: Ứng dụng mô hình CPU-only kết hợp Foundation Models qua Amazon Bedrock theo cơ chế Pay-as-you-go, triệt tiêu máy chủ GPU chạy lãng phí; chính sách vòng đời S3 Lifecycle tự động chuyển dữ liệu cũ sang kho lạnh S3 Glacier.
+6.  **Tính bền vững (Sustainability - Green Cloud)**: Sử dụng chip **AWS Graviton** giúp giảm tiêu thụ điện năng tới **60%** so với chip x86 tương đương, đồng thời loại bỏ các máy chủ dư thừa chạy không tải ngoài giờ làm việc, góp phần giảm thiểu dấu chân carbon (Carbon Footprint) cho doanh nghiệp.
 
 ---
 

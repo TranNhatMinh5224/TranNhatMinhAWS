@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 # NexusDoc AI — Enterprise Legal & Knowledge RAG Platform on AWS
-## Enterprise Cloud Architecture: Multi-AZ Resiliency, Zero-Trust Security, Serverless Containers & TCO Cost Optimization
+## Enterprise Cloud Architecture: Multi-AZ Resiliency, Zero-Trust Security, Containerized Architecture (Docker on EC2) & TCO Cost Optimization
 
 ---
 
@@ -23,8 +23,8 @@ pre: " <b> 2. </b> "
 This proposal focuses on **modernizing and transitioning** the containerized application prototype into a production-ready **Enterprise Cloud Architecture on Amazon Web Services (AWS)** to achieve:
 1.  **High Availability (Multi-AZ Resiliency)**: Resilient operation across multiple Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`) with automated hardware failover and zero service interruption (Zero-Downtime).
 2.  **Enterprise-Grade Security (Zero-Trust Model)**: Isolated database subnets, IAM least-privilege roles, dynamic secrets rotation via AWS Secrets Manager, and end-to-end data-at-rest encryption via AWS KMS.
-3.  **Elastic Scalability (Auto-Scaling Serverless Containers)**: Amazon ECS Fargate decoupling high-speed REST APIs from heavy background ingestion workers (Celery + Redis).
-4.  **Cost-Optimized Total Cost of Ownership (TCO)**: Leveraging **AWS Graviton3 (ARM64)** for vector search and CPU-optimized embedding inference combined with S3 Lifecycle policies to achieve **68%** monthly infrastructure cost savings over traditional GPU server models.
+3.  **Containerized Microservices Architecture**: Docker Compose on an Amazon EC2 host running decoupled microservices (Next.js, FastAPI, Qdrant, Redis), separating high-speed REST APIs from heavy background Celery ingestion workers.
+4.  **Cost-Optimized Total Cost of Ownership (TCO)**: Leveraging **AWS Graviton (ARM64 db.t4g.micro)** for relational databases and CPU-optimized embedding inference combined with S3 Lifecycle policies to achieve **over 80%** monthly infrastructure cost savings over traditional GPU server models.
 
 ---
 
@@ -139,12 +139,11 @@ graph LR
     *   **Impact**: Shrunk Docker image footprint from **4.8 GB to 1.1 GB** (77% reduction) and cut image deployment pull times from 15 minutes to under 2 minutes.
 
 #### Stage 7: Enterprise Cloud Infrastructure Deployment on AWS
-*   **Multi-AZ Zero-Trust Topology**: VPC `10.0.0.0/16` across two Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`) with 6 subnets: Public Subnet (ALB), Private App Subnet (ECS/EC2), Isolated DB Subnet (RDS).
-*   **Application Load Balancer Layer 7**: Ingress traffic routing: `/api/*` forwarded to FastAPI Target Group (Port 8000), `/*` to Next.js Frontend Target Group (Port 3000).
-*   **Amazon ECS Fargate Serverless**: Auto-scaling containers based on 70% CPU utilization thresholds, enabling Zero-Downtime Rolling Deployments.
-*   **Qdrant on EC2 Graviton3 ARM64**: Harnesses AWS Graviton3 processors with NEON SIMD acceleration, boosting vector similarity throughput by 20% over x86 counterparts at lower operational cost.
-*   **Amazon RDS PostgreSQL 15 Multi-AZ**: Automated failover, 7-day automated backup retention, KMS encryption at rest in an Isolated Subnet.
-*   **AWS Secrets Manager & PrivateLink Endpoints**: Centralized credential management with VPC Endpoints for S3, ECR, and Bedrock, keeping all internal traffic off the public Internet.
+*   **Multi-AZ Zero-Trust Topology**: VPC `10.0.0.0/16` across two Availability Zones (`ap-southeast-1a`, `ap-southeast-1b`) with isolated subnet tiers: Public Subnet (ALB), Private Application Subnet (EC2), Isolated Database Subnet (RDS).
+*   **Application Load Balancer Layer 7**: Ingress traffic routing: `/api/*` and `/docs*` forwarded to FastAPI Target Group (Port 8000), `/*` to Next.js Frontend Target Group (Port 3000).
+*   **Amazon EC2 Server (enterprise-rag-server) running Docker Compose**: Packages the entire microservices cluster (Next.js, FastAPI, Qdrant Vector DB, Redis) on a unified Ubuntu 24.04 LTS instance, optimizing local loopback communication (<0.5ms latency) and eliminating idle server costs.
+*   **Amazon RDS PostgreSQL on AWS Graviton (`db.t4g.micro`)**: Air-gapped relational database inside the Isolated Database Subnet without Internet Gateways, backed by automated daily snapshots and AWS KMS encryption.
+*   **AWS Secrets Manager & PrivateLink Endpoints**: Centralized management of 16 production environment keys, dynamically injected at runtime via IAM Role `EC2-S3-RAG` without static `.env` exposure.
 
 #### Stage 8: Load Testing, Observability & Benchmark SLA Validation
 *   **Stress Testing**: Evaluated elasticity with Apache Bench (`ab -n 50000 -c 200`) and `stress-ng`.
@@ -242,12 +241,12 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
 
 | Subnet Tier | Availability Zone | CIDR Block | Architectural Purpose |
 | :--- | :--- | :--- | :--- |
-| **Public Subnet 1** | `ap-southeast-1a` | `10.0.1.0/24` | Application Load Balancer Node 1, NAT Gateway 1, Internet Gateway ingress. |
-| **Public Subnet 2** | `ap-southeast-1b` | `10.0.2.0/24` | Application Load Balancer Node 2, NAT Gateway 2 (Failover Resiliency). |
-| **Private App Subnet 1** | `ap-southeast-1a` | `10.0.10.0/24` | ECS Fargate API Container, Celery Worker Node 1, ElastiCache Redis Primary. |
-| **Private App Subnet 2** | `ap-southeast-1b` | `10.0.20.0/24` | ECS Fargate API Replica, ElastiCache Redis Read Replica (Auto-failover). |
-| **Isolated Data Subnet 1**| `ap-southeast-1a` | `10.0.100.0/24`| RDS PostgreSQL Primary Instance, Qdrant Vector Store on EC2 Graviton (No Internet Inbound/Outbound). |
-| **Isolated Data Subnet 2**| `ap-southeast-1b` | `10.0.200.0/24`| RDS PostgreSQL Standby Replica (Multi-AZ Synchronous), EBS Snapshots. |
+| **Public Subnet 1** | `ap-southeast-1a` | `10.0.1.0/24` | Application Load Balancer Node 1, Internet Gateway (`rag-lb`). |
+| **Public Subnet 2** | `ap-southeast-1b` | `10.0.2.0/24` | Application Load Balancer Node 2 (High Availability Multi-AZ ingress). |
+| **Private App Subnet 1** | `ap-southeast-1a` | `10.0.10.0/24` | Amazon EC2 host (`enterprise-rag-server`, `t3.small`) orchestrating Docker Compose (Next.js, FastAPI, Celery, Redis, Qdrant). |
+| **Private App Subnet 2** | `ap-southeast-1b` | `10.0.20.0/24` | Standby subnet reserved for Multi-AZ compute scaling. |
+| **Isolated Data Subnet 1**| `ap-southeast-1a` | `10.0.100.0/24`| Amazon RDS PostgreSQL (`rag-db`, AWS Graviton `db.t4g.micro`, Port 5432) air-gapped without Internet access. |
+| **Isolated Data Subnet 2**| `ap-southeast-1b` | `10.0.200.0/24`| Amazon RDS DB Subnet Group (Multi-AZ failover target & automated KMS snapshots). |
 
 ---
 
@@ -255,12 +254,10 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
 
 | Security Group | Protocol / Port | Allowed Source | Technical Purpose |
 | :--- | :--- | :--- | :--- |
-| **`sg-alb`** | TCP `443` (HTTPS)<br/>TCP `80` (HTTP) | `0.0.0.0/0` (via CloudFront) | Accepts incoming user traffic, redirects HTTP to HTTPS. |
-| **`sg-ecs-api`** | TCP `8000` | Only `sg-alb` | Restricts API access solely to the ALB, rejecting direct internet traffic. |
-| **`sg-ecs-worker`** | No Inbound | None | Worker acts strictly as an outbound consumer pulling jobs from Redis. |
-| **`sg-elasticache`**| TCP `6379` | Only `sg-ecs-api` & `sg-ecs-worker` | Guards Celery queue broker and session storage against unauthorized access. |
-| **`sg-rds`** | TCP `5432` | Only `sg-ecs-api` & `sg-ecs-worker` | Restricts database access strictly to authorized application containers. |
-| **`sg-qdrant`** | TCP `6333` | Only `sg-ecs-api` & `sg-ecs-worker` | Shields the vector engine, blocking external vector manipulation. |
+| **`rag-alb-sg`** | TCP `80` (HTTP)<br/>TCP `443` (HTTPS) | `0.0.0.0/0` (Public Internet) | Ingress entrypoint terminating client traffic, providing path-based routing. |
+| **`rag-ec2-sg`** | TCP `8000`<br/>TCP `3000` | Only `rag-alb-sg` | Permits ALB forwarding into FastAPI (8000) and Next.js (3000) containers on the EC2 host, blocking direct public access. |
+| **`rag-ec2-sg` (SSH)**| TCP `22` | Authorized Admin IP / SSM Session | Secure host management via SSH keypair or AWS Systems Manager Session Manager. |
+| **`rag-rds-sg`** | TCP `5432` | Only `rag-ec2-sg` | Strictly locks PostgreSQL access solely to the EC2 application host, preventing data leaks. |
 
 ---
 
@@ -268,16 +265,15 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
 
 | Application Source Component | AWS Service Equivalent | Architectural Role |
 | :--- | :--- | :--- |
-| **Frontend Web (React / Next.js)** | **Amazon S3 + CloudFront** | S3 hosts static artifacts; CloudFront CDN distributes globally with free SSL via ACM. |
-| **Edge Firewall & Load Balancer** | **AWS WAF + ALB** | WAF inspects traffic with `AWSManagedRulesCommonRuleSet`; ALB balances loads across Multi-AZ targets. |
-| **Backend API (FastAPI)** | **Amazon ECS Fargate** | Serverless API containers auto-scaling based on CPU utilization thresholds (70%). |
-| **Background Processing (Celery)** | **Amazon ECS Fargate Worker** | Specialized asynchronous containers executing OCR, hierarchical parsing, and vector embeddings. |
-| **Queue Broker & Session Cache** | **Amazon ElastiCache Redis** | Multi-AZ Redis cluster with automated failover and sub-millisecond latency. |
-| **Relational Database (PostgreSQL)** | **Amazon RDS PostgreSQL** | `db.t4g.medium` Multi-AZ with daily automated backups and KMS encryption at rest. |
-| **Vector Database (Qdrant)** | **Qdrant on EC2 Graviton (ARM64)** | `c7g.xlarge` powered by AWS Graviton3, equipped with `gp3` storage (3000 IOPS, 125 MB/s throughput). |
-| **Raw Storage (Document Lake)** | **Amazon S3 (Standard + Glacier)** | Automated S3 Lifecycle transitioning documents older than 90 days to Glacier Instant Retrieval; SSE-KMS encrypted. |
-| **Foundation Models (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Next-generation serverless Bedrock Mantle endpoint (`us-east-1`) routed via VPC Interface Endpoint; Gemini 2.5 Flash via NAT Gateway. |
-| **Secrets & Observability** | **AWS Secrets Manager & CloudWatch** | Centralizes secrets management in `rag/production/credentials`; CloudWatch collects logs and triggers SNS alerts. |
+| **Frontend Web (React / Next.js)** | **Docker Container on EC2** | Next.js 14 Standalone container (Port 3000) receiving default `/*` path traffic from ALB. |
+| **Edge Routing & Load Balancer** | **Application Load Balancer (ALB)** | Multi-AZ load balancer (`rag-lb`) executing path routing: `/*` to Next.js and `/api/*`, `/docs*` to FastAPI. |
+| **Backend API (FastAPI)** | **Docker Container on EC2** | FastAPI container (Port 8000) running Clean Architecture, JWT auth, SSE streaming responses. |
+| **Background Processing & Queue** | **Celery Worker + Redis on EC2** | Containerized Celery & Redis Alpine (Port 6379) processing OCR, structural chunking, and embedding generation. |
+| **Relational Database (PostgreSQL)** | **Amazon RDS PostgreSQL** | `db.t4g.micro` powered by AWS Graviton in the Isolated Subnet with automated backups and KMS encryption. |
+| **Vector Database (Qdrant)** | **Docker Container on EC2** | Qdrant Vector Engine container (Port 6333) hosting 1024d embeddings with persistent EBS `gp3` storage. |
+| **Raw Storage (Document Lake)** | **Amazon S3 Document Lake** | S3 Standard (`rag-document-lake-minh`), S3 Lifecycle tiering, SSE-KMS encryption, S3 Gateway Endpoint. |
+| **Foundation Models (LLM)** | **Amazon Bedrock Mantle / Google Gemini** | Next-generation serverless Bedrock Mantle endpoint (`us-east-1`) via VPC Interface Endpoint; Gemini 2.5 Flash via NAT Gateway. |
+| **Secrets & Observability** | **AWS Secrets Manager & CloudWatch** | Centralizes 16 production keys at `rag/production/credentials`; CloudWatch aggregates logs and triggers SNS alerts. |
 
 ---
 
@@ -321,12 +317,11 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 5d: Live Inference and Reasoning Validation on Amazon Bedrock Workbench</p>
 </div>
 
-3.  **ECS Task Execution Role & Task Role**:
-    *   `ecsTaskExecutionRole`: Pulls images from ECR, ships logs to CloudWatch, and decrypts secrets from Secrets Manager (`secretsmanager:GetSecretValue`).
-    *   `ecsLegalRAGTaskRole`: Accesses S3 Document Lake (`s3:GetObject`, `s3:PutObject`), decrypts KMS keys, and invokes Bedrock models (`bedrock:InvokeModel`).
+3.  **Host-Attached IAM Role (EC2-S3-RAG)**:
+    *   Enforces strict Least-Privilege permissions assigned directly to the EC2 host without local access key storage: pulling container images from Amazon ECR, shipping stdout/stderr logs to CloudWatch Logs, decrypting 16 production credentials from Secrets Manager (`secretsmanager:GetSecretValue`), reading/writing documents in S3 Document Lake (`s3:GetObject`, `s3:PutObject`), and invoking Foundation Models on Amazon Bedrock (`bedrock:InvokeModel`).
 4.  **End-to-End Cryptography**:
-    *   *In-Transit*: Enforces TLS 1.3 encryption across all client, CDN, ALB, and container hops.
-    *   *At-Rest*: All S3 Buckets, RDS PostgreSQL data volumes, and Qdrant EBS drives are encrypted using AWS KMS Customer Managed Keys.
+    *   *In-Transit*: Enforces TLS 1.3 encryption across all client, ALB, and container hops, with secure private routing from ALB into the EC2 host via Security Group `rag-ec2-sg`.
+    *   *At-Rest*: All S3 Document Lake buckets, RDS PostgreSQL data storage, and EC2 EBS volumes are encrypted using AWS KMS Customer Managed Keys.
 
 ---
 
@@ -337,10 +332,10 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
   <p style="font-style: italic; color: #666; margin-top: 10px; font-size: 0.9em;">Figure 6: CI/CD GitOps Automated Pipeline & Comprehensive Observability Architecture on AWS</p>
 </div>
 
-*   **Zero-Downtime Rolling Deployments**: ECS Fargate provisions new container tasks, waits for healthy ALB target responses (`/api/health`), and only then terminates obsolete tasks.
-*   **Deep Observability**:
-    *   **CloudWatch Container Insights**: Tracks container CPU, memory utilization, and network traffic.
-    *   **AWS X-Ray**: Distributed tracing isolates latency bottlenecks across embedding generation, vector querying, and LLM inference.
+*   **Automated GitOps CI/CD**: When developers push code to the protected main branch on GitHub, GitHub Actions triggers automated test suites, scans container security vulnerabilities via Trivy Scanner, packages versioned Docker images, and pushes them to Amazon ECR. The Amazon EC2 host (`enterprise-rag-server`) pulls updated images and performs seamless container reloads via Docker Compose without client disruption (Zero-Downtime Reload).
+*   **Proactive Telemetry & Real-Time Alerting (Observability)**:
+    *   **Amazon CloudWatch Logs & Metrics**: Aggregates continuous container stdout/stderr logs and host performance metrics (`CPUUtilization`, `Memory`), alongside ALB latency indicators (`TargetResponseTime`).
+    *   **CloudWatch Alarms & Amazon SNS**: Automated alarm rules (`RAG-Server-High-CPU-Alarm`) monitor CPU spikes (>80%) or elevated error rates, immediately triggering an Amazon SNS Topic that broadcasts urgent email alerts to the DevOps on-call team.
 
 ---
 
@@ -350,36 +345,35 @@ The architecture operates inside VPC `10.0.0.0/16` spanning across **2 Availabil
 
 | AWS Service | Selected Configuration | Pricing Methodology | Estimated Monthly Cost |
 | :--- | :--- | :--- | :--- |
-| **Amazon ECS Fargate (API)** | 2 Always-on Tasks (0.5 vCPU, 1 GB RAM) | ~$0.024/hr x 730 hrs x 2 | ~$35.00 |
-| **Amazon ECS Fargate (Worker)**| 1 On-demand Task (1.0 vCPU, 2 GB RAM) | Runs ~120 hrs/mo on intake spikes | ~$6.50 |
-| **EC2 Qdrant (Graviton3 ARM64)**| 1x `c7g.xlarge` (4 vCPU, 8 GB RAM) + 100GB gp3 | ~$0.145/hr x 730 hrs + 100GB gp3 | ~$115.00 |
-| **Amazon RDS PostgreSQL** | `db.t4g.medium` (2 vCPU, 4 GB RAM) Multi-AZ | ~$0.068 x 2 x 730 hrs + 50GB storage | ~$58.00 |
-| **Amazon ElastiCache Redis** | `cache.t4g.micro` (0.5 GB RAM) Single-node | ~$0.016/hr x 730 hrs | ~$11.50 |
-| **Amazon S3 Document Lake** | 200 GB S3 Standard + 500 GB S3 Glacier Tier | Storage + PUT/GET Request charges | ~$12.00 |
-| **CloudFront & AWS WAF** | 1TB Egress Data Transfer + WAF Rule Group | 1TB Free Tier + WAF Web ACL ($5/mo) | ~$6.00 |
-| **Networking & Telemetry** | 1x ALB + 1x NAT Gateway + CloudWatch Logs | ALB base + NAT Gateway data processing | ~$35.00 |
-| **TOTAL ESTIMATED MONTHLY** | **AWS Serverless & Graviton Model** | **Production-Grade Infrastructure** | **~$270 – $280 / month** |
+| **Amazon EC2 (enterprise-rag-server)** | 1x `t3.small` (2 vCPU, 2 GB RAM) + 30GB gp3 SSD | ~$0.0208/hr x 730 hrs + 30GB gp3 storage | ~$17.50 |
+| **Amazon RDS PostgreSQL** | `db.t4g.micro` (AWS Graviton ARM64, 1 GB RAM) + 20GB gp3 | ~$0.016/hr x 730 hrs + 20GB storage | ~$13.50 |
+| **Application Load Balancer (`rag-lb`)** | 1x ALB Multi-AZ + LCU (Load Balancer Capacity Units) | Fixed ~$0.0225/hr x 730 hrs + LCU traffic | ~$18.50 |
+| **Amazon S3 Document Lake** | 200 GB S3 Standard + 500 GB S3 Glacier Tier | Storage capacity + PUT/GET Request charges | ~$8.50 |
+| **AWS Secrets Manager & KMS** | 1 Secret (16 production keys) + KMS Encryption | $0.40/secret/month + API request charges | ~$1.50 |
+| **Amazon Bedrock Mantle / GenAI API** | On-demand Pay-as-you-go based on token throughput | Claude 3.5 Sonnet / Mistral / Nova (~500k tokens/mo) | ~$25.00 |
+| **Networking & CloudWatch Monitoring** | Data Transfer Egress + CloudWatch Logs/Metrics + SNS | Centralized monitoring telemetry and egress data | ~$15.00 |
+| **TOTAL ACTUAL MONTHLY** | **Docker Compose on EC2 & RDS Graviton Model** | **Production-Grade, Fully Secured Infrastructure** | **~$95 – $105 / month** |
 
 #### 8.2. TCO Comparison: Traditional GPU Server vs. Proposed AWS Model:
 
-| Evaluation Dimension | Traditional Dedicated GPU Host (`g5.xlarge` / `g4dn.xlarge`) | Proposed AWS Architecture (CPU Graviton3 + ECS Fargate Serverless) | Optimization Impact |
+| Evaluation Dimension | Traditional Dedicated GPU Host (`g5.xlarge` / `g4dn.xlarge`) | Proposed Architecture (Docker on EC2 + RDS Graviton + Bedrock) | Optimization Impact |
 | :--- | :--- | :--- | :--- |
-| **Compute Server Cost** | ~$420 – $550 / month (Idle GPU runtime during non-working hours) | ~$135 / month (Fargate auto-scaling + Graviton ARM64) | **68% Compute Cost Reduction** |
-| **Storage Expense** | Fixed large EBS block volumes ($0.10/GB/month) | S3 Standard paired with automated S3 Glacier lifecycle ($0.004/GB) | **~80% Long-Term Storage Savings** |
-| **Operational & Human Labor** | Requires dedicated DevOps engineer for NVIDIA/CUDA drivers & OS patches | Fully managed AWS services (Fargate, RDS) automate operational upkeep | **Substantial reduction in human operational overhead** |
-| **Scalability Under Peak Load** | Locked to single GPU capacity, throttles under concurrent load | ASG and Fargate automatically spawn new tasks within 60 seconds | **5x Throughput Resilience** |
-| **TOTAL MONTHLY TCO** | **~$600 – $800 / month** | **~$240 – $280 / month** | **65% – 70% Overall Savings** |
+| **Compute Server Cost** | ~$420 – $550 / month (Idle GPU runtime during non-working hours) | ~$17.50 / month (EC2 hosting Docker Compose microservices) | **> 95% Compute Cost Reduction** |
+| **Database Cost** | Self-hosted DB on GPU host or expensive standalone RDS ($100+) | ~$13.50 / month (RDS Graviton `db.t4g.micro` energy-efficient instance) | **> 85% Database Cost Reduction** |
+| **AI Inference Cost** | High fixed monthly GPU overhead regardless of utilization | Pay-as-you-go via Bedrock: charged strictly for consumed tokens | **Eliminates idle runtime waste** |
+| **Operational & Human Labor** | Requires dedicated DevOps engineer for NVIDIA/CUDA drivers & OS patches | AWS managed RDS and standard container runtime automate operational upkeep | **Substantial reduction in human operational overhead** |
+| **TOTAL MONTHLY TCO** | **~$600 – $800 / month** | **~$95 – $105 / month** | **82% – 88% Overall Savings** |
 
 ---
 
 ### 9. Full Alignment with the 6 Pillars of the AWS Well-Architected Framework
 
-1.  **Operational Excellence**: Infrastructure provisioned as code (IaC); automated testing and deployment pipelines managed through GitHub Actions and Amazon ECR; centralized telemetry with CloudWatch and AWS X-Ray.
-2.  **Security (Zero-Trust Model)**: Complete network isolation of databases in Isolated Subnets; IAM least-privilege policies separating Execution and Task roles; end-to-end encryption at-rest and in-transit via AWS KMS and TLS 1.3.
-3.  **Reliability**: Dual-AZ distribution across 2 Availability Zones; automated failover with RDS Multi-AZ and ElastiCache; self-healing container task recovery on ECS Fargate.
-4.  **Performance Efficiency**: Matrix-optimized **AWS Graviton3 ARM64** processors for Qdrant Vector DB; in-memory caching via ElastiCache Redis; edge caching via CloudFront CDN.
-5.  **Cost Optimization**: Pay-as-you-go serverless billing eliminating idle runtime waste; automated S3 Lifecycle tiering transitioning stale files to S3 Glacier.
-6.  **Sustainability (Green Cloud)**: Adopting **AWS Graviton3** chips reduces energy consumption by **up to 60%** compared to equivalent x86 instances, while serverless computing eliminates idle server carbon footprints.
+1.  **Operational Excellence**: Standardized microservices containerized via Docker; automated CI/CD build, test, and release pipelines managed through GitHub Actions and Amazon ECR; centralized telemetry with CloudWatch and automated SNS incident escalation.
+2.  **Security (Zero-Trust Model)**: Complete network isolation of PostgreSQL databases in Isolated Subnets without Internet gateways; IAM least-privilege policies enforced via `EC2-S3-RAG`; end-to-end encryption at-rest and in-transit via AWS KMS and TLS.
+3.  **Reliability**: Dual-AZ distribution across 2 Availability Zones; Application Load Balancer path routing and health checks; self-healing container recovery governed by Docker Compose restart policies.
+4.  **Performance Efficiency**: Matrix-optimized **AWS Graviton** processors for RDS PostgreSQL; Redis cache and Qdrant Vector Engine memory optimization directly on the EC2 host.
+5.  **Cost Optimization**: CPU-only vector processing coupled with on-demand Foundation Models via Amazon Bedrock eliminating dedicated GPU idle expense; automated S3 Lifecycle tiering transitioning stale files to S3 Glacier.
+6.  **Sustainability (Green Cloud)**: Adopting **AWS Graviton** chips reduces energy consumption by **up to 60%** compared to equivalent x86 instances, while serverless AI inference eliminates idle server carbon footprints.
 
 ---
 

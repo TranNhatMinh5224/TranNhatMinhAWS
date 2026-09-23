@@ -9,7 +9,7 @@ pre: " <b> 4. </b> "
 
 #### Workshop Overview
 
-This workshop provides a comprehensive step-by-step hands-on guide to architecting, configuring, and deploying the **Enterprise Knowledge AI RAG Assistant** on Amazon Web Services (AWS), adhering to enterprise standards with Multi-AZ, Zero-Trust security, and Serverless Containers.
+This workshop provides a comprehensive step-by-step hands-on guide to architecting, configuring, and deploying the **Enterprise Knowledge AI RAG Assistant** on Amazon Web Services (AWS), adhering to enterprise standards with Multi-AZ, Zero-Trust security, and Docker Containerized Architecture on Amazon EC2 & ALB.
 
 > [!NOTE]
 > * **Project**: Enterprise Knowledge AI RAG Assistant
@@ -32,7 +32,7 @@ This workshop provides a comprehensive step-by-step hands-on guide to architecti
    * 4.3.1. Provisioning IAM User (`github-action`) for CI/CD Automation
    * 4.3.2. Amazon ECR Private Repositories Provisioning (`enterprise-rag-backend`, `enterprise-rag-frontend`)
    * 4.3.3. Dockerfile Architecture & Automated GitHub Actions Pipeline
-4. [**4.4. Deploying Application Server & Application Load Balancer (ALB)**](4.4-ecs-fargate-alb/)
+4. [**4.4. Deploying Application Server & Application Load Balancer (ALB)**](4.4-ec2-docker-alb/)
    * 4.4.1. EC2 Compute Node Provisioning & Remote Administration (`enterprise-rag-server`, Ubuntu 24.04, SSH Key)
    * 4.4.2. Application Load Balancer (`rag-lb`) & Target Groups Configuration (`rag-backend-tg`, `rag-frontend-tg`)
    * 4.4.3. Path-Based Routing Implementation (`/api/*`, `/docs*`, `/*`)

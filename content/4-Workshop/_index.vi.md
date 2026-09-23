@@ -11,7 +11,7 @@ aliases:
 
 #### Tổng quan bài Thực hành (Hands-on Workshop)
 
-Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, cấu hình và triển khai hệ thống **Enterprise Knowledge AI RAG Assistant** (Trợ lý AI tra cứu văn bản nội bộ chuẩn doanh nghiệp) lên hạ tầng đám mây Amazon Web Services (AWS) theo mô hình kiến trúc Multi-AZ, Zero-Trust và Serverless Containers.
+Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, cấu hình và triển khai hệ thống **Enterprise Knowledge AI RAG Assistant** (Trợ lý AI tra cứu văn bản nội bộ chuẩn doanh nghiệp) lên hạ tầng đám mây Amazon Web Services (AWS) theo mô hình kiến trúc Multi-AZ, Zero-Trust và Kiến trúc Container hóa Docker trên Amazon EC2 & Cân bằng tải ALB.
 
 > [!NOTE]
 > * **Dự án**: Enterprise Knowledge AI RAG Assistant
@@ -34,7 +34,7 @@ Phần thực hành này hướng dẫn chi tiết từng bước xây dựng, c
    * 4.3.1. Cấu hình IAM Service User (`github-action`) cho Tự động hóa CI/CD
    * 4.3.2. Khởi tạo Amazon ECR Private Repositories (`enterprise-rag-backend`, `enterprise-rag-frontend`)
    * 4.3.3. Đóng gói Dockerfile & Quy trình Tự động hóa GitHub Actions CI/CD
-4. [**4.4. Triển khai Máy chủ Ứng dụng & Cân bằng tải Application Load Balancer (ALB)**](4.4-ecs-fargate-alb/)
+4. [**4.4. Triển khai Máy chủ Ứng dụng & Cân bằng tải Application Load Balancer (ALB)**](4.4-ec2-docker-alb/)
    * 4.4.1. Khởi tạo & Cấu hình Máy chủ EC2 RAG Server (`enterprise-rag-server`, Ubuntu 24.04, SSH Key)
    * 4.4.2. Cấu hình Application Load Balancer (`rag-lb`) & 2 Target Groups (`rag-backend-tg`, `rag-frontend-tg`)
    * 4.4.3. Cấu hình Định tuyến Thông minh dựa trên đường dẫn (Path-Based Routing: `/api/*`, `/docs*`, `/*`)

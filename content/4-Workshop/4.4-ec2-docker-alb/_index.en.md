@@ -4,6 +4,9 @@ date: 2026-08-25
 weight: 4
 chapter: false
 pre: " <b> 4.4. </b> "
+aliases:
+  - /en/4-workshop/4.4-ecs-fargate-alb/
+  - /4-workshop/4.4-ecs-fargate-alb/
 ---
 
 # 4.4. Deploying Application Server & Application Load Balancer (ALB)

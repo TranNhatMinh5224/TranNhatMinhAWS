@@ -4,6 +4,8 @@ date: 2026-08-25
 weight: 4
 chapter: false
 pre: " <b> 4.4. </b> "
+aliases:
+  - /4-workshop/4.4-ecs-fargate-alb/
 ---
 
 # 4.4. Triển khai Máy chủ Ứng dụng & Cân bằng tải Application Load Balancer (ALB)
