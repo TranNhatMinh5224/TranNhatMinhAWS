@@ -22,7 +22,7 @@ This section archives technical in-depth articles authored and published by the 
 * **Publication Date:** September 2026
 
 #### [5.2. Don't "All-in" on a Single AI Model: Designing a Smart Model Router on Amazon Bedrock to Optimize 60% Latency & 50% Cost](5.2-smart-model-router-bedrock/)
-* **Publishing Platform:** [AWS Study Group (FCJ) — Facebook Community](https://web.facebook.com/groups/awsstudygroupfcj/)
+* **Publishing Platform:** [AWS Study Group (FCJ) — Facebook Community](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
 * **Core Topics:** Smart Multi-Model Router Design, Dynamic Model Routing & Model Cascading (Amazon Nova Micro / Mistral 7B & Claude 3.5 Sonnet), 60% TTFT reduction and 50% monthly token cost savings.
 * **Publication Date:** September 2026
 

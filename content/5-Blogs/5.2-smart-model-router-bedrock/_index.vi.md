@@ -10,7 +10,8 @@ pre: " <b> 5.2. </b> "
 
 {{% notice info %}}
 * **Tác giả:** Trần Nhật Minh (Solutions Architecture & Cloud Engineering Intern)
-* **Kênh xuất bản:** [Cộng đồng AWS Study Group (FCJ) — Facebook](https://web.facebook.com/groups/awsstudygroupfcj/)
+* **Kênh xuất bản:** [Cộng đồng AWS Study Group (FCJ) — Facebook](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
+* **Link bài đăng trực tiếp (Live Post):** [https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
 * **Chủ đề kỹ thuật:** Dynamic Model Routing, Model Cascading, Amazon Bedrock, Amazon Nova Micro, Anthropic Claude 3.5 Sonnet, Query Classification & FinOps.
 {{% /notice %}}
 

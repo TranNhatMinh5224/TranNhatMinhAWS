@@ -33,7 +33,9 @@ chapter: false
 ### Hoạt động thi đấu & Mở rộng:
 * Tham gia chuỗi đấu trường công nghệ **Prove It: Agentic Cloud Investigation Series** (Đội thi WAR - Team 06).  
 * Mới đăng ký tham gia cuộc thi Hackathon phát triển sản phẩm **FCAJ BUILDRATHON 2026 — Season 01**.  
-* Xuất bản bài viết kỹ thuật chia sẻ cộng đồng: [**Xây dựng RAG Pipeline cho Enterprise: Từ Web Client đến Amazon Bedrock & Tối ưu 68% Chi phí trên AWS**](5-Blogs/5.1-rag-enterprise-pipeline/) trên Facebook AWS Study Group (FCJ).  
+* Xuất bản các bài viết kỹ thuật chia sẻ cộng đồng trên Facebook AWS Study Group (FCJ):
+  * [**Bài 1: Xây dựng RAG Pipeline cho Enterprise: Từ Web Client đến Amazon Bedrock & Tối ưu 68% Chi phí trên AWS**](5-Blogs/5.1-rag-enterprise-pipeline/)  
+  * [**Bài 2: Đừng "All-in" vào một Model AI: Thiết kế Smart Model Router trên Amazon Bedrock để tối ưu 60% độ trễ & 50% chi phí**](5-Blogs/5.2-smart-model-router-bedrock/)  
 
 <img src="/images/avarta.jpg" alt="Ảnh chân dung sinh viên" width="220" style="border-radius: 10px; border: 1px solid #E2E8F0; margin-top: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" />
 
@@ -42,7 +44,7 @@ chapter: false
 * **Sinh hoạt & Đào tạo chuyên môn:** Hoàn thành 2 tháng thực tập tập trung tại Văn phòng AWS Hà Nội (Tòa nhà Grand Terra, 36 Cát Linh), làm chủ các trụ cột AWS Well-Architected Framework, hạ tầng Multi-AZ, Serverless Containerization và hoàn thiện giải pháp Capstone **NexusDoc AI**.
 * **Đấu trường Prove It Series:** Cùng Đội thi **WAR (Team 06)** hoàn thành chuỗi thử thách điều tra sự cố đám mây quốc tế *Prove It: Agentic Cloud Investigation Series* (Day 1: Govern, Day 2: Investigate, Day 3: Prove It Arena).
 * **Đăng ký hoạt động mới:** Tiếp tục phát triển chuyên môn thông qua việc đăng ký tham gia chương trình Hackathon **FCAJ BUILDRATHON 2026 — Season 01**.
-* **Chia sẻ cộng đồng:** Xuất bản bài viết kiến trúc Enterprise RAG và tối ưu 68% chi phí trên AWS Study Group FCJ.
+* **Chia sẻ cộng đồng:** Xuất bản các bài viết chuyên sâu về kiến trúc Enterprise RAG và thiết kế Smart Model Router tối ưu chi phí & độ trễ trên AWS Study Group FCJ.
 {{% /notice %}}
 
 

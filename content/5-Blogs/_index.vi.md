@@ -22,7 +22,7 @@ Mục này lưu trữ các bài viết kỹ thuật chuyên sâu được tác g
 * **Thời gian đăng:** Tháng 09/2026
 
 #### [5.2. Đừng "All-in" vào một Model AI: Thiết kế Smart Model Router trên Amazon Bedrock để tối ưu 60% độ trễ & 50% chi phí](5.2-smart-model-router-bedrock/)
-* **Nền tảng công bố:** Cộng đồng [AWS Study Group (FCJ) — Facebook Group](https://web.facebook.com/groups/awsstudygroupfcj/)
+* **Nền tảng công bố:** Cộng đồng [AWS Study Group (FCJ) — Facebook Group](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
 * **Chủ đề chính:** Thiết kế Smart Multi-Model Router, Dynamic Routing & Model Cascading giữa Amazon Nova Micro / Mistral 7B và Claude 3.5 Sonnet, giảm 60% TTFT và tiết kiệm 50% chi phí gọi LLM.
 * **Thời gian đăng:** Tháng 09/2026
 

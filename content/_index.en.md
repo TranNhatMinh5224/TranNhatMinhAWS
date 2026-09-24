@@ -33,7 +33,9 @@ chapter: false
 ### Competitions & Extended Activities:
 * Participated in the **Prove It: Agentic Cloud Investigation Series** (Team WAR - Team 06).  
 * Registered and participating in the product hackathon **FCAJ BUILDRATHON 2026 — Season 01**.  
-* Published community technical article: [**Building an Enterprise RAG Pipeline: From Web Client to Amazon Bedrock & 68% Cost Optimization on AWS**](5-Blogs/5.1-rag-enterprise-pipeline/) on AWS Study Group (FCJ) Facebook.  
+* Published technical community articles on AWS Study Group (FCJ) Facebook:
+  * [**Blog 1: Building an Enterprise RAG Pipeline: From Web Client to Amazon Bedrock & 68% Cost Optimization on AWS**](5-Blogs/5.1-rag-enterprise-pipeline/)  
+  * [**Blog 2: Don't "All-in" on a Single AI Model: Designing a Smart Model Router on Amazon Bedrock to Optimize 60% Latency & 50% Cost**](5-Blogs/5.2-smart-model-router-bedrock/)  
 
 <img src="/images/avarta.jpg" alt="Student Portrait" width="220" style="border-radius: 10px; border: 1px solid #E2E8F0; margin-top: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" />
 
@@ -42,7 +44,7 @@ chapter: false
 * **On-site Professional Training:** Successfully completed 2 months of on-site internship at the AWS Hanoi Office (Grand Terra Tower, 36 Cat Linh), mastering the AWS Well-Architected Framework, Multi-AZ architectures, Serverless Containerization, and engineering the **NexusDoc AI** Capstone platform.
 * **Prove It Cloud Challenge:** Successfully competed with **Team WAR (Team 06)** in the global cloud incident investigation challenge *Prove It: Agentic Cloud Investigation Series* (Day 1: Govern, Day 2: Investigate, Day 3: Prove It Arena).
 * **Extended Activity Enrollment:** Continuing professional development through newly registering for the **FCAJ BUILDRATHON 2026 — Season 01** hackathon.
-* **Community Sharing:** Published architectural guide on Enterprise RAG and 68% cost optimization on AWS Study Group FCJ.
+* **Community Sharing:** Published architectural guidebooks on Enterprise RAG and Smart Model Router design on AWS Study Group FCJ.
 {{% /notice %}}
 
 

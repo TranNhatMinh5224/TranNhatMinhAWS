@@ -10,7 +10,8 @@ pre: " <b> 5.2. </b> "
 
 {{% notice info %}}
 * **Author:** Tran Nhat Minh (Solutions Architecture & Cloud Engineering Intern)
-* **Publishing Channel:** [AWS Study Group (FCJ) — Facebook Community](https://web.facebook.com/groups/awsstudygroupfcj/)
+* **Publishing Channel:** [AWS Study Group (FCJ) — Facebook Community](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
+* **Live Post Link:** [https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/](https://www.facebook.com/groups/awsstudygroupfcj/posts/2284809892283970/?comment_id=2286056325492660&notif_id=1790267372025574&notif_t=group_comment)
 * **Technical Domains:** Dynamic Model Routing, Model Cascading, Amazon Bedrock, Amazon Nova Micro, Anthropic Claude 3.5 Sonnet, Query Classification & FinOps.
 {{% /notice %}}
 
